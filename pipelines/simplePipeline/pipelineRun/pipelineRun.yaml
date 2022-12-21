@@ -1,0 +1,47 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: simple-pipeline-pr-
+spec:
+  pipelineRef:
+    name: simple-pipeline
+  params:
+    - name: url
+      value: ""
+    - name: gitrepository_fullname
+      value: ""
+    - name: revision
+      value: ""
+    - name: commit_prior_revision
+      value: ""
+    - name: commit_ref
+      value: ""
+    - name: commit_id
+      value: ""
+    - name: commit_date
+      value: ""
+    - name: commit_message
+      value: ""
+    - name: commit_author
+      value: ""
+    - name: git-url
+      value: https://github.com/marrober/simplePipeline.git
+    - name: git-revision
+      value: main
+  workspaces:
+  - name: files
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 20Gi
+  - name: resources
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 5Gi
