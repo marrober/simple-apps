@@ -1,0 +1,41 @@
+apiVersion: 1.0.0
+metadata:
+  name: cpp-u99n6
+projects:
+  - name: example
+    source:
+      location: 'git@github.com:marrober/cpp-example.git'
+      type: git
+components:
+  - id: che-incubator/cpptools/latest
+    preferences:
+      clangd.path: /usr/bin/clangd
+      cdt.clangd.binaries.enable: false
+    type: chePlugin
+    alias: cpp-plugin
+  - mountSources: true
+    memoryLimit: 512Mi
+    type: dockerimage
+    alias: cpp-dev
+    image: 'registry.redhat.io/codeready-workspaces/stacks-cpp-rhel8@sha256:31ef0774342bc1dbcd91e3b85d68d7a28846500f04ace7a5dfa3116c0cedfeb1'
+  - id: eclipse-cdt/cdt-vscode/latest
+    type: chePlugin
+commands:
+  - name: 1. Run cmake
+    actions:
+      - workdir: '${fileDirname}'
+        type: exec
+        command: 'cmake "${fileDirname}" -B "${fileDirname}" && echo "CMake complete"'
+        component: cpp-dev
+  - name: 2. Build using cmake definition
+    actions:
+      - workdir: '${fileDirname}'
+        type: exec
+        command: make
+        component: cpp-dev
+  - name: 3. Run executable
+    actions:
+      - workdir: '${fileDirname}'
+        type: exec
+        command: bin/bin.out
+        component: cpp-dev
