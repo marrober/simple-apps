@@ -1,0 +1,5 @@
+oc new-project sandbox-user1-12
+
+odo create nodejs node-app-rest-user1 --port 8080 --s2i
+
+odo url create node-app-rest-user1 --port 8080

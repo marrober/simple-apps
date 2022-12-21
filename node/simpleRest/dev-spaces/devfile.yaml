@@ -1,0 +1,103 @@
+apiVersion: 1.0.0
+metadata:
+  name: development-
+projects:
+  - name: nodejs
+    source:
+      location: 'git@github.com:marrober/simpleRest.git'
+      startPoint: crw
+      type: git
+  - name: cpp
+    source:
+      location: 'git@github.com:marrober/cpp-example.git'
+      startPoint: main
+      type: git
+components:
+  - mountSources: true
+    memoryLimit: 512Mi
+    type: dockerimage
+    alias: cpp-dev
+    image: 'registry.redhat.io/codeready-workspaces/stacks-cpp-rhel8@sha256:af102d3c13de1baf3462ab53d835b3e74328cb035743d27dcf9541c9357bd292'
+  - id: eclipse-cdt/cdt-vscode/latest
+    type: chePlugin
+  - id: vscode/typescript-language-features/latest
+    type: chePlugin
+  - id: redhat/vscode-openshift-connector/latest
+    type: chePlugin
+  - id: redhat/project-initializer/latest
+    type: chePlugin
+  - id: ms-vscode/node-debug2/latest
+    type: chePlugin
+  - id: redhat/java/latest
+    type: chePlugin
+  - mountSources: true
+    endpoints:
+      - name: nodejs
+        port: 8080
+    memoryLimit: 512Mi
+    type: dockerimage
+    alias: nodejs
+    image: 'registry.redhat.io/codeready-workspaces/plugin-java8-rhel8@sha256:81548d8559fdc3ba3e2b1ec398f3bd94728e8e4037a4c3a180177f20c9704db9'
+  - mountSources: true
+    memoryLimit: 512Mi
+    type: dockerimage
+    alias: openshift-tools
+    endpoints:
+      - name: tools
+        port: 10000    
+    image: 'quay.io/marrober/devex-terminal-4@sha256:83cc15c3c1ccafc25123af23e3348a5945a054287a45f6c4e0cd5426cd3457b7'
+  - id: redhat/vscode-yaml/latest
+    type: chePlugin
+  - id: redhat/vscode-xml/latest
+    type: chePlugin
+  - id: che-incubator/cpptools/latest
+    preferences:
+      clangd.path: /usr/bin/clangd
+      cdt.clangd.binaries.enable: false
+    type: chePlugin
+    alias: cpp-plugin
+commands:
+  - name: 1. Download dependencies
+    actions:
+      - workdir: '${CHE_PROJECTS_ROOT}/nodejs/source'
+        type: exec
+        command: npm install
+        component: nodejs
+  - name: 2. Run the app
+    actions:
+      - workdir: '${CHE_PROJECTS_ROOT}/nodejs/source'
+        type: exec
+        command: npm install; nodemon simpleRest.js
+        component: nodejs
+  - name: 3. Stop the app
+    actions:
+      - type: exec
+        command: 'node_server_pids=$(pgrep -fx ''.*nodemon (--inspect )?simpleRest.js'' | tr "\\n" " ") && echo "Stopping node server with PIDs: ${node_server_pids}" && kill -15 ${node_server_pids} &>/dev/null && echo ''Done.'''
+        component: nodejs
+  - name: 1. Build current c++ algorithm
+    actions:
+      - workdir: '${fileDirname}'
+        type: exec
+        command: 'rm -f "${fileDirname}"/bin.out && g++ -g "${file}" -o bin.out && echo "Build complete"'
+        component: cpp-dev
+  - name: 2. Run current c++ algorithm
+    actions:
+      - workdir: '${fileDirname}'
+        type: exec
+        command: ./bin.out
+        component: cpp-dev
+  - name: 3. Debug current c++ algorithm
+    actions:
+      - referenceContent: |
+          {
+            "version": "0.2.0",
+            "configurations": [
+                {
+                    "type": "gdb",
+                    "name": "Debug current algorithm",
+                    "request": "launch",
+                    "program": "${fileDirname}/bin.out"
+                }
+            ]
+          }
+        type: vscode-launch

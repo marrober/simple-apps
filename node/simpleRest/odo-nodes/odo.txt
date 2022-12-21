@@ -1,0 +1,5 @@
+odo project create test01
+odo create nodejs node-app-01 --port 8080 --s2i
+more .odo/config.yaml 
+odo url create --port 8080
+odo push
