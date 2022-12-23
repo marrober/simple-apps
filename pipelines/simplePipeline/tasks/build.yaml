@@ -72,7 +72,7 @@ spec:
     - /files/buildah-containers
     - --layers
     - -f
-    - /resources/$(params.app-dir)/dockerfile
+    - ./dockerfile
     - -t
     - my-container-image
     - .
@@ -82,7 +82,7 @@ spec:
       capabilities:
         add:
         - SETFCAP
-    workingDir: /resources
+    workingDir: /resources/resources/$(params.app-dir)
   - command:
     - buildah
     - images

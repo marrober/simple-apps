@@ -28,6 +28,8 @@ spec:
       value: main
     - name: app-dir
       value: node/layers
+    - name: imagestream-url
+      value: image-registry.openshift-image-registry.svc:5000/simple-pipeline/my-app
   workspaces:
   - name: files
     volumeClaimTemplate:

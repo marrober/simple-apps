@@ -1,0 +1,45 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: push-image-to-ocp
+spec:
+  params:
+    - name: imagestream-url
+      type: string
+  results:
+    - name: new-tag
+  stepTemplate:
+    env:
+      - name: "HOME"
+        value: "/tekton/home"
+  steps:
+    - name: push-to-imagestream
+      script: >-
+        #!/usr/bin/env bash
+
+        set +x
+
+        var1=$(params.pipelineRunName)
+
+        var2=${var1:0:4}
+
+        tag=$var2
+
+        echo $tag
+
+        echo -n $tag >  $(results.new-tag.path)
+
+        buildah push --storage-driver=$(params.STORAGE_DRIVER) \
+
+        --tls-verify=$(params.TLSVERIFY) --root /files/buildah-containers \
+
+        localhost/my-container-image:latest \
+
+        docker://$(params.imagestream-url):$tag
+
+      image: registry.redhat.io/rhel8/buildah
+# Changes for skylake        
+      securityContext:
+        capabilities:
+          add: ["SETFCAP"]
+      resources: {}
