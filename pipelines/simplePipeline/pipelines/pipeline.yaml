@@ -47,7 +47,9 @@ spec:
     - name: revision
       value: $(params.git_revision)
     - name: verbose
-      value: 'false'
+      value: 'true'
+    - name: deleteExisting
+      value: 'true'
     taskRef:
       kind: ClusterTask
       name:  git-clone

@@ -33,28 +33,35 @@ spec:
     type: string
   - name: app-dir
     type: string
+  stepTemplate:
+    env:
+      - name: "HOME"
+        value: "/tekton/home"
   steps:
-  - args:
-    - |-
-      ls -al /resources
+  - name: ls
     command:
     - /bin/sh
     - -c
-    image: registry.redhat.io/ocp-tools-43-tech-preview/source-to-image-rhel8
-    name: ls
+    args:
+    - |-
+      ls -alR /resources
+      echo "---------------------------------------------------------------"
+      ls -alR /resources/resources
+    image: registry.redhat.io/ocp-tools-43-tech-preview/source-to-image-rhel8  
     resources: {}
     workingDir: /
-  - args:
+  - name: package-node-app
+    command:
+    - /bin/sh
+    - -c
+    args:
     - |-
       npm install
       ls -al
-    command:
-    - /bin/sh
-    - -c
-    image: registry.redhat.io/ocp-tools-43-tech-preview/source-to-image-rhel8
-    name: package-node-app
+    image: registry.redhat.io/rhel8/nodejs-16
+    
     resources: {}
-    workingDir: /resources/$(params.app-dir)
+    workingDir: /resources/resources/$(params.app-dir)
   - command:
     - buildah
     - bud
@@ -110,6 +117,6 @@ spec:
   workspaces:
   - mountPath: /files
     name: files
-  - mountPath: /resources
+  - mountPath: /
     name: resources
 
