@@ -7,11 +7,11 @@ spec:
   - name: STORAGE_DRIVER
     type: string
     default: vfs
-  - name: git-url
+  - name: git_url
     type: string
-  - name: git-revision
+  - name: git_revision
     type: string
-  - name: gitrepository_fullname
+  - name: git_fullname
     type: string
   - name: commit_prior_revision
     type: string
@@ -43,13 +43,11 @@ spec:
   - name: git-clone-resources
     params:
     - name: url
-      value: $(params.git-url)
+      value: $(params.git_url)
     - name: revision
-      value: $(params.git-revision)
+      value: $(params.git_revision)
     - name: verbose
       value: 'false'
-    - name: subdirectory
-      value: resources
     taskRef:
       kind: ClusterTask
       name:  git-clone
@@ -63,10 +61,10 @@ spec:
     params:
       - name: STORAGE_DRIVER
         value: $(params.STORAGE_DRIVER)
-      - name: gitrepository_url
-        value: $(params.url)
-      - name: gitrepository_fullname
-        value: $(params.gitrepository_fullname)
+      - name: git_url
+        value: $(params.git_url)
+      - name: git_fullname
+        value: $(params.git_fullname)
       - name: commit_prior_revision
         value: $(params.commit_prior_revision)
       - name: commit_ref
@@ -83,7 +81,8 @@ spec:
         value: $(context.pipelineRun.name)
       - name: pipelineName
         value: $(context.pipeline.name)
-
+      - name: app-dir
+        value: $(params.app-dir)
     taskRef:
       kind: Task
       name: build
@@ -92,6 +91,8 @@ spec:
     workspaces:
     - name: files
       workspace: files
+    - name: resources
+      workspace: resources
 #------------------------------------------------------------------
 # Push the new runtime image to quay.io
 #------------------------------------------------------------------

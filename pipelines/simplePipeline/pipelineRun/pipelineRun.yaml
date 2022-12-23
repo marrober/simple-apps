@@ -6,7 +6,7 @@ spec:
   pipelineRef:
     name: simple-pipeline
   params:
-    - name: gitrepository_fullname
+    - name: git_fullname
       value: ""
     - name: revision
       value: ""
@@ -22,9 +22,9 @@ spec:
       value: ""
     - name: commit_author
       value: ""
-    - name: git-url
+    - name: git_url
       value: https://github.com/marrober/simple-apps.git
-    - name: git-revision
+    - name: git_revision
       value: main
     - name: app-dir
       value: node/layers
