@@ -25,7 +25,7 @@ spec:
     - name: commit_author
       value: ""
     - name: git-url
-      value: https://github.com/marrober/simplePipeline.git
+      value: https://github.com/marrober/simple-apps.git
     - name: git-revision
       value: main
   workspaces:

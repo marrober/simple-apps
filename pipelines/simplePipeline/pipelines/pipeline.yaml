@@ -2,7 +2,6 @@ apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
   name: simple-pipeline
-  namespace:  simple-pipeline
 spec:
   params:
   - name: STORAGE_DRIVER
@@ -41,34 +40,22 @@ spec:
 ##------------------------------------------------------------------
 # Git clone resources task
 ##------------------------------------------------------------------
-  - name: git-clone-resources
-    params:
-    - name: url
-      value: $(params.git-url)
-    - name: revision
-      value: $(params.git-revision)
-    - name: verbose
-      value: 'false'
-    - name: subdirectory
-      value: resources
-    taskRef:
-      kind: ClusterTask
-      name:  git-clone
-    workspaces:
-    - name: output
-      workspace: resources
-##------------------------------------------------------------------
-# List resources
-##------------------------------------------------------------------
-  - name: list-resources
-    taskRef:
-      kind: Task
-      name:  list
-    runAfter:
-    - git-clone-resources
-    workspaces:
-    - name: resources
-      workspace: resources
+#  - name: git-clone-resources
+#    params:
+#    - name: url
+#      value: $(params.git-url)
+#    - name: revision
+#      value: $(params.git-revision)
+#    - name: verbose
+#      value: 'false'
+#    - name: subdirectory
+#      value: resources
+#    taskRef:
+#      kind: ClusterTask
+#      name:  git-clone
+#    workspaces:
+#    - name: output
+#      workspace: resources
 ##------------------------------------------------------------------
 # Build the jar file deliverable
 ##------------------------------------------------------------------
@@ -99,32 +86,32 @@ spec:
     taskRef:
       kind: Task
       name: build
-    runAfter:
-    - git-clone-resources
+#    runAfter:
+#    - git-clone-resources
     workspaces:
     - name: files
       workspace: files
 #------------------------------------------------------------------
 # Push the new runtime image to quay.io
 #------------------------------------------------------------------
-  - name: push-image-to-quay
-    params:
-      - name: quay-io-account
-        value: $(params.quay-io-account)
-      - name: quay-io-repository
-        value: $(params.quay-io-repository)
-      - name: quay-io-image-tag-name
-        value: $(params.quay-io-image-tag-name)
-      - name: STORAGE_DRIVER
-        value: $(params.STORAGE_DRIVER)
-    taskRef:
-      kind: Task
-      name: push-image-to-quay
-    runAfter:
-      - build
-    workspaces:
-    - name: files
-      workspace: files
+#  - name: push-image-to-quay
+#    params:
+#      - name: quay-io-account
+#        value: $(params.quay-io-account)
+#      - name: quay-io-repository
+#        value: $(params.quay-io-repository)
+#      - name: quay-io-image-tag-name
+#        value: $(params.quay-io-image-tag-name)
+#      - name: STORAGE_DRIVER
+#        value: $(params.STORAGE_DRIVER)
+#    taskRef:
+#      kind: Task
+#      name: push-image-to-quay
+#    runAfter:
+#      - build
+#    workspaces:
+#    - name: files
+#      workspace: files
 ##------------------------------------------------------------------
 # Workspace definitions
 ##------------------------------------------------------------------

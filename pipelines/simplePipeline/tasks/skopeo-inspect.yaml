@@ -7,7 +7,7 @@ spec:
     - name: image-url
       type: string
   steps:
-    - name: gen-binary-extraction-dockerfile
+    - name: inspect-image
       command:
         - /bin/sh
         - '-c'

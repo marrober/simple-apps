@@ -38,7 +38,7 @@ spec:
         - '-c'
       args:
         - |-
-          echo "FROM openliberty/open-liberty:21.0.0.9-full-java8-ibmjava-ubi" > /env-params/ext-dockerfile.gen
+          echo "FROM quay.io/marrober/layers:25" > /env-params/ext-dockerfile.gen
           echo "LABEL github.repository.url=\"$(params.gitrepository_url)\" \\" >> /env-params/ext-dockerfile.gen
           echo "github.repository.fullname=\"$(params.gitrepository_fullname)\" \\" >> /env-params/ext-dockerfile.gen
           echo "github.commit.ref=\"$(params.commit_ref)\" \\" >> /env-params/ext-dockerfile.gen
@@ -72,6 +72,9 @@ spec:
         - 'simple-pipeline'
         - .
       image: registry.redhat.io/rhel8/buildah@sha256:6a68ece207bc5fd8db2dd5cc2d0b53136236fb5178eb5b71eebe5d07a3c33d13
+      securityContext:
+        capabilities:
+          add: ["SETFCAP"]
       volumeMounts:
         - name: envparams
           mountPath: /env-params
@@ -85,6 +88,9 @@ spec:
         - '--root'
         - '/files/buildah-containers'
       image: registry.redhat.io/rhel8/buildah@sha256:6a68ece207bc5fd8db2dd5cc2d0b53136236fb5178eb5b71eebe5d07a3c33d13
+      securityContext:
+        capabilities:
+          add: ["SETFCAP"]
       workingDir: /
       resources: {}
     - name: inspect
@@ -96,6 +102,9 @@ spec:
         - '/files/buildah-containers'
         - 'simple-pipeline'
       image: registry.redhat.io/rhel8/buildah@sha256:6a68ece207bc5fd8db2dd5cc2d0b53136236fb5178eb5b71eebe5d07a3c33d13
+      securityContext:
+        capabilities:
+          add: ["SETFCAP"]
       workingDir: /
       resources: {}
   volumes:
