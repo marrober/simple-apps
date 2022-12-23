@@ -11,8 +11,6 @@ spec:
     type: string
   - name: git-revision
     type: string
-  - name: url
-    type: string
   - name: gitrepository_fullname
     type: string
   - name: commit_prior_revision
@@ -36,26 +34,28 @@ spec:
   - name: quay-io-image-tag-name
     type: string
     default: "latest"
+  - name: app-dir
+    type: string
   tasks:
 ##------------------------------------------------------------------
 # Git clone resources task
 ##------------------------------------------------------------------
-#  - name: git-clone-resources
-#    params:
-#    - name: url
-#      value: $(params.git-url)
-#    - name: revision
-#      value: $(params.git-revision)
-#    - name: verbose
-#      value: 'false'
-#    - name: subdirectory
-#      value: resources
-#    taskRef:
-#      kind: ClusterTask
-#      name:  git-clone
-#    workspaces:
-#    - name: output
-#      workspace: resources
+  - name: git-clone-resources
+    params:
+    - name: url
+      value: $(params.git-url)
+    - name: revision
+      value: $(params.git-revision)
+    - name: verbose
+      value: 'false'
+    - name: subdirectory
+      value: resources
+    taskRef:
+      kind: ClusterTask
+      name:  git-clone
+    workspaces:
+    - name: output
+      workspace: resources
 ##------------------------------------------------------------------
 # Build the jar file deliverable
 ##------------------------------------------------------------------
@@ -83,11 +83,12 @@ spec:
         value: $(context.pipelineRun.name)
       - name: pipelineName
         value: $(context.pipeline.name)
+
     taskRef:
       kind: Task
       name: build
-#    runAfter:
-#    - git-clone-resources
+    runAfter:
+    - git-clone-resources
     workspaces:
     - name: files
       workspace: files

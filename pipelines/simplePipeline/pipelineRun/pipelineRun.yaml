@@ -6,8 +6,6 @@ spec:
   pipelineRef:
     name: simple-pipeline
   params:
-    - name: url
-      value: ""
     - name: gitrepository_fullname
       value: ""
     - name: revision
@@ -28,6 +26,8 @@ spec:
       value: https://github.com/marrober/simple-apps.git
     - name: git-revision
       value: main
+    - name: app-dir
+      value: node/layers
   workspaces:
   - name: files
     volumeClaimTemplate:

@@ -31,32 +31,46 @@ spec:
       type: string
     - name: pipelineRunName
       type: string
+    - name: app-dir
+      type: string
   steps:
-    - name: gen-dockerfile
+    - name: package-node-app
       command:
         - /bin/sh
         - '-c'
       args:
         - |-
-          echo "FROM quay.io/marrober/layers:25" > /env-params/ext-dockerfile.gen
-          echo "LABEL github.repository.url=\"$(params.gitrepository_url)\" \\" >> /env-params/ext-dockerfile.gen
-          echo "github.repository.fullname=\"$(params.gitrepository_fullname)\" \\" >> /env-params/ext-dockerfile.gen
-          echo "github.commit.ref=\"$(params.commit_ref)\" \\" >> /env-params/ext-dockerfile.gen
-          echo "github.commit.id=\"$(params.commit_id)\" \\" >> /env-params/ext-dockerfile.gen
-          echo "github.commit.message=\"$(params.commit_message)\" \\" >> /env-params/ext-dockerfile.gen
-          echo "github.commit.date=\"$(params.commit_date)\" \\" >> /env-params/ext-dockerfile.gen
-          echo "github.commit_author=\"$(params.commit_author)\" \\" >> /env-params/ext-dockerfile.gen
-          echo "pipeline.name=\"$(params.pipelineName)\" \\" >> /env-params/ext-dockerfile.gen
-          echo "pipeline.run=\"$(params.pipelineRunName)\" \\" >> /env-params/ext-dockerfile.gen
-          echo "pipeline.task.run.name=\"$(context.taskRun.name)\"" >> /env-params/ext-dockerfile.gen
-          echo "------------------------------"
-          cat /env-params/ext-dockerfile.gen
-          echo "------------------------------"
+        npm install
+        ls -al
       image: registry.redhat.io/ocp-tools-43-tech-preview/source-to-image-rhel8
-      volumeMounts:
-        - name: envparams
-          mountPath: /env-params
-      workingDir: /env-params
+      workingDir: /resources/$(params.app-dir)
+
+
+#    - name: gen-dockerfile
+#      command:
+#        - /bin/sh
+#        - '-c'
+#      args:
+#        - |-
+#          echo "FROM quay.io/marrober/layers:25" > /env-params/ext-dockerfile.gen
+#          echo "LABEL github.repository.url=\"$(params.gitrepository_url)\" \\" >> /env-params/ext-dockerfile.gen
+#          echo "github.repository.fullname=\"$(params.gitrepository_fullname)\" \\" >> /env-params/ext-dockerfile.gen
+#          echo "github.commit.ref=\"$(params.commit_ref)\" \\" >> /env-params/ext-dockerfile.gen
+#          echo "github.commit.id=\"$(params.commit_id)\" \\" >> /env-params/ext-dockerfile.gen
+#          echo "github.commit.message=\"$(params.commit_message)\" \\" >> /env-params/ext-dockerfile.gen
+#          echo "github.commit.date=\"$(params.commit_date)\" \\" >> /env-params/ext-dockerfile.gen
+#          echo "github.commit_author=\"$(params.commit_author)\" \\" >> /env-params/ext-dockerfile.gen
+#          echo "pipeline.name=\"$(params.pipelineName)\" \\" >> /env-params/ext-dockerfile.gen
+#          echo "pipeline.run=\"$(params.pipelineRunName)\" \\" >> /env-params/ext-dockerfile.gen
+#          echo "pipeline.task.run.name=\"$(context.taskRun.name)\"" >> /env-params/ext-dockerfile.gen
+#          echo "------------------------------"
+#          cat /env-params/ext-dockerfile.gen
+#          echo "------------------------------"
+#      image: registry.redhat.io/ocp-tools-43-tech-preview/source-to-image-rhel8
+#      volumeMounts:
+#        - name: envparams
+#          mountPath: /env-params
+#      workingDir: /env-params
     - name: build
       command:
         - buildah
@@ -67,18 +81,15 @@ spec:
         - '/files/buildah-containers'
         - '--layers'
         - '-f'
-        - '/env-params/ext-dockerfile.gen'
+        - '/resources/$(params.app-dir)/dockerfile'
         - '-t'
-        - 'simple-pipeline'
+        - 'my-container-image'
         - .
       image: registry.redhat.io/rhel8/buildah@sha256:6a68ece207bc5fd8db2dd5cc2d0b53136236fb5178eb5b71eebe5d07a3c33d13
       securityContext:
         capabilities:
           add: ["SETFCAP"]
-      volumeMounts:
-        - name: envparams
-          mountPath: /env-params
-      workingDir:
+      workingDir: /resources/$(params.app-dir)
       resources: {}
     - name: list-images
       command:
@@ -100,7 +111,7 @@ spec:
         - '--storage-driver=$(params.STORAGE_DRIVER)'
         - '--root'
         - '/files/buildah-containers'
-        - 'simple-pipeline'
+        - 'my-container-image'
       image: registry.redhat.io/rhel8/buildah@sha256:6a68ece207bc5fd8db2dd5cc2d0b53136236fb5178eb5b71eebe5d07a3c33d13
       securityContext:
         capabilities:
@@ -113,3 +124,5 @@ spec:
   workspaces:
   - name: files
     mountPath: /files
+  - name: resources
+    mountPath: /resources
