@@ -44,9 +44,9 @@ spec:
     - -c
     args:
     - |-
-      ls -alR /resources
+      ls -al /resources
       echo "---------------------------------------------------------------"
-      ls -alR /resources/resources
+      ls -al /resources/resources
     image: registry.redhat.io/ocp-tools-43-tech-preview/source-to-image-rhel8  
     resources: {}
     workingDir: /
@@ -62,7 +62,8 @@ spec:
     
     resources: {}
     workingDir: /resources/resources/$(params.app-dir)
-  - command:
+  - name: build
+    command:
     - buildah
     - bud
     - --tls-verify=$(params.TLSVERIFY)
@@ -76,12 +77,12 @@ spec:
     - my-container-image
     - .
     image: registry.redhat.io/rhel8/buildah@sha256:6a68ece207bc5fd8db2dd5cc2d0b53136236fb5178eb5b71eebe5d07a3c33d13
-    name: build
     resources: {}
     securityContext:
       capabilities:
         add:
         - SETFCAP
+    workingDir: /resources
   - command:
     - buildah
     - images
@@ -117,6 +118,6 @@ spec:
   workspaces:
   - mountPath: /files
     name: files
-  - mountPath: /
+  - mountPath: /resources
     name: resources
 
