@@ -6,6 +6,12 @@ spec:
   params:
     - name: imagestream-url
       type: string
+    - name: STORAGE_DRIVER
+      type: string
+    - name: TLSVERIFY
+      type: string
+    - name: pipelineRunName
+      type: string
   results:
     - name: new-tag
   stepTemplate:

@@ -36,6 +36,11 @@ spec:
     default: "latest"
   - name: app-dir
     type: string
+  - name: TLSVERIFY
+    type: string
+    default: 'false'
+  - name: imagestream-url
+    type: string
   tasks:
 ##------------------------------------------------------------------
 # Git clone resources task
@@ -79,8 +84,6 @@ spec:
         value: $(params.commit_message)
       - name: commit_author
         value: $(params.commit_author)
-      - name: pipelineRunName
-        value: $(context.pipelineRun.name)
       - name: pipelineName
         value: $(context.pipeline.name)
       - name: app-dir
@@ -102,6 +105,12 @@ spec:
     params:
     - name: imagestream-url
       value: $(params.imagestream-url)    
+    - name: STORAGE_DRIVER
+      value: $(params.STORAGE_DRIVER)
+    - name: TLSVERIFY 
+      value: "$(params.TLSVERIFY)"
+    - name: pipelineRunName
+      value: $(context.pipelineRun.name)
     taskRef:
       kind: Task
       name: push-image-to-ocp

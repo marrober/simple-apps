@@ -29,8 +29,6 @@ spec:
     type: string
   - name: pipelineName
     type: string
-  - name: pipelineRunName
-    type: string
   - name: app-dir
     type: string
   stepTemplate:
@@ -56,10 +54,10 @@ spec:
     - -c
     args:
     - |-
+      npm install -g npm@9.2.0
       npm install
       ls -al
     image: registry.redhat.io/rhel8/nodejs-16
-    
     resources: {}
     workingDir: /resources/resources/$(params.app-dir)
   - name: build
