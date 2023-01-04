@@ -49,3 +49,6 @@ spec:
         capabilities:
           add: ["SETFCAP"]
       resources: {}
+  workspaces:
+  - mountPath: /files
+    name: files

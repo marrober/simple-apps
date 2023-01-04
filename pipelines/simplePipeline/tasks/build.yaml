@@ -4,118 +4,118 @@ metadata:
   name: build
 spec:
   params:
-  - default: "false"
-    description: Verify the TLS on the registry endpoint
-    name: TLSVERIFY
-    type: string
-  - description: The Buildah storage STORAGE_DRIVER
-    name: STORAGE_DRIVER
-    type: string
-  - name: git_url
-    type: string
-  - name: git_fullname
-    type: string
-  - name: commit_prior_revision
-    type: string
-  - name: commit_ref
-    type: string
-  - name: commit_id
-    type: string
-  - name: commit_date
-    type: string
-  - name: commit_message
-    type: string
-  - name: commit_author
-    type: string
-  - name: pipelineName
-    type: string
-  - name: app-dir
-    type: string
+    - default: "false"
+      description: Verify the TLS on the registry endpoint
+      name: TLSVERIFY
+      type: string
+    - description: The Buildah storage STORAGE_DRIVER
+      name: STORAGE_DRIVER
+      type: string
+    - name: git_url
+      type: string
+    - name: git_fullname
+      type: string
+    - name: commit_prior_revision
+      type: string
+    - name: commit_ref
+      type: string
+    - name: commit_id
+      type: string
+    - name: commit_date
+      type: string
+    - name: commit_message
+      type: string
+    - name: commit_author
+      type: string
+    - name: pipelineName
+      type: string
+    - name: app-dir
+      type: string
   stepTemplate:
     env:
       - name: "HOME"
         value: "/tekton/home"
   steps:
-  - name: ls
-    command:
-    - /bin/sh
-    - -c
-    args:
-    - |-
-      ls -al /resources
-      echo "---------------------------------------------------------------"
-      ls -al /resources/resources
-    image: registry.redhat.io/ocp-tools-43-tech-preview/source-to-image-rhel8  
-    resources: {}
-    workingDir: /
-  - name: package-node-app
-    command:
-    - /bin/sh
-    - -c
-    args:
-    - |-
-      npm install -g npm@9.2.0
-      npm install
-      ls -al
-    image: registry.redhat.io/rhel8/nodejs-16
-    resources: {}
-    workingDir: /resources/resources/$(params.app-dir)
-  - name: build
-    command:
-    - buildah
-    - bud
-    - --tls-verify=$(params.TLSVERIFY)
-    - --storage-driver=$(params.STORAGE_DRIVER)
-    - --root
-    - /files/buildah-containers
-    - --layers
-    - -f
-    - ./dockerfile
-    - -t
-    - my-container-image
-    - .
-    image: registry.redhat.io/rhel8/buildah@sha256:6a68ece207bc5fd8db2dd5cc2d0b53136236fb5178eb5b71eebe5d07a3c33d13
-    resources: {}
-    securityContext:
-      capabilities:
-        add:
-        - SETFCAP
-    workingDir: /resources/resources/$(params.app-dir)
-  - command:
-    - buildah
-    - images
-    - --storage-driver=$(params.STORAGE_DRIVER)
-    - --root
-    - /files/buildah-containers
-    image: registry.redhat.io/rhel8/buildah@sha256:6a68ece207bc5fd8db2dd5cc2d0b53136236fb5178eb5b71eebe5d07a3c33d13
-    name: list-images
-    resources: {}
-    securityContext:
-      capabilities:
-        add:
-        - SETFCAP
-    workingDir: /
-  - command:
-    - buildah
-    - inspect
-    - --storage-driver=$(params.STORAGE_DRIVER)
-    - --root
-    - /files/buildah-containers
-    - my-container-image
-    image: registry.redhat.io/rhel8/buildah@sha256:6a68ece207bc5fd8db2dd5cc2d0b53136236fb5178eb5b71eebe5d07a3c33d13
-    name: inspect
-    resources: {}
-    securityContext:
-      capabilities:
-        add:
-        - SETFCAP
-    workingDir: /
+    - name: ls
+      command:
+      - /bin/sh
+      - -c
+      args:
+      - |-
+        ls -al /resources
+        echo "---------------------------------------------------------------"
+        ls -al /resources/$(params.app-dir)
+      image: registry.redhat.io/ocp-tools-43-tech-preview/source-to-image-rhel8  
+      resources: {}
+      workingDir: /
+    - name: package-node-app
+      command:
+      - /bin/sh
+      - -c
+      args:
+      - |-
+        npm install
+        npm install -g npm@9.2.0
+        ls -al
+      image: registry.redhat.io/rhel8/nodejs-16
+      resources: {}
+      workingDir: /resources/$(params.app-dir)
+    - name: build
+      command:
+      - buildah
+      - bud
+      - --tls-verify=$(params.TLSVERIFY)
+      - --storage-driver=$(params.STORAGE_DRIVER)
+      - --root
+      - /files/buildah-containers
+      - --layers
+      - -f
+      - ./dockerfile
+      - -t
+      - my-container-image
+      - .
+      image: registry.redhat.io/rhel8/buildah@sha256:6a68ece207bc5fd8db2dd5cc2d0b53136236fb5178eb5b71eebe5d07a3c33d13
+      resources: {}
+      securityContext:
+        capabilities:
+          add:
+          - SETFCAP
+      workingDir: /resources/$(params.app-dir)
+    - command:
+      - buildah
+      - images
+      - --storage-driver=$(params.STORAGE_DRIVER)
+      - --root
+      - /files/buildah-containers
+      image: registry.redhat.io/rhel8/buildah@sha256:6a68ece207bc5fd8db2dd5cc2d0b53136236fb5178eb5b71eebe5d07a3c33d13
+      name: list-images
+      resources: {}
+      securityContext:
+        capabilities:
+          add:
+          - SETFCAP
+      workingDir: /
+    - command:
+      - buildah
+      - inspect
+      - --storage-driver=$(params.STORAGE_DRIVER)
+      - --root
+      - /files/buildah-containers
+      - my-container-image
+      image: registry.redhat.io/rhel8/buildah@sha256:6a68ece207bc5fd8db2dd5cc2d0b53136236fb5178eb5b71eebe5d07a3c33d13
+      name: inspect
+      resources: {}
+      securityContext:
+        capabilities:
+          add:
+          - SETFCAP
+      workingDir: /
   volumes:
-  - emptyDir: {}
-    name: envparams
+    - emptyDir: {}
+      name: envparams
   workspaces:
-  - mountPath: /files
-    name: files
-  - mountPath: /resources
-    name: resources
+    - mountPath: /files
+      name: files
+    - mountPath: /resources
+      name: resources
 
