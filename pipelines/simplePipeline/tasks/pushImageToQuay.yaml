@@ -20,6 +20,25 @@ spec:
       description: The Buildah storage STORAGE_DRIVER
       type: string
   steps:
+    - name: echo
+      script: >-
+        #!/usr/bin/env bash
+
+        set +x
+
+        var1=$(params.quay-io-account)
+
+        echo $var1
+
+        var1=$(params.quay-io-repository)
+
+        echo $var1
+
+        var1=$(params.quay-io-image-tag-name)
+
+        echo $var1
+
+      image: registry.redhat.io/rhel8/buildah
     - name: buildah-tag-image
       command:
         - buildah
@@ -27,9 +46,12 @@ spec:
         - '--storage-driver=$(params.STORAGE_DRIVER)'
         - '--root'
         - '/files/buildah-containers'
-        - 'simple-pipeline'
-        - quay.io/$(params.quay-io-account)/$(params.quay-io-repository):$(params.quay-io-image-tag-name)
+        - 'my-container-image:latest'
+        - 'quay.io/$(params.quay-io-account)/$(params.quay-io-repository):$(params.quay-io-image-tag-name)'
       image: registry.redhat.io/rhel8/buildah
+      securityContext:
+        capabilities:
+          add: ["SETFCAP"]
       resources: {}
     - name: list-images
       command:
@@ -39,6 +61,9 @@ spec:
         - '--root'
         - '/files/buildah-containers'
       image: registry.redhat.io/rhel8/buildah
+      securityContext:
+        capabilities:
+          add: ["SETFCAP"]
       workingDir: /
       resources: {}
     - name: push-image-to-quay
@@ -50,8 +75,11 @@ spec:
         - /etc/secret-volume/.dockerconfigjson
         - '--root'
         - '/files/buildah-containers'
-        - quay.io/$(params.quay-io-account)/$(params.quay-io-repository):$(params.quay-io-image-tag-name)
+        - 'quay.io/$(params.quay-io-account)/$(params.quay-io-repository):$(params.quay-io-image-tag-name)'
       image: registry.redhat.io/rhel8/buildah
+      securityContext:
+        capabilities:
+          add: ["SETFCAP"]
       volumeMounts:
         - name: quay-auth-secret
           mountPath: /etc/secret-volume

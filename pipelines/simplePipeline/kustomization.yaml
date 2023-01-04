@@ -4,5 +4,6 @@ kind: Kustomization
 resources:
 - pipelines/pipeline.yaml
 - tasks/build.yaml
-- tasks/push-image-to-ocp-is.yaml
-- tasks/skopeo-inspect.yaml
+- tasks/pushImageToOCPImageStream.yaml
+- tasks/pushImageToQuay.yaml
+

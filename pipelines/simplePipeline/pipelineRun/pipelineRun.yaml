@@ -6,22 +6,6 @@ spec:
   pipelineRef:
     name: simple-pipeline
   params:
-    - name: git_fullname
-      value: ""
-    - name: revision
-      value: ""
-    - name: commit_prior_revision
-      value: ""
-    - name: commit_ref
-      value: ""
-    - name: commit_id
-      value: ""
-    - name: commit_date
-      value: ""
-    - name: commit_message
-      value: ""
-    - name: commit_author
-      value: ""
     - name: git_url
       value: https://github.com/marrober/simple-apps.git
     - name: git_revision
@@ -30,6 +14,12 @@ spec:
       value: node/layers
     - name: imagestream-url
       value: image-registry.openshift-image-registry.svc:5000/simple-pipeline/my-app
+    - name: quay-io-account
+      value: "marrober"
+    - name: quay-io-repository
+      value: "simple-pipeline"
+    - name: quay-io-image-tag-name
+      value: "latest"
   workspaces:
   - name: files
     volumeClaimTemplate:

@@ -4,30 +4,12 @@ metadata:
   name: build
 spec:
   params:
-    - default: "false"
+    - name: TLSVERIFY
+      default: "false"
       description: Verify the TLS on the registry endpoint
-      name: TLSVERIFY
       type: string
-    - description: The Buildah storage STORAGE_DRIVER
-      name: STORAGE_DRIVER
-      type: string
-    - name: git_url
-      type: string
-    - name: git_fullname
-      type: string
-    - name: commit_prior_revision
-      type: string
-    - name: commit_ref
-      type: string
-    - name: commit_id
-      type: string
-    - name: commit_date
-      type: string
-    - name: commit_message
-      type: string
-    - name: commit_author
-      type: string
-    - name: pipelineName
+    - name: STORAGE_DRIVER
+      description: The Buildah storage STORAGE_DRIVER
       type: string
     - name: app-dir
       type: string
@@ -54,8 +36,8 @@ spec:
       - -c
       args:
       - |-
-        npm install
         npm install -g npm@9.2.0
+        npm install
         ls -al
       image: registry.redhat.io/rhel8/nodejs-16
       resources: {}
@@ -81,29 +63,14 @@ spec:
           add:
           - SETFCAP
       workingDir: /resources/$(params.app-dir)
-    - command:
+    - name: list-images
+      command:
       - buildah
       - images
       - --storage-driver=$(params.STORAGE_DRIVER)
       - --root
       - /files/buildah-containers
       image: registry.redhat.io/rhel8/buildah@sha256:6a68ece207bc5fd8db2dd5cc2d0b53136236fb5178eb5b71eebe5d07a3c33d13
-      name: list-images
-      resources: {}
-      securityContext:
-        capabilities:
-          add:
-          - SETFCAP
-      workingDir: /
-    - command:
-      - buildah
-      - inspect
-      - --storage-driver=$(params.STORAGE_DRIVER)
-      - --root
-      - /files/buildah-containers
-      - my-container-image
-      image: registry.redhat.io/rhel8/buildah@sha256:6a68ece207bc5fd8db2dd5cc2d0b53136236fb5178eb5b71eebe5d07a3c33d13
-      name: inspect
       resources: {}
       securityContext:
         capabilities:
