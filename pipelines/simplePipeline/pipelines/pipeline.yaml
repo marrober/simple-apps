@@ -4,26 +4,34 @@ metadata:
   name: simple-pipeline
 spec:
   params:
+      # Buildah step configuration parameters - storage driver and TLS settings.
+      #
     - name: STORAGE_DRIVER
       type: string
       default: vfs
+    - name: TLSVERIFY
+      type: string
+      default: 'false'
+      #
+      # Git repository parameters
+      #
     - name: git_url
       type: string
     - name: git_revision
       type: string
     - name: app-dir
       type: string
-    - name: TLSVERIFY
-      type: string
-      default: 'false'
+      # 
+      # OpenShift imagestream URL parameters
+      # 
     - name: imagestream-url
       type: string
-#   Quay.io configuration
+      #
+      #   Quay.io configuration
+      #
     - name: quay-io-account
       type: string
     - name: quay-io-repository
-      type: string
-    - name: quay-io-image-tag-name
       type: string
   tasks:
 ##------------------------------------------------------------------
@@ -50,6 +58,8 @@ spec:
 ##------------------------------------------------------------------
     - name: build
       params:
+        - name: TLSVERIFY 
+          value: "$(params.TLSVERIFY)"
         - name: STORAGE_DRIVER
           value: $(params.STORAGE_DRIVER)
         - name: app-dir
@@ -94,6 +104,9 @@ spec:
         value: $(params.quay-io-account)
       - name: quay-io-repository
         value: $(params.quay-io-repository)
+        # 
+        # Use the output parameter from the push-image-to-imagestream task that generates the tag.
+        # 
       - name: quay-io-image-tag-name
         value: $(tasks.push-image-to-imagestream.results.new-tag)
       - name: STORAGE_DRIVER

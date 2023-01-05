@@ -20,25 +20,6 @@ spec:
       description: The Buildah storage STORAGE_DRIVER
       type: string
   steps:
-    - name: echo
-      script: >-
-        #!/usr/bin/env bash
-
-        set +x
-
-        var1=$(params.quay-io-account)
-
-        echo $var1
-
-        var1=$(params.quay-io-repository)
-
-        echo $var1
-
-        var1=$(params.quay-io-image-tag-name)
-
-        echo $var1
-
-      image: registry.redhat.io/rhel8/buildah
     - name: buildah-tag-image
       command:
         - buildah
