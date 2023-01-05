@@ -1,4 +1,4 @@
-FROM default-route-openshift-image-registry.apps.skylake.demolab.local/simple-pipeline/nodejs-16:1-72.1669834625
+FROM registry.redhat.io/rhel9/nodejs-18:latest
 COPY layer.js /opt/app-root/src/layer.js
 COPY node_modules/ /opt/app-root/src/node_modules/
 USER 0
