@@ -15,9 +15,9 @@ spec:
       #
       # Git repository parameters
       #
-    - name: git_url
+    - name: git-url
       type: string
-    - name: git_revision
+    - name: git-revision
       type: string
     - name: app-dir
       type: string
@@ -40,9 +40,9 @@ spec:
     - name: git-clone-resources
       params:
       - name: url
-        value: $(params.git_url)
+        value: $(params.git-url)
       - name: revision
-        value: $(params.git_revision)
+        value: $(params.git-revision)
       - name: verbose
         value: 'false'
       - name: deleteExisting

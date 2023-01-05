@@ -8,10 +8,10 @@ spec:
   params:
       # Use this Git URL to pull a simple sample application and dockerfile for the construction of the container image. 
       # Update this reference if you clone the repo and make changes or use a completely difference repo.
-    - name: git_url
+    - name: git-url
       value: https://github.com/marrober/simple-apps.git
       # Main branch of the git repo
-    - name: git_revision
+    - name: gitrevision
       value: main
       # Directory within the git repo that holds the dockerfile. The example dockerfile makes reference to 
       # files within this directory too.
