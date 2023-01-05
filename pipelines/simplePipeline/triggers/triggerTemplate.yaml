@@ -48,9 +48,9 @@ spec:
         - name: commit_author
           value: $(tt.params.commit.author)
         - name: git-url
-          value: https://github.com/marrober/simplePipeline.git
+          value: $(tt.params.gitrepository.url)
         - name: git-revision
-          value: main
+          value: $(tt.params.gitrevision)
       workspaces:
       - name: files
         volumeClaimTemplate:
