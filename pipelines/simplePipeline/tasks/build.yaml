@@ -18,18 +18,6 @@ spec:
       - name: "HOME"
         value: "/tekton/home"
   steps:
-    - name: ls
-      command:
-      - /bin/sh
-      - -c
-      args:
-      - |-
-        ls -al /resources
-        echo "---------------------------------------------------------------"
-        ls -al /resources/$(params.app-dir)
-      image: registry.redhat.io/ocp-tools-43-tech-preview/source-to-image-rhel8  
-      resources: {}
-      workingDir: /
     - name: package-node-app
       command:
       - /bin/sh
