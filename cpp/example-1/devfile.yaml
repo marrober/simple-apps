@@ -27,7 +27,7 @@ commands:
         type: exec
         command: 'cmake "${fileDirname}" -B "${fileDirname}" && echo "CMake complete"'
         component: cpp-dev
-  - name: 2. Build using cmake definition
+  - name: 2. Build using cmake definition.
     actions:
       - workdir: '${fileDirname}'
         type: exec
