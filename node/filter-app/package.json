@@ -13,6 +13,7 @@
     "ip": "1.1.5",
     "json-log": "3.0.1",
     "sprintf-js": "1.1.2",
+    "express": "^4.18.2",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
