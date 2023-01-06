@@ -1,11 +1,11 @@
 {
-  "name": "layer-node-application",
+  "name": "filter-node-application",
   "version": "1.0.0",
   "description": "The layer appliction - a micro-service communication example",
-  "main": "./layer.js",
+  "main": "./filter.js",
   "private": true,
   "scripts": {
-    "start": "node ./layer.js"
+    "start": "node ./filter.js"
   },
   "dependencies": {
     "bunyan": "^1.8.12",
