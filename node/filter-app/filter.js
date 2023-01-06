@@ -14,11 +14,11 @@ console.log("phase: setup", "This app ip address  : " + ip.address());
 console.log("Application is starting......");
 var counter = 0;
 
-app.get('/', (request, response) => {
+app.post('/', (request, response) => {
   counter++;
   messageText = sprintfJS.sprintf("this ip address %-15s  %04d", ip.address(), counter);
   console.log("phase: root", messageText);
-  response.send(messageText + request + "\n");
+  response.send(messageText + request.body + "\n");
 });
 
 console.log("Listening on port " + port);
