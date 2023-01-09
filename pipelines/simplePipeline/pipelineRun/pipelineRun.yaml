@@ -11,7 +11,7 @@ spec:
     - name: git-url
       value: https://github.com/marrober/simple-apps.git
       # Main branch of the git repo
-    - name: gitrevision
+    - name: git-revision
       value: main
       # Directory within the git repo that holds the dockerfile. The example dockerfile makes reference to 
       # files within this directory too.

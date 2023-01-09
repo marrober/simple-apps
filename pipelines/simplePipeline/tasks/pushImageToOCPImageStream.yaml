@@ -45,8 +45,7 @@ spec:
 
         docker://$(params.imagestream-url):$tag
 
-      image: registry.redhat.io/rhel8/buildah
-# Changes for skylake        
+      image: registry.redhat.io/rhel8/buildah    
       securityContext:
         capabilities:
           add: ["SETFCAP"]

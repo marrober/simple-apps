@@ -5,14 +5,7 @@ metadata:
 spec:
   params:
   - name: gitrepository.url
-  - name: gitrepository.fullname
   - name: gitrevision
-  - name: commit.prior_revision
-  - name: commit.ref
-  - name: commit.id
-  - name: commit.date
-  - name: commit.message
-  - name: commit.author
   resourcetemplates:
   - apiVersion: tekton.dev/v1beta1
     kind: PipelineRun
@@ -23,34 +16,25 @@ spec:
       pipelineRef:
         name: simple-pipeline
       params:
-        - name: quay-io-account
-          value: "marrober"
-        - name: quay-io-repository
-          value: "liberty-rest"
-        - name: quay-io-image-tag-name
-          value: "latest"
-        - name: url
-          value: $(tt.params.gitrepository.url)
-        - name: gitrepository_fullname
-          value: $(tt.params.gitrepository.fullname)
-        - name: revision
-          value: $(tt.params.gitrevision)
-        - name: commit_prior_revision
-          value: $(tt.params.commit.prior_revision)
-        - name: commit_ref
-          value: $(tt.params.commit.ref)
-        - name: commit_id
-          value: $(tt.params.commit.id)
-        - name: commit_date
-          value: $(tt.params.commit.date)
-        - name: commit_message
-          value: $(tt.params.commit.message)
-        - name: commit_author
-          value: $(tt.params.commit.author)
         - name: git-url
           value: $(tt.params.gitrepository.url)
         - name: git-revision
           value: $(tt.params.gitrevision)
+          # Directory within the git repo that holds the dockerfile. The example dockerfile makes reference to 
+          # files within this directory too.
+        - name: app-dir
+          value: node/layers
+          # The imagestream url for where the created container image will be stored. Update the namespace element if this is
+          # created in a different namespace. also update the namespace file in the location namespace/namespace.yaml.
+        - name: imagestream-url
+          value: image-registry.openshift-image-registry.svc:5000/simple-pipeline/my-app
+          # If using the push-to-quay task update the following fields.
+          # The quay.io user account field.
+        - name: quay-io-account
+          value: "marrober"
+          # The quay.io repository name.
+        - name: quay-io-repository
+          value: "simple-pipeline"
       workspaces:
       - name: files
         volumeClaimTemplate:
