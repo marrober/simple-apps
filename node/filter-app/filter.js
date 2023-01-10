@@ -24,7 +24,7 @@ var port = 8080;
 console.log("Path prefixes : " + prefixes);
 console.log("Filter debug " + filterDebug);
 
-console.log("Application is starting......");
+console.log("Application is starting.....");
 var counter = 0;
 
 app.post('/', (request, response) => {
