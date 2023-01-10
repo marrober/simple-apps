@@ -4,4 +4,4 @@ metadata:
   name: filter-configuration
 data:
   FILTER_DEBUG: 'true'
-  PATH_PREFIX: simple-apps/node/layers
+  PATH_PREFIX: node/layers

@@ -6,13 +6,13 @@ spec:
   serviceAccountName: pipeline
   triggers:
     - name: github-listener
-      bindings:
-        - ref: simple-pipeline-binding
-      template:
-        ref: simple-pipeline-template
       interceptors:
         - webhook:
             objectRef:
               kind: Service
               name: trigger-filter
               apiVersion: v1
+      bindings:
+        - ref: simple-pipeline-binding
+      template:
+        ref: simple-pipeline-template
