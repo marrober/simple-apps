@@ -10,3 +10,9 @@ spec:
         - ref: simple-pipeline-binding
       template:
         ref: simple-pipeline-template
+      interceptors:
+        - webhook:
+            objectRef:
+              kind: Service
+              name: trigger-filter
+              apiVersion: v1

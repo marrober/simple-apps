@@ -1,0 +1,8 @@
+FROM default-route-openshift-image-registry.apps.cluster-2x6cj.2x6cj.sandbox2690.opentlc.com/simple-pipeline/node-js
+COPY filter.js /opt/app-root/src/filter.js
+COPY node_modules/ /opt/app-root/src/node_modules/
+USER 0
+RUN chmod a+w /var/log
+USER 1001
+ENTRYPOINT ["node"]
+CMD ["/opt/app-root/src/filter.js"]

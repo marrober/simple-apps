@@ -55,7 +55,7 @@ app.post('/', (request, response) => {
       for (modified_counter = 0; modified_counter < split_modified_files.length; modified_counter++) {
         console.log("M : pushing : " + split_modified_files[modified_counter]);
         filelist.push(split_modified_files[modified_counter]);
-      }    
+      }
     }
 
     var split_added_files = added_files.toString().split(',');
@@ -64,14 +64,14 @@ app.post('/', (request, response) => {
         console.log("A : pushing : " + split_added_files[added_counter]);
         filelist.push(split_added_files[added_counter]);
       }
-    } 
+    }
     var split_removed_files = removed_files.toString().split(',');
     if (split_removed_files.length > 1) {
      for (removed_counter = 0; removed_counter < split_removed_files.length; removed_counter++) {
         console.log("R : pushing : " + split_removed_files[removed_counter]);
         filelist.push(split_removed_files[removed_counter]);
      }
-    }  
+    }
   }
 
   if (filterDebug) {
@@ -99,7 +99,11 @@ app.post('/', (request, response) => {
 
   console.log(match);
 
-  response.send("ok" + "\n");
+  if (match == true) {
+    response.send(request.body);
+  } else {
+    response.status(404).send("do not trigger a build for this git push");
+  }
 });
 
 app.listen(port, () => console.log("Listening on port " + port));

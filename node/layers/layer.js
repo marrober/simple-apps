@@ -4,7 +4,7 @@ const sprintfJS = require('sprintf-js');
 var ip = require("ip");
 const app = express();
 
-/* API endpoints ..
+/* API endpoints ..---
     /             - Get the IP address of the current layer.
     /call-layers  - Call the next layer microservice indicated by the environment variable NEXT_LAYER_NAME
     /sendIgnore   - Tell the receiving next layer container to ignore further requests (used for liveness and readiness testing)
@@ -60,7 +60,7 @@ if (typeof serviceNames != 'undefined') {
       console.log("next service ip address : " + nextServiceClusterIP);
       console.log("phase: setup", "next interface service host : " + nextServiceClusterIP);
     });
-  } 
+  }
 
   console.log("next interface service port : " + nextServicePort);
   console.log("phase: setup", "next interface service port : " + nextServicePort);
@@ -104,7 +104,7 @@ app.get('/call-layers', (request, response) => {
 
     if ( typeof username == 'undefined') {
       username = "-";
-    } else { 
+    } else {
       console.log("Username : ", username);
     }
 
@@ -252,7 +252,7 @@ function sendNextRequest(cb) {
       cb(true, dataResponse, res.statusCode);
     });
   });
-  
+
   request.on("error", (err) => {
     console.log("Error : " + err.message);
   });
