@@ -56,9 +56,10 @@ app.post('/', (request, response) => {
     var added_files = commits[count].added;
     var removed_files = commits[count].removed;
 
-    console.log("Commit ID : " + commits[count].id);
-    console.log("Committer : " + commits[count].committer.name
-  );
+    console.log("Commit ID      : " + commits[count].id);
+    console.log("Committer      : " + commits[count].committer.name);
+    console.log("Commit Message : " + commits[count].message);
+
     if (filterDebug == true) {
       console.log ("modified : " + modified_files);
       console.log ("added : " + added_files);
