@@ -10,7 +10,11 @@ var debugEnv = process.env.FILTER_DEBUG;
 if (debugEnv == null) {
   filterDebug = false;
 } else {
-  filterDebug = debugEnv;
+  if (debugEnv.toLowerCase() == 'false') {
+    filterDebug = false;
+  } else {
+    filterDebug = true;
+  }
 }
 
 var prefixes = pathPrefix.split(",");
@@ -55,7 +59,7 @@ app.post('/', (request, response) => {
     console.log("Commit ID : " + commits[count].id);
     console.log("Committer : " + commits[count].committer.name
   );
-    if (filterDebug) {
+    if (filterDebug == true) {
       console.log ("modified : " + modified_files);
       console.log ("added : " + added_files);
       console.log ("removed : " + removed_files);
@@ -65,7 +69,7 @@ app.post('/', (request, response) => {
     if (split_modified_files.length > 0) {
       for (modified_counter = 0; modified_counter < split_modified_files.length; modified_counter++) {
         if (split_modified_files[modified_counter].length > 0) {
-          if (filterDebug) {
+          if (filterDebug == true) {
             console.log("M : pushing : " + split_modified_files[modified_counter]);
           }
           filelist.push(split_modified_files[modified_counter]);
@@ -77,7 +81,7 @@ app.post('/', (request, response) => {
     if (split_added_files.length > 0) {
       for (added_counter = 0; added_counter < split_added_files.length; added_counter++) {
         if (split_added_files[added_counter].length > 0) {
-          if (filterDebug) {
+          if (filterDebug == true) {
             console.log("A : pushing : " + split_added_files[added_counter]);
           }
           filelist.push(split_added_files[added_counter]);
@@ -88,7 +92,7 @@ app.post('/', (request, response) => {
     if (split_removed_files.length > 0) {
      for (removed_counter = 0; removed_counter < split_removed_files.length; removed_counter++) {
        if (split_removed_files[removed_counter].length > 0) {
-         if (filterDebug) {
+         if (filterDebug == true) {
            console.log("R : pushing : " + split_removed_files[removed_counter]);
          }
          filelist.push(split_removed_files[removed_counter]);
@@ -97,7 +101,7 @@ app.post('/', (request, response) => {
     }
   }
 
-  if (filterDebug) {
+  if (filterDebug == true) {
     console.log("---------------------------------------------------------");
     console.log("Files for comparison");
     console.log("---------------------------------------------------------");
@@ -108,11 +112,11 @@ app.post('/', (request, response) => {
 
   for (count = 0; count < filelist.length; count++) {
     for (prefixCount = 0; prefixCount < prefixes.length; prefixCount++) {
-      if (filterDebug) {
+      if (filterDebug == true) {
         console.log ("compare : " + filelist[count] + " with " + prefixes[prefixCount]);
       }
       if (filelist[count].startsWith(prefixes[prefixCount])) {
-        if (filterDebug) {
+        if (filterDebug == true) {
           console.log("matched");
         } else {
           console.log("match on : " + filelist[count])
