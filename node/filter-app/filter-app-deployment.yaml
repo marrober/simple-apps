@@ -1,0 +1,50 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: trigger-filter
+  labels:
+    app: trigger-filter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      deployment: trigger-filter
+      app: trigger-filter
+  template:
+    metadata:
+      labels:
+        deployment: trigger-filter
+        app: trigger-filter
+    spec:
+      containers:
+        - name: trigger-filter
+          image: quay.io/marrober/trigger-filter:5
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: PATH_PREFIX
+              valueFrom:
+                configMapKeyRef:
+                  name: filter-configuration
+                  key: PATH_PREFIX
+            - name: FILTER_DEBUG
+              valueFrom:
+                configMapKeyRef:
+                  name: filter-configuration
+                  key: FILTER_DEBUG
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: trigger-filter
+  labels:
+    app: trigger-filter
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  selector:
+    app: trigger-filter

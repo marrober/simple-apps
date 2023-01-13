@@ -15,8 +15,5 @@
     "sprintf-js": "1.1.2",
     "express": "^4.18.2",
     "uuid": "^9.0.0"
-  },
-  "devDependencies": {
-    "express": "^4.18.2"
   }
 }
