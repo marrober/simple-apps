@@ -50,7 +50,7 @@ spec:
       - name: STORAGE_DRIVER
       - name: app-dir
     workspaces:
-      - name: source
+#      - name: source
       - name: files
     tasks:
 ##------------------------------------------------------------------
@@ -60,8 +60,8 @@ spec:
         taskRef:
           name: git-clone
         workspaces:
-          - name: output
-            workspace: source
+#          - name: output
+#            workspace: source
 #          - name: basic-auth
 #            workspace: basic-auth
         params:
@@ -88,17 +88,17 @@ spec:
         workspaces:
           - name: files
             workspace: files
-          - name: source
-            workspace: source
+#          - name: source
+#            workspace: source
   workspaces:
-    - name: source
-      volumeClaimTemplate:
-        spec:
-          accessModes:
-            - ReadWriteOnce
-          resources:
-            requests:
-              storage: 5Gi
+#    - name: source
+#      volumeClaimTemplate:
+#        spec:
+#          accessModes:
+#            - ReadWriteOnce
+#          resources:
+#            requests:
+#              storage: 5Gi
     - name: files
       volumeClaimTemplate:
         spec:
