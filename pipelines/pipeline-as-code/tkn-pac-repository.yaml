@@ -1,0 +1,8 @@
+apiVersion: pipelinesascode.tekton.dev/v1alpha1
+kind: Repository
+metadata:
+  name: tkn-pac-simple-apps
+  namespace: tkn-pac-simple-apps
+spec:
+  url: https://github.com/marrober/simple-apps
+  

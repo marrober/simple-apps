@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pac-trigger-demolab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gosmee
+  template:
+    metadata:
+      labels:
+        app: gosmee
+    spec:
+      containers:
+        - image: ghcr.io/chmouel/gosmee:latest
+          imagePullPolicy: IfNotPresent
+          name: gosmee
+          args:
+            [
+              "client",
+              "--saveDir",
+              "/tmp/save",
+              "https://smee.io/3aC3MfW0AoBzRW6",
+              "http://http-pipelines-as-code-pipelines-as-code.apps.skylake.demolab.local",
+            ]
