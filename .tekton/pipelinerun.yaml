@@ -84,12 +84,12 @@ spec:
           kind: Task
           name: build
         runAfter:
-        - clone-source-repo
+          - clone-source-repo
         workspaces:
-        - name: files
-          workspace: files
-        - name: source
-          workspace: source
+          - name: files
+            workspace: files
+          - name: source
+            workspace: source
   workspaces:
     - name: source
       volumeClaimTemplate:
