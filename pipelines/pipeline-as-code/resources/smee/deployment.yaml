@@ -23,5 +23,5 @@ spec:
               "--saveDir",
               "/tmp/save",
               "https://smee.io/3aC3MfW0AoBzRW6",
-              "http://http-pipelines-as-code-pipelines-as-code.apps.skylake.demolab.local",
+              "http://pac-openshift-pipelines.apps.skylake.demolab.local/",
             ]
