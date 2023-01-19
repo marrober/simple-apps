@@ -91,14 +91,6 @@ spec:
         - name: source
           workspace: source
   workspaces:
-    - name: files
-      volumeClaimTemplate:
-        spec:
-          accessModes:
-          - ReadWriteOnce
-          resources:
-            requests:
-              storage: 20Gi
     - name: source
       volumeClaimTemplate:
         spec:
@@ -107,6 +99,14 @@ spec:
           resources:
             requests:
               storage: 5Gi
+    - name: files
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+          - ReadWriteOnce
+          resources:
+            requests:
+              storage: 20Gi
     # This workspace will inject secret to help the git-clone task to be able to
     # checkout the private repositories
 #    - name: basic-auth
