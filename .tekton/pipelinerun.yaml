@@ -48,10 +48,10 @@ spec:
     workspaces:
       - name: source
 #      - name: files
-    tasks:
 ##------------------------------------------------------------------
 # Git clone source content
 ##------------------------------------------------------------------
+    tasks:
       - name: clone-source-repo
         taskRef:
           name: git-clone
