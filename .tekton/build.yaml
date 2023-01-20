@@ -19,7 +19,7 @@ spec:
         value: "/tekton/home"
   steps:
     - name: ls
-      # 
+      #
       command:
       - /bin/sh
       - -c
@@ -28,7 +28,7 @@ spec:
         ls -al
       image: registry.redhat.io/rhel8/nodejs-16
       resources: {}
-      workingDir: /
+      workingDir: /resources
     - name: package-node-app
       command:
       - /bin/sh
