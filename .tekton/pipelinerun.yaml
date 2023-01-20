@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  name: pipelinerun-java
+  name: simple-app-node-js-layers
   annotations:
     # The event we are targeting as seen from the webhook payload
     # this can be an array too, i.e: [pull_request, push]
@@ -48,6 +48,7 @@ spec:
       - name: app-dir
       - name: TLSVERIFY
       - name: STORAGE_DRIVER
+      - name: source-image-name
     workspaces:
       - name: source
       - name: resources
