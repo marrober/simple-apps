@@ -53,18 +53,6 @@ spec:
             value: $(params.repo_url)
           - name: revision
             value: $(params.revision)
-      - name: maven-test
-        taskRef:
-          name: maven
-        runAfter:
-          - fetch-repository
-        params:
-          - name: GOALS
-            value:
-              - test
-        workspaces:
-          - name: source
-            workspace: source
   workspaces:
     - name: source
       volumeClaimTemplate:
