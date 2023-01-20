@@ -28,7 +28,7 @@ spec:
         ls -al
       image: default-route-openshift-image-registry.apps.skylake.demolab.local/tkn-pac-simple-apps/nodejs-16
       resources: {}
-      workingDir: /resources
+      workingDir: /resources/node
     - name: package-node-app
       command:
       - /bin/sh
