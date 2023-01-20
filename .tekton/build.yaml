@@ -19,6 +19,7 @@ spec:
         value: "/tekton/home"
   steps:
     - name: ls
+      # 
       command:
       - /bin/sh
       - -c
