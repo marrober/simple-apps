@@ -14,6 +14,8 @@ spec:
       type: string
     - name: app-dir
       type: string
+    - name: source-image-name
+      type: string
   stepTemplate:
     env:
       - name: "HOME"
@@ -25,6 +27,8 @@ spec:
       - -c
       args:
       - |-
+        echo "$(params.source-image-name)"
+
         oc get is/nodejs-16 -o jsonpath='{.status.dockerImageRepository}' > /nodejs-16.location
 
         cat /nodejs-16.location
