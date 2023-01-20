@@ -18,21 +18,28 @@ spec:
       - name: "HOME"
         value: "/tekton/home"
   steps:
+    - name:ls
+      command:
+      - /bin/sh
+      - -c
+      args:
+      - |-
+        ls -al
+      image: registry.redhat.io/rhel8/nodejs-16
+      resources: {}
+      workingDir: /
     - name: package-node-app
       command:
       - /bin/sh
       - -c
       args:
       - |-
+        ls -al
         npm install -g npm@9.2.0
         npm install
         ls -al
       image: registry.redhat.io/rhel8/nodejs-16
       resources: {}
-      securityContext:
-        capabilities:
-          add:
-          - SETFCAP
       workingDir: /resources/$(params.app-dir)
     - name: build
       command:
