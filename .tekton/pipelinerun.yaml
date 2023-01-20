@@ -44,6 +44,8 @@ spec:
       - name: revision
   #    - name: image_name
       - name: app-dir
+      - name: TLSVERIFY
+      - name: STORAGE_DRIVER
     workspaces:
       - name: source
       - name: files
