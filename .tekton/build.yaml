@@ -25,9 +25,13 @@ spec:
       - -c
       args:
       - |-
-        ls -al
+        ls -alR
       image: default-route-openshift-image-registry.apps.skylake.demolab.local/tkn-pac-simple-apps/nodejs-16
       resources: {}
+      securityContext:
+        capabilities:
+          add:
+          - SETFCAP
       workingDir: /resources/node
     - name: package-node-app
       command:
@@ -35,12 +39,17 @@ spec:
       - -c
       args:
       - |-
+        pwd
         ls -al
         npm install -g npm@9.2.0
         npm install
         ls -al
       image: default-route-openshift-image-registry.apps.skylake.demolab.local/tkn-pac-simple-apps/nodejs-16
       resources: {}
+      securityContext:
+        capabilities:
+          add:
+          - SETFCAP
       workingDir: /resources/$(params.app-dir)
     - name: build
       command:
