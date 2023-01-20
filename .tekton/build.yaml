@@ -19,13 +19,16 @@ spec:
       - name: "HOME"
         value: "/tekton/home"
   steps:
-    - name: ls
+    - name: get-source-image-location
       command:
       - /bin/sh
       - -c
       args:
       - |-
-        ls -alR
+        oc get is/nodejs-16 -o jsonpath='{.status.dockerImageRepository}' > /nodejs-16.location
+
+        cat /nodejs-16.location
+
       image: default-route-openshift-image-registry.apps.skylake.demolab.local/tkn-pac-simple-apps/nodejs-16
       resources: {}
       securityContext:
@@ -39,8 +42,6 @@ spec:
       - -c
       args:
       - |-
-        pwd
-        ls -al
         # npm install -g npm@9.2.0
         npm install
         ls -al
