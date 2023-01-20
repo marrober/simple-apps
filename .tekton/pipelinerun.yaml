@@ -38,6 +38,9 @@ spec:
     workspaces:
       - name: source
     tasks:
+      ##------------------------------------------------------------------
+#       Git clone source content
+      ##------------------------------------------------------------------
       - name: fetch-repository
         taskRef:
           name: git-clone
