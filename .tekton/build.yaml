@@ -1,0 +1,76 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: build
+spec:
+  params:
+    - name: TLSVERIFY
+      default: "false"
+      description: Verify the TLS on the registry endpoint
+      type: string
+    - name: STORAGE_DRIVER
+      description: The Buildah storage STORAGE_DRIVER
+      type: string
+    - name: app-dir
+      type: string
+  stepTemplate:
+    env:
+      - name: "HOME"
+        value: "/tekton/home"
+  steps:
+    - name: package-node-app
+      command:
+      - /bin/sh
+      - -c
+      args:
+      - |-
+        npm install -g npm@9.2.0
+        npm install
+        ls -al
+      image: registry.redhat.io/rhel8/nodejs-16
+      resources: {}
+      workingDir: /resources/$(params.app-dir)
+    - name: build
+      command:
+      - buildah
+      - bud
+      - --tls-verify=$(params.TLSVERIFY)
+      - --storage-driver=$(params.STORAGE_DRIVER)
+      - --root
+      - /files/buildah-containers
+      - --layers
+      - -f
+      - ./dockerfile
+      - -t
+      - my-container-image
+      - .
+      image: registry.redhat.io/rhel8/buildah@sha256:6a68ece207bc5fd8db2dd5cc2d0b53136236fb5178eb5b71eebe5d07a3c33d13
+      resources: {}
+      securityContext:
+        capabilities:
+          add:
+          - SETFCAP
+      workingDir: /resources/$(params.app-dir)
+    - name: list-images
+      command:
+      - buildah
+      - images
+      - --storage-driver=$(params.STORAGE_DRIVER)
+      - --root
+      - /files/buildah-containers
+      image: registry.redhat.io/rhel8/buildah@sha256:6a68ece207bc5fd8db2dd5cc2d0b53136236fb5178eb5b71eebe5d07a3c33d13
+      resources: {}
+      securityContext:
+        capabilities:
+          add:
+          - SETFCAP
+      workingDir: /
+  volumes:
+    - emptyDir: {}
+      name: envparams
+  workspaces:
+    - mountPath: /files
+      name: files
+    - mountPath: /resources
+      name: resources
+

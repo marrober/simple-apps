@@ -30,13 +30,17 @@ spec:
       value: "{{ repo_url }}"
     - name: revision
       value: "{{ revision }}"
+    - name: app-dir
+      value: node/layers
   pipelineSpec:
     params:
       - name: repo_url
       - name: revision
   #    - name: image_name
+      - name: app-dir
     workspaces:
       - name: source
+      - name: files
     tasks:
       #  Git clone source content
       - name: fetch-repository
@@ -52,6 +56,26 @@ spec:
             value: $(params.revision)
           - name: verbose
             value: 'false'
+
+        # Build the container
+      - name: build
+        params:
+          - name: TLSVERIFY
+            value: "$(params.TLSVERIFY)"
+          - name: STORAGE_DRIVER
+            value: $(params.STORAGE_DRIVER)
+          - name: app-dir
+            value: $(params.app-dir)
+        taskRef:
+          kind: Task
+          name: build
+        runAfter:
+          - fetch-repository
+        workspaces:
+          - name: files
+            workspace: files
+          - name: source
+            workspace: source
   workspaces:
     - name: source
       volumeClaimTemplate:
@@ -61,3 +85,11 @@ spec:
           resources:
             requests:
               storage: 1Gi
+    - name: files
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 20Gi
