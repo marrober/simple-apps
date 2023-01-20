@@ -41,7 +41,7 @@ spec:
       - |-
         pwd
         ls -al
-        npm install -g npm@9.2.0
+        # npm install -g npm@9.2.0
         npm install
         ls -al
       image: default-route-openshift-image-registry.apps.skylake.demolab.local/tkn-pac-simple-apps/nodejs-16
