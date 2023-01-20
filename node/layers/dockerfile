@@ -1,4 +1,4 @@
-FROM image-registry.openshift-image-registry.svc:5000/simple-pipeline/node-js
+FROM image-registry.openshift-image-registry.svc:5000/tkn-pac-simple-apps/nodejs-16
 COPY layer.js /opt/app-root/src/layer.js
 COPY node_modules/ /opt/app-root/src/node_modules/
 USER 0
