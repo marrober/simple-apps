@@ -50,6 +50,8 @@ spec:
             value: $(params.repo_url)
           - name: revision
             value: $(params.revision)
+          - name: verbose
+            value: false
   workspaces:
     - name: source
       volumeClaimTemplate:
