@@ -82,7 +82,7 @@ spec:
         workspaces:
           - name: resources
             workspace: resources
-          - name: files
+          - name: source
             workspace: source
   workspaces:
     - name: source

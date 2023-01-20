@@ -32,7 +32,7 @@ spec:
         capabilities:
           add:
           - SETFCAP
-      workingDir: /resources/node
+      workingDir: /source/node
     - name: package-node-app
       command:
       - /bin/sh
@@ -50,7 +50,7 @@ spec:
         capabilities:
           add:
           - SETFCAP
-      workingDir: /resources/$(params.app-dir)
+      workingDir: /source/$(params.app-dir)
     - name: build
       command:
       - buildah
@@ -58,7 +58,7 @@ spec:
       - --tls-verify=$(params.TLSVERIFY)
       - --storage-driver=$(params.STORAGE_DRIVER)
       - --root
-      - /files/buildah-containers
+      - /resources/buildah-containers
       - --layers
       - -f
       - ./dockerfile
@@ -71,14 +71,14 @@ spec:
         capabilities:
           add:
           - SETFCAP
-      workingDir: /resources/$(params.app-dir)
+      workingDir: /source/$(params.app-dir)
     - name: list-images
       command:
       - buildah
       - images
       - --storage-driver=$(params.STORAGE_DRIVER)
       - --root
-      - /files/buildah-containers
+      - /resources/buildah-containers
       image: default-route-openshift-image-registry.apps.skylake.demolab.local/tkn-pac-simple-apps/buildah
       resources: {}
       securityContext:
@@ -90,7 +90,7 @@ spec:
     - emptyDir: {}
       name: envparams
   workspaces:
-    - mountPath: /files
-      name: files
+    - mountPath: /source
+      name: source
     - mountPath: /resources
       name: resources
