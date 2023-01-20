@@ -48,7 +48,7 @@ spec:
       - name: STORAGE_DRIVER
     workspaces:
       - name: source
-      - name: files
+      - name: resources
     tasks:
       #  Git clone source content
       - name: fetch-repository
@@ -80,8 +80,8 @@ spec:
         runAfter:
           - fetch-repository
         workspaces:
-          - name: files
-            workspace: files
+          - name: resources
+            workspace: resources
           - name: source
             workspace: source
   workspaces:
@@ -93,7 +93,7 @@ spec:
           resources:
             requests:
               storage: 1Gi
-    - name: files
+    - name: resources
       volumeClaimTemplate:
         spec:
           accessModes:
