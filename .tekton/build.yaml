@@ -92,7 +92,7 @@ spec:
       - /resources/buildah-containers
       - --layers
       - -f
-      - ./dockerfile
+      - ./new-dockerfile
       - -t
       - my-container-image
       - .
