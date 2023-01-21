@@ -29,9 +29,9 @@ spec:
       - |-
         echo "$(params.source-image-name)"
 
-        oc get is/nodejs-16 -o jsonpath='{.status.dockerImageRepository}' > /nodejs-16.location
+        oc get is/$(params.source-image-name) -o jsonpath='{.status.dockerImageRepository}' > /source/$(params.source-image-name).location
 
-        cat /nodejs-16.location
+        cat /source/nodejs-16.location
 
       image: default-route-openshift-image-registry.apps.skylake.demolab.local/tkn-pac-simple-apps/nodejs-16
       resources: {}
@@ -39,7 +39,7 @@ spec:
         capabilities:
           add:
           - SETFCAP
-      workingDir: /source/node
+      workingDir: /source
     - name: package-node-app
       command:
       - /bin/sh
