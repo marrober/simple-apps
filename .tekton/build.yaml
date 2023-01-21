@@ -37,35 +37,35 @@ spec:
           - SETFCAP
       workingDir: /source
     - name: create-dockerfile
-        command:
-        - /bin/sh
-        - -c
-        args:
-        - |-
+      command:
+      - /bin/sh
+      - -c
+      args:
+      - |-
 
-          isname=$(oc get is/$(params.source-image-name) -o jsonpath='{.status.dockerImageRepository}')
+        isname=$(oc get is/$(params.source-image-name) -o jsonpath='{.status.dockerImageRepository}')
 
-          echo "FROM "$isname > new-dockerfile
+        echo "FROM "$isname > new-dockerfile
 
-          input="dockerfile"
+        input="dockerfile"
 
-          while IFS= read -r line
+        while IFS= read -r line
 
-          do
+        do
 
-            echo "$line" >> new-dockerfile
+          echo "$line" >> new-dockerfile
 
-          done < "$input"
+        done < "$input"
 
-          cat new-dockerfile
+        cat new-dockerfile
 
-        image: quay.io/openshift/origin-cli:latest
-        resources: {}
-        securityContext:
-          capabilities:
-            add:
-            - SETFCAP
-        workingDir: /source/$(params.app-dir)
+      image: quay.io/openshift/origin-cli:latest
+      resources: {}
+      securityContext:
+        capabilities:
+          add:
+          - SETFCAP
+      workingDir: /source/$(params.app-dir)
     - name: package-node-app
       command:
       - /bin/sh
