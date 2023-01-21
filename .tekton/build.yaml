@@ -29,10 +29,6 @@ spec:
       - |-
         echo "$(params.source-image-name)"
 
-        oc get is/$(params.source-image-name) -o jsonpath='{.status.dockerImageRepository}' > /source/$(params.source-image-name).location
-
-        cat /source/nodejs-16.location
-
       image: default-route-openshift-image-registry.apps.skylake.demolab.local/tkn-pac-simple-apps/nodejs-16
       resources: {}
       securityContext:
@@ -40,6 +36,36 @@ spec:
           add:
           - SETFCAP
       workingDir: /source
+      - name: create-dockerfile
+        command:
+        - /bin/sh
+        - -c
+        args:
+        - |-
+
+          isname=$(oc get is/$(params.source-image-name) -o jsonpath='{.status.dockerImageRepository}')
+
+          echo "FROM "$isname > new-dockerfile
+
+          input="dockerfile"
+
+          while IFS= read -r line
+
+          do
+
+            echo "$line" >> new-dockerfile
+
+          done < "$input"
+
+          cat new-dockerfile
+
+        image: quay.io/openshift/origin-cli:latest
+        resources: {}
+        securityContext:
+          capabilities:
+            add:
+            - SETFCAP
+        workingDir: /source/$(params.app-dir)
     - name: package-node-app
       command:
       - /bin/sh
