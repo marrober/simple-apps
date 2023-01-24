@@ -21,21 +21,6 @@ spec:
       - name: "HOME"
         value: "/tekton/home"
   steps:
-    - name: get-source-image-location
-      command:
-      - /bin/sh
-      - -c
-      args:
-      - |-
-        echo "$(params.source-image-name)"
-
-      image: default-route-openshift-image-registry.apps.skylake.demolab.local/tkn-pac-simple-apps/nodejs-16
-      resources: {}
-      securityContext:
-        capabilities:
-          add:
-          - SETFCAP
-      workingDir: /source
     - name: create-dockerfile
       command:
       - /bin/sh
