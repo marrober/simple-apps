@@ -33,7 +33,7 @@ spec:
     - name: app-dir
       value: node/layers
     - name: imagestream-url
-      value: image-registry.openshift-image-registry.svc:5000/simple-pipeline/my-app
+      value: image-registry.openshift-image-registry.svc:5000/tkn-pac-simple-apps/my-app
 
     # Buildah step configuration parameters - storage driver and TLS settings.
     - name: TLSVERIFY
