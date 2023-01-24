@@ -59,6 +59,7 @@ spec:
       #  Git clone source content
       - name: fetch-repository
         taskRef:
+          kind: ClusterTask
           name: git-clone
         workspaces:
           - name: output
