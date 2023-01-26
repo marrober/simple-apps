@@ -26,7 +26,7 @@ spec:
         - tag
         - '--storage-driver=$(params.STORAGE_DRIVER)'
         - '--root'
-        - '/files/buildah-containers'
+        - '/resources/buildah-containers'
         - 'my-container-image:latest'
         - 'quay.io/$(params.quay-io-account)/$(params.quay-io-repository):$(params.quay-io-image-tag-name)'
       image: registry.redhat.io/rhel8/buildah
@@ -40,7 +40,7 @@ spec:
         - images
         - '--storage-driver=$(params.STORAGE_DRIVER)'
         - '--root'
-        - '/files/buildah-containers'
+        - '/resources/buildah-containers'
       image: registry.redhat.io/rhel8/buildah
       securityContext:
         capabilities:
@@ -55,7 +55,7 @@ spec:
         - '--authfile'
         - /etc/secret-volume/.dockerconfigjson
         - '--root'
-        - '/files/buildah-containers'
+        - '/resources/buildah-containers'
         - 'quay.io/$(params.quay-io-account)/$(params.quay-io-repository):$(params.quay-io-image-tag-name)'
       image: registry.redhat.io/rhel8/buildah
       securityContext:
@@ -70,5 +70,5 @@ spec:
       secret:
         secretName: quay-auth-secret
   workspaces:
-  - name: files
-    mountPath: /files
+  - mountPath: /resources
+    name: resources
