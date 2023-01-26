@@ -42,16 +42,24 @@ spec:
       value: vfs
     - name: source-image-name
       value: nodejs-16
+      #
+      #   Quay.io configuration
+      #
+    - name: quay-io-account
+      value: "marrober"
+    - name: quay-io-repository
+      value: "simple-pipeline"
   pipelineSpec:
     params:
       - name: repo_url
       - name: revision
-  #    - name: image_name
       - name: app-dir
       - name: TLSVERIFY
       - name: STORAGE_DRIVER
       - name: source-image-name
       - name: imagestream-url
+      - name: quay-io-account
+      - name: quay-io-repository
     workspaces:
       - name: source
       - name: resources
@@ -111,6 +119,27 @@ spec:
         workspaces:
           - name: resources
             workspace: resources
+      - name: push-image-to-quay
+        params:
+        - name: quay-io-account
+          value: $(params.quay-io-account)
+        - name: quay-io-repository
+          value: $(params.quay-io-repository)
+          #
+          # Use the output parameter from the push-image-to-imagestream task that generates the tag.
+          #
+        - name: quay-io-image-tag-name
+          value: $(tasks.push-image-to-imagestream.results.new-tag)
+        - name: STORAGE_DRIVER
+          value: $(params.STORAGE_DRIVER)
+        taskRef:
+          kind: Task
+          name: push-image-to-quay
+        runAfter:
+          - push-image-to-imagestream
+        workspaces:
+        - name: files
+          workspace: files
   workspaces:
     - name: source
       volumeClaimTemplate:
