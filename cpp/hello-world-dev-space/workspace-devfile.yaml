@@ -1,0 +1,106 @@
+schemaVersion: 2.1.0
+metadata:
+  name: cpp
+  namespace: rhn-support-marrober-dev
+attributes:
+  controller.devfile.io/devworkspace-config:
+    name: devworkspace-config
+    namespace: crw
+  controller.devfile.io/scc: container-build
+  controller.devfile.io/storage-type: common
+projects:
+  - name: cpp-hello-world
+    zip:
+      location: 'https://eclipse-che.github.io/che-devfile-registry/7.56.0/resources/v2/cpp-hello-world.zip'
+components:
+  - attributes:
+      che-code.eclipse.org/contribute-cpuLimit: true
+      che-code.eclipse.org/contribute-cpuRequest: true
+      che-code.eclipse.org/contribute-endpoint/che-code: 3100
+      che-code.eclipse.org/contribute-endpoint/code-redirect-1: 13131
+      che-code.eclipse.org/contribute-endpoint/code-redirect-2: 13132
+      che-code.eclipse.org/contribute-endpoint/code-redirect-3: 13133
+      che-code.eclipse.org/contribute-entry-point: true
+      che-code.eclipse.org/contribute-memoryLimit: true
+      che-code.eclipse.org/contribute-memoryRequest: true
+      che-code.eclipse.org/contribute-volume-mount/checode: /checode
+      che-code.eclipse.org/contributed-container: tools
+      che-code.eclipse.org/original-memoryLimit: 1G
+    container:
+      command:
+        - /checode/entrypoint-volume.sh
+      cpuLimit: 500m
+      cpuRequest: 30m
+      endpoints:
+        - attributes:
+            contributed-by: che-code.eclipse.org
+            cookiesAuthEnabled: true
+            discoverable: false
+            type: main
+            urlRewriteSupported: true
+          exposure: public
+          name: che-code
+          path: '?tkn=eclipse-che'
+          protocol: https
+          secure: false
+          targetPort: 3100
+        - attributes:
+            contributed-by: che-code.eclipse.org
+            discoverable: false
+            urlRewriteSupported: true
+          exposure: public
+          name: code-redirect-1
+          protocol: http
+          targetPort: 13131
+        - attributes:
+            contributed-by: che-code.eclipse.org
+            discoverable: false
+            urlRewriteSupported: true
+          exposure: public
+          name: code-redirect-2
+          protocol: http
+          targetPort: 13132
+        - attributes:
+            contributed-by: che-code.eclipse.org
+            discoverable: false
+            urlRewriteSupported: true
+          exposure: public
+          name: code-redirect-3
+          protocol: http
+          targetPort: 13133
+      env:
+        - name: CHE_DASHBOARD_URL
+          value: 'https://devspaces.apps.sandbox-m2.ll9k.p1.openshiftapps.com'
+        - name: CHE_PLUGIN_REGISTRY_URL
+          value: 'https://devspaces.apps.sandbox-m2.ll9k.p1.openshiftapps.com/plugin-registry/v3'
+        - name: CHE_PLUGIN_REGISTRY_INTERNAL_URL
+          value: 'http://plugin-registry.crw.svc:8080/v3'
+        - name: OPENVSX_REGISTRY_URL
+          value: 'https://open-vsx.org'
+      image: 'quay.io/devfile/universal-developer-image:ubi8-0e189d9'
+      memoryLimit: 2.07G
+      memoryRequest: 256Mi
+      mountSources: true
+      sourceMapping: /projects
+      volumeMounts:
+        - name: checode
+          path: /checode
+    name: tools
+commands:
+  - exec:
+      commandLine: g++ -g hello.cpp -o hello.out && echo "Build complete"
+      component: tools
+      group:
+        isDefault: true
+        kind: build
+      label: Build application
+      workingDir: '${PROJECT_SOURCE}'
+    id: build
+  - exec:
+      commandLine: ./hello.out
+      component: tools
+      group:
+        kind: run
+      label: Run application
+      workingDir: '${PROJECT_SOURCE}'
+    id: run
