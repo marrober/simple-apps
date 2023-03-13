@@ -1,0 +1,30 @@
+oc new-project serverless-01
+
+kn service create my-knative-app \
+--image=quay.io/marrober/serverless:latest\
+--revision-name=v1 \
+--env version="1" \
+--env colour="blue"
+
+
+kn service update my-knative-app \
+--revision-name=v2 \
+--env version="2" \
+--env colour="green" \
+--traffic my-knative-app-v1=90,my-knative-app-v2=10
+
+curl -k --silent https://my-knative-app-knative-2.apps.cluster-7lnl2.7lnl2.sandbox1886.opentlc.com | grep Version
+
+kn revision list
+
+kn service update my-knative-app --traffic my-knative-app-v1=50,my-knative-app-v2=50
+
+kn service update my-knative-app --traffic @latest=100
+
+kn service update my-knative-app --revision-name "v1-1" --concurrency-target=5
+
+siege -c 50 -t 30s https://my-knative-app-knative-2.apps.cluster-7lnl2.7lnl2.sandbox1886.opentlc.com
+
+kn service update my-knative-app --revision-name "v1-4" --scale-max 5
+
+siege -c 50 -t 30s https://my-knative-app-knative-2.apps.cluster-7lnl2.7lnl2.sandbox1886.opentlc.com
