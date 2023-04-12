@@ -1,0 +1,15 @@
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: Gateway
+metadata:
+  name: simple-apps-gateway
+  namespace: test-1-gateway
+spec:
+  gatewayClassName: istio
+  listeners:
+  - name: demo
+    hostname: "*.test1.redhat.com"
+    port: 80
+    protocol: HTTP
+    allowedRoutes:
+      namespaces:
+        from: All

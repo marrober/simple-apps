@@ -1,0 +1,1 @@
+curl -I -H "Host: http.test1.redhat.com" $INGRESS_HOST

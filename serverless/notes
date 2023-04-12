@@ -1,7 +1,7 @@
 oc new-project serverless-01
 
 kn service create my-knative-app \
---image=quay.io/marrober/serverless:latest\
+--image=quay.io/marrober/serverless:latest \
 --revision-name=v1 \
 --env version="1" \
 --env colour="blue"
