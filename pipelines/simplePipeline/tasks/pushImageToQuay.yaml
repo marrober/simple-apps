@@ -30,9 +30,9 @@ spec:
         - 'my-container-image:latest'
         - 'quay.io/$(params.quay-io-account)/$(params.quay-io-repository):$(params.quay-io-image-tag-name)'
       image: registry.redhat.io/rhel8/buildah
-      securityContext:
-        capabilities:
-          add: ["SETFCAP"]
+#      securityContext:
+#        capabilities:
+#          add: ["SETFCAP"]
       resources: {}
     - name: list-images
       command:
@@ -42,9 +42,9 @@ spec:
         - '--root'
         - '/files/buildah-containers'
       image: registry.redhat.io/rhel8/buildah
-      securityContext:
-        capabilities:
-          add: ["SETFCAP"]
+#      securityContext:
+#        capabilities:
+#          add: ["SETFCAP"]
       workingDir: /
       resources: {}
     - name: push-image-to-quay
@@ -58,9 +58,9 @@ spec:
         - '/files/buildah-containers'
         - 'quay.io/$(params.quay-io-account)/$(params.quay-io-repository):$(params.quay-io-image-tag-name)'
       image: registry.redhat.io/rhel8/buildah
-      securityContext:
-        capabilities:
-          add: ["SETFCAP"]
+#      securityContext:
+#        capabilities:
+#          add: ["SETFCAP"]
       volumeMounts:
         - name: quay-auth-secret
           mountPath: /etc/secret-volume

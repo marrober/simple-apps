@@ -17,6 +17,12 @@ Setup 1 - Create the OpenShift Pipeline resources. The resources will be created
 Setup 1 - The dockerfile referenced by the build process requires a Node.JS base image from the Red Hat Container catalog. Rather than ask each user to go through the process of setting up a secret in the OpenShift project to gain access to the container catalog, it has been decided that the container image will be imported to an image stream as a one time setup task. 
 
 
+
+
+
+
+
+
 - Testing - The demonstration should include details of how the user can be assured that it is configured correctly and ready to use.
 
 - Demonstration assets - The content required to deliver the demonstration. This should be organised into a series of numbered and named sub-directories for a multi-part demonstration to enable the user to easily follow the flow. For example :

@@ -46,9 +46,9 @@ spec:
         docker://$(params.imagestream-url):$tag
 
       image: registry.redhat.io/rhel8/buildah    
-      securityContext:
-        capabilities:
-          add: ["SETFCAP"]
+#      securityContext:
+#        capabilities:
+#          add: ["SETFCAP"]
       resources: {}
   workspaces:
   - mountPath: /files
