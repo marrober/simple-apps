@@ -46,10 +46,10 @@ spec:
       - .
       image: registry.redhat.io/rhel8/buildah@sha256:6a68ece207bc5fd8db2dd5cc2d0b53136236fb5178eb5b71eebe5d07a3c33d13
       resources: {}
-#      securityContext:
-#        capabilities:
-#          add:
-#          - SETFCAP
+      securityContext:
+        capabilities:
+          add:
+          - SETFCAP
       workingDir: /resources/$(params.app-dir)
     - name: list-images
       command:
@@ -60,10 +60,10 @@ spec:
       - /files/buildah-containers
       image: registry.redhat.io/rhel8/buildah@sha256:6a68ece207bc5fd8db2dd5cc2d0b53136236fb5178eb5b71eebe5d07a3c33d13
       resources: {}
-#      securityContext:
-#        capabilities:
-#          add:
-#          - SETFCAP
+      securityContext:
+        capabilities:
+          add:
+          - SETFCAP
       workingDir: /
   volumes:
     - emptyDir: {}
