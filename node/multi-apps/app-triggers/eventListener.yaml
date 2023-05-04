@@ -11,7 +11,7 @@ spec:
           name: cel
         params:
         - name: "filter"
-          value: 'body["ref"].contains("main") && body["repository"]["name"] == "simple-apps" && header.match("X-GitHub-Event", "push")'
+          value: 'body["ref"].contains("main") && body["repository"]["name"] == "simple-apps" && header.match("X-GitHub-Event", "push") && extensions.changed_files.matches("controllers/")'
         - name: "overlays"
           value:
           - key: branch
