@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: trigger-filter
-          image: quay.io/marrober/trigger-filter:5
+          image: image-registry.openshift-image-registry.svc:5000/simple-pipeline/filter-app:latest
           ports:
             - containerPort: 8080
               protocol: TCP
