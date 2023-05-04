@@ -1,0 +1,10 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerBinding
+metadata:
+  name: app-1-pipeline-binding
+spec:
+  params:
+  - name: gitrepository.url
+    value: $(body.repository.clone_url)
+  - name: gitrevision
+    value: $(body.head_commit.id)

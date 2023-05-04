@@ -1,0 +1,29 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: EventListener
+metadata:
+  name: simple-pipeline-listener-interceptor
+spec:
+  serviceAccountName: pipeline
+  triggers:
+    - name: github-listener-app-1
+#      interceptors:
+#        - webhook:
+#            objectRef:
+#              kind: Service
+#              name: trigger-filter
+#              apiVersion: v1
+      bindings:
+        - ref: app-1-pipeline-binding
+      template:
+        ref: app-1-pipeline-template
+    - name: github-listener-app-2
+#      interceptors:
+#        - webhook:
+#            objectRef:
+#              kind: Service
+#              name: trigger-filter
+#              apiVersion: v1
+      bindings:
+        - ref: app-2-pipeline-binding
+      template:
+        ref: app-2-pipeline-template

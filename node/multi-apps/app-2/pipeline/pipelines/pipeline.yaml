@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: build-filter-app
+  name: pipeline-app-2
 spec:
   params:
       # Buildah step configuration parameters - storage driver and TLS settings.
@@ -70,7 +70,7 @@ spec:
 #------------------------------------------------------------------
 # Push the new runtime image to OpenShift imagestream
 #------------------------------------------------------------------
-    - name: push-image-to-ocp-latest-tag
+    - name: push-image-to-imagestream
       params:
       - name: imagestream-url
         value: $(params.imagestream-url)
