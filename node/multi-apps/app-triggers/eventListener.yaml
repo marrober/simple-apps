@@ -24,12 +24,6 @@ spec:
           value:
           - key: branch
             expression: "body.ref.split('/')[2]"
-#      interceptors:
-#        - webhook:
-#            objectRef:
-#              kind: Service
-#              name: trigger-filter
-#              apiVersion: v1
       bindings:
         - ref: app-1-pipeline-binding
       template:
@@ -37,10 +31,18 @@ spec:
     - name: github-listener-app-2
       interceptors:
       - ref:
+          name: "github"
+          kind: ClusterInterceptor
+          apiVersion: triggers.tekton.dev
+        params:
+        - name: "addChangedFiles"
+          value:
+            enabled: true
+      - ref:
           name: cel
         params:
         - name: "filter"
-          value: 'body["ref"].contains("main-xxx") && body["repository"]["name"] == "simple-apps" && header.match("X-GitHub-Event", "push")'
+          value: 'body["ref"].contains("main") && body["repository"]["name"] == "simple-apps" && header.match("X-GitHub-Event", "push") && extensions.changed_files.matches("app-2/src/")'
         - name: "overlays"
           value:
           - key: branch
