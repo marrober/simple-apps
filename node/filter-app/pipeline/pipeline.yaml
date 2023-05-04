@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: simple-pipeline
+  name: build-filter-app
 spec:
   params:
       # Buildah step configuration parameters - storage driver and TLS settings.

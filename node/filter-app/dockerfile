@@ -1,4 +1,4 @@
-FROM default-route-openshift-image-registry.apps.cluster-2x6cj.2x6cj.sandbox2690.opentlc.com/simple-pipeline/node-js
+FROM image-registry.openshift-image-registry.svc:5000/simple-pipeline/node-js
 COPY filter.js /opt/app-root/src/filter.js
 COPY node_modules/ /opt/app-root/src/node_modules/
 USER 0
