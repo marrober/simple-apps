@@ -1,7 +1,7 @@
 apiVersion: triggers.tekton.dev/v1alpha1
 kind: EventListener
 metadata:
-  name: simple-pipeline-listener-interceptor
+  name: multi-app-event-listener
 spec:
   serviceAccountName: pipeline
   triggers:
