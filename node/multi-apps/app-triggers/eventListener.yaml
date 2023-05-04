@@ -8,6 +8,14 @@ spec:
     - name: github-listener-app-1
       interceptors:
       - ref:
+          name: "github"
+          kind: ClusterInterceptor
+          apiVersion: triggers.tekton.dev
+        params:
+        - name: "addChangedFiles"
+          value:
+            enabled: true
+      - ref:
           name: cel
         params:
         - name: "filter"
@@ -16,12 +24,6 @@ spec:
           value:
           - key: branch
             expression: "body.ref.split('/')[2]"
-        - name: "addChangedFiles"
-          value:
-            enabled: true
-            personalAccessToken:
-              secretName: github-access-token
-              secretKey: token
 #      interceptors:
 #        - webhook:
 #            objectRef:
