@@ -23,7 +23,7 @@ spec:
           # Directory within the git repo that holds the dockerfile. The example dockerfile makes reference to 
           # files within this directory too.
         - name: app-dir
-          value: node/app-1
+          value: node/multi-apps/app-1
           # The imagestream url for where the created container image will be stored. Update the namespace element if this is
           # created in a different namespace. also update the namespace file in the location namespace/namespace.yaml.
         - name: imagestream-url
