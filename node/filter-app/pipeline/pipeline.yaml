@@ -82,7 +82,7 @@ spec:
         value: $(context.pipelineRun.name)
       taskRef:
         kind: Task
-        name: push-image-to-ocp
+        name: push-image-to-ocp-latest-tag
       runAfter:
         - build
       workspaces:
