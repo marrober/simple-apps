@@ -6,6 +6,22 @@ spec:
   serviceAccountName: pipeline
   triggers:
     - name: github-listener-app-1
+      interceptors:
+      - ref:
+          name: cel
+        params:
+        - name: "filter"
+          value: 'body["ref"].contains("main") && body["repository"]["name"] == "simple-apps" && header.match("X-GitHub-Event", "push")'
+        - name: "overlays"
+          value:
+          - key: branch
+            expression: "body.ref.split('/')[2]"
+        - name: "addChangedFiles"
+          value:
+            enabled: true
+            personalAccessToken:
+              secretName: github-access-token
+              secretKey: token
 #      interceptors:
 #        - webhook:
 #            objectRef:
@@ -17,6 +33,22 @@ spec:
       template:
         ref: app-1-pipeline-template
     - name: github-listener-app-2
+      interceptors:
+      - ref:
+          name: cel
+        params:
+        - name: "filter"
+          value: 'body["ref"].contains("main-xxx") && body["repository"]["name"] == "simple-apps" && header.match("X-GitHub-Event", "push")'
+        - name: "overlays"
+          value:
+          - key: branch
+            expression: "body.ref.split('/')[2]"
+        - name: "addChangedFiles"
+          value:
+            enabled: true
+            personalAccessToken:
+              secretName: github-access-token
+              secretKey: token
 #      interceptors:
 #        - webhook:
 #            objectRef:
