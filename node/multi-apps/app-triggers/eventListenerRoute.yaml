@@ -2,11 +2,11 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   labels:
-    eventlistener: simple-pipeline-listener-interceptor
-  name: simple-pipeline-listener-el
+    eventlistener: multi-app-event-listener
+  name: el-route
 spec:
   port:
     targetPort: http-listener
   to:
     kind: Service
-    name: el-simple-pipeline-listener-interceptor
+    name: el-multi-app-event-listener
