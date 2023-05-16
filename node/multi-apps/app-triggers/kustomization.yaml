@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
 - eventListener.yaml
 - eventListenerRoute.yaml
+- triggerBinding.yaml
