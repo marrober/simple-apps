@@ -3,7 +3,7 @@ const express = require('express');
 const sprintfJS = require('sprintf-js');
 const app = express();
 
-/* API endpoints .........................
+/* API endpoints ..........................
     /             - Get the IP address of the current layer.
 */
 
