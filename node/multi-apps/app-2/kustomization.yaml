@@ -3,5 +3,4 @@ kind: Kustomization
 
 resources:
 - pipeline/pipelines/pipeline.yaml
-- pipeline/trigger/triggerBinding.yaml
 - pipeline/trigger/triggerTemplate.yaml
