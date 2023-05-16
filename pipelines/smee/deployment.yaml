@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smee-pipeline
+  labels:
+    app.kubernetes.io/part-of: smee
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gosmee
+  template:
+    metadata:
+      labels:
+        app: gosmee
+    spec:
+      containers:
+        - image: quay.io/marrober/gosmee:latest
+          imagePullPolicy: IfNotPresent
+          name: gosmee
+          args:
+            [
+              "client",
+              "--saveDir",
+              "/tmp/save",
+              "https://smee.io/3aC3MfW0AoBzRW6",
+              "http://el-route-simple-pipeline.apps.conroe.demolab.local/"
+            ]
