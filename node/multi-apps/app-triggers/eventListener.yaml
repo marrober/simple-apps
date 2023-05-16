@@ -19,13 +19,9 @@ spec:
           name: cel
         params:
         - name: "filter"
-          value: 'body["ref"].contains("main") && body["repository"]["name"] == "simple-apps" && header.match("X-GitHub-Event", "push") && extensions.changed_files.matches("app-1/src/")'
-        - name: "overlays"
-          value:
-          - key: branch
-            expression: "body.ref.split('/')[2]"
+          value: 'header.match("X-GitHub-Event", "push") && extensions.changed_files.matches("app-1/src/")'
       bindings:
-        - ref: app-1-pipeline-binding
+        - ref: app-pipeline-binding
       template:
         ref: app-1-pipeline-template
     - name: github-listener-app-2
@@ -42,24 +38,11 @@ spec:
           name: cel
         params:
         - name: "filter"
-          value: 'body["ref"].contains("main") && body["repository"]["name"] == "simple-apps" && header.match("X-GitHub-Event", "push") && extensions.changed_files.matches("app-2/src/")'
-        - name: "overlays"
-          value:
-          - key: branch
-            expression: "body.ref.split('/')[2]"
+          value: 'header.match("X-GitHub-Event", "push") && extensions.changed_files.matches("app-2/src/")'
         - name: "addChangedFiles"
           value:
             enabled: true
-            personalAccessToken:
-              secretName: github-access-token
-              secretKey: token
-#      interceptors:
-#        - webhook:
-#            objectRef:
-#              kind: Service
-#              name: trigger-filter
-#              apiVersion: v1
       bindings:
-        - ref: app-2-pipeline-binding
+        - ref: app-pipeline-binding
       template:
         ref: app-2-pipeline-template
