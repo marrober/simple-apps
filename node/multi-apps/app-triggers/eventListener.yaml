@@ -20,6 +20,10 @@ spec:
         params:
         - name: "filter"
           value: 'header.match("X-GitHub-Event", "push") && extensions.changed_files.matches("app-1/src/")'
+        - name: "overlays"
+          value:
+          - key: branch
+            expression: "body.ref.split('/')[2]"
       bindings:
         - ref: app-pipeline-binding
       template:
@@ -39,9 +43,10 @@ spec:
         params:
         - name: "filter"
           value: 'header.match("X-GitHub-Event", "push") && extensions.changed_files.matches("app-2/src/")'
-        - name: "addChangedFiles"
+        - name: "overlays"
           value:
-            enabled: true
+          - key: branch
+            expression: "body.ref.split('/')[2]"
       bindings:
         - ref: app-pipeline-binding
       template:

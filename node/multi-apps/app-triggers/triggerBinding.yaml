@@ -8,3 +8,5 @@ spec:
     value: $(body.repository.clone_url)
   - name: gitrevision
     value: $(body.head_commit.id)
+  - name: ext-branch 
+    value: $(extensions.branch)

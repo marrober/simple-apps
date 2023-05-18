@@ -6,6 +6,7 @@ spec:
   params:
   - name: gitrepository.url
   - name: gitrevision
+  - name: ext-branch
   resourcetemplates:
   - apiVersion: tekton.dev/v1beta1
     kind: PipelineRun
@@ -20,6 +21,8 @@ spec:
           value: $(tt.params.gitrepository.url)
         - name: git-revision
           value: $(tt.params.gitrevision)
+        - name: git-branch
+          value: $(tt.params.ext-branch)
           # Directory within the git repo that holds the dockerfile. The example dockerfile makes reference to 
           # files within this directory too.
         - name: app-dir
