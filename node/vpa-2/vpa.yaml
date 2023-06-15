@@ -1,0 +1,11 @@
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: vpa-recommender
+spec:
+  targetRef:
+    apiVersion: "apps.openshift.io/v1"
+    kind:       DeploymentConfig
+    name:       layers-git 
+  updatePolicy:
+    updateMode: "Auto" 
