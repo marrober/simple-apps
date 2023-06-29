@@ -23,7 +23,7 @@ spec:
       containers:
         - name: my-app
           image: >-
-            image-registry.openshift-image-registry.svc:5000/simple-pipeline/my-app:dd6kt
+            image-registry.openshift-image-registry.svc:5000/simple-pipeline/my-app:6fncs
           ports:
             - containerPort: 8080
               protocol: TCP
