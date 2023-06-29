@@ -33,7 +33,7 @@ const port = targePort;
 console.log("phase: setup", "This app target port : " + port);
 console.log("phase: setup", "This app ip address  : " + ip.address());
 
-console.log("Application is starting ..//..");
+console.log("Application is starting ~~~~");
 var counter = 0;
 
 var nextServiceClusterIP = [];
@@ -83,7 +83,7 @@ var messageText = "";
 
 app.get('/', (request, response) => {
   counter++;
-  messageText = sprintfJS.sprintf("this ip address /// %-15s  %04d", ip.address(), counter);
+  messageText = sprintfJS.sprintf("this ip address ~~~~ %-15s  %04d", ip.address(), counter);
   console.log("phase: root", messageText);
   response.send(messageText + "\n");
 });
