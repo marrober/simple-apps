@@ -23,6 +23,6 @@ spec:
               "client",
               "--saveDir",
               "/tmp/save",
-              "https://smee.io/3aC3MfW0AoBzRW6",
-              "http://el-route-simple-pipeline.apps.conroe.demolab.local/"
+              "https://smee.io/p7xxQSdMuMgZfLoN",
+              "http://simple-pipeline-listener-el-simple-pipeline.apps.conroe.demolab.local"
             ]
