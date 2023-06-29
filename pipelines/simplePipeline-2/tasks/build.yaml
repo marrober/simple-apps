@@ -27,6 +27,7 @@ spec:
         npm install -g npm@9.2.0
         npm install
         ls -al
+        cat layer.js
       image: default-route-openshift-image-registry.apps.conroe.demolab.local/simple-pipeline/node-js
       workingDir: /resources/$(params.app-dir)
     - name: build
