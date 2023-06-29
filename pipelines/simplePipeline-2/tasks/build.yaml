@@ -1,4 +1,4 @@
-apiVersion: tekton.dev/v1beta1
+apiVersion: tekton.dev/v1
 kind: Task
 metadata:
   name: build
@@ -27,8 +27,7 @@ spec:
         npm install -g npm@9.2.0
         npm install
         ls -al
-      image: registry.redhat.io/rhel8/nodejs-16
-      resources: {}
+      image: default-route-openshift-image-registry.apps.conroe.demolab.local/simple-pipeline/node-js
       workingDir: /resources/$(params.app-dir)
     - name: build
       command:
@@ -44,8 +43,7 @@ spec:
       - -t
       - my-container-image
       - .
-      image: registry.redhat.io/rhel8/buildah@sha256:6a68ece207bc5fd8db2dd5cc2d0b53136236fb5178eb5b71eebe5d07a3c33d13
-      resources: {}
+      image: default-route-openshift-image-registry.apps.conroe.demolab.local/simple-pipeline/buildah
       securityContext:
         capabilities:
           add:
@@ -58,16 +56,12 @@ spec:
       - --storage-driver=$(params.STORAGE_DRIVER)
       - --root
       - /files/buildah-containers
-      image: registry.redhat.io/rhel8/buildah@sha256:6a68ece207bc5fd8db2dd5cc2d0b53136236fb5178eb5b71eebe5d07a3c33d13
-      resources: {}
+      image: default-route-openshift-image-registry.apps.conroe.demolab.local/simple-pipeline/buildah
       securityContext:
         capabilities:
           add:
           - SETFCAP
       workingDir: /
-  volumes:
-    - emptyDir: {}
-      name: envparams
   workspaces:
     - mountPath: /files
       name: files

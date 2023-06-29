@@ -1,4 +1,4 @@
-apiVersion: tekton.dev/v1beta1
+apiVersion: tekton.dev/v1
 kind: Task
 metadata:
   name: push-image-to-ocp
@@ -45,11 +45,10 @@ spec:
 
         docker://$(params.imagestream-url):$tag
 
-      image: registry.redhat.io/rhel8/buildah    
+      image: default-route-openshift-image-registry.apps.conroe.demolab.local/simple-pipeline/buildah  
       securityContext:
         capabilities:
           add: ["SETFCAP"]
-      resources: {}
   workspaces:
   - mountPath: /files
     name: files
