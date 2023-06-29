@@ -30,7 +30,7 @@ spec:
     - /spec/host
     kind: Route
   source:
-    path: pipelines/simple-pipeline-2/deployment
+    path: pipelines/SimplePipeline-2/deployment
     targetRevision: main
     repoURL: https://github.com/marrober/simple-apps.git
   syncPolicy:
