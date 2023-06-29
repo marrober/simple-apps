@@ -3,7 +3,7 @@ kind: Kustomization
 
 images:
 - name: image-registry.openshift-image-registry.svc:5000/simple-pipeline/my-app
-  newTag: zns9p
+  newTag: gk2dx
 resources:
 - deployment.yaml
 - service.yaml
