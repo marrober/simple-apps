@@ -5,4 +5,5 @@ resources:
 - argo-cd-app.yaml
 - simple-apps-project.yaml
 - app-deployment.yaml
+- argocd-ci-process.yaml
 - role-bindings/argocd-admin.yaml
