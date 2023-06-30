@@ -5,4 +5,10 @@ resources:
 - pipelines/pipeline.yaml
 - tasks/build.yaml
 - tasks/pushImageToOCPImageStream.yaml
+- smee/deployment.yaml
+- triggers/eventListener.yaml
+- triggers/eventListenerRoute.yaml
+- triggers/triggerBinding.yaml
+- triggers/triggerTemplate.yaml
+
 
