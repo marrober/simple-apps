@@ -23,7 +23,7 @@ var counter = 0;
 var ignore_switch = 0;
 
 app.get('/', (request, response) => {
-  response.send('Hello - this is a simple REST interface =+> \n' + versionIdentifier);
+  response.send('Hello - this is a simple REST interface =+=-=-=-=-> \n' + versionIdentifier);
   log.info({app: 'simpleRest', phase: 'operational', version: versionIdentifier, ip: ip.address()}, " Root response " + counter);
 });
 
