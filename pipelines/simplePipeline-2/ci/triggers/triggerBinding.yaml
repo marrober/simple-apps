@@ -1,7 +1,7 @@
 apiVersion: triggers.tekton.dev/v1alpha1
 kind: TriggerBinding
 metadata:
-  name: simple-pipeline-binding
+  name: simple-pipeline-2-binding
 spec:
   params:
   - name: gitrepository.url

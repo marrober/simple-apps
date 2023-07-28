@@ -1,7 +1,7 @@
 apiVersion: triggers.tekton.dev/v1alpha1
 kind: EventListener
 metadata:
-  name: simple-pipeline-listener-interceptor
+  name: simple-pipeline-2-listener-interceptor
 spec:
   serviceAccountName: pipeline
   triggers:
@@ -21,6 +21,6 @@ spec:
         - name: "filter"
           value: 'header.match("X-GitHub-Event", "push") && extensions.changed_files.matches("node/layers")'
       bindings:
-        - ref: simple-pipeline-binding
+        - ref: simple-pipeline-2-binding
       template:
-        ref: simple-pipeline-template
+        ref: simple-pipeline-2-template

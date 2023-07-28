@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   creationTimestamp: null
-  name: simple-pipeline-mgmt-app
+  name: simple-pipeline-2-mgmt-app
   namespace: openshift-gitops
 spec:
   project: simple-apps

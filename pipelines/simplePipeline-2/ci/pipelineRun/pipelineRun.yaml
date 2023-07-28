@@ -1,10 +1,10 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  generateName: simple-pipeline-pr-
+  generateName: simple-pipeline-2-pr-
 spec:
   pipelineRef:
-    name: simple-pipeline
+    name: simple-pipeline-2
   params:
       # Use this Git URL to pull a simple sample application and dockerfile for the construction of the container image. 
       # Update this reference if you clone the repo and make changes or use a completely difference repo.
@@ -20,7 +20,7 @@ spec:
       # The imagestream url for where the created container image will be stored. Update the namespace element if this is
       # created in a different namespace. also update the namespace file in the location namespace/namespace.yaml.
     - name: imagestream-url
-      value: image-registry.openshift-image-registry.svc:5000/simple-pipeline/my-app
+      value: image-registry.openshift-image-registry.svc:5000/simple-pipeline-2/my-app
   workspaces:
   - name: files
     volumeClaimTemplate:

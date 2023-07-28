@@ -6,7 +6,7 @@ metadata:
 spec:
   project: simple-apps
   destination:
-    namespace: simple-pipeline
+    namespace: simple-pipeline-2
     server: https://kubernetes.default.svc
   ignoreDifferences:
   - group: argoproj.io

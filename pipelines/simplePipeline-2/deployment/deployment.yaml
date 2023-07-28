@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/instance: my-app
     app.kubernetes.io/name: my-app
     app.openshift.io/runtime: my-app
-    app.openshift.io/runtime-namespace: simple-pipeline
+    app.openshift.io/runtime-namespace: simple-pipeline-2
 spec:
   replicas: 1
   selector:
@@ -23,7 +23,7 @@ spec:
       containers:
         - name: my-app
           image: >-
-            image-registry.openshift-image-registry.svc:5000/simple-pipeline/my-app
+            image-registry.openshift-image-registry.svc:5000/simple-pipeline-2/my-app
           ports:
             - containerPort: 8080
               protocol: TCP

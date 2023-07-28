@@ -12,7 +12,7 @@ The demonstration makes use of a secondary git repository containing the applica
 
 Setup
 
-Setup 1 - Create the OpenShift Pipeline resources. The resources will be created in an OpenShift project called simple-pipeline. If you wish to change this then clone this repository and update the file in the location : 
+Setup 1 - Create the OpenShift Pipeline resources. The resources will be created in an OpenShift project called simple-pipeline-2. If you wish to change this then clone this repository and update the file in the location : 
 
 Setup 1 - The dockerfile referenced by the build process requires a Node.JS base image from the Red Hat Container catalog. Rather than ask each user to go through the process of setting up a secret in the OpenShift project to gain access to the container catalog, it has been decided that the container image will be imported to an image stream as a one time setup task. 
 
