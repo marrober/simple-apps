@@ -26,13 +26,6 @@ spec:
       #
     - name: imagestream-url
       type: string
-      #
-      #   Quay.io configuration
-      #
-    - name: quay-io-account
-      type: string
-    - name: quay-io-repository
-      type: string
   tasks:
 ##------------------------------------------------------------------
 # Git clone resources task

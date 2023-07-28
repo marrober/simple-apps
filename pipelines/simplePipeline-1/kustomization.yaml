@@ -5,5 +5,4 @@ resources:
 - pipelines/pipeline.yaml
 - tasks/build.yaml
 - tasks/pushImageToOCPImageStream.yaml
-- tasks/pushImageToQuay.yaml
 
