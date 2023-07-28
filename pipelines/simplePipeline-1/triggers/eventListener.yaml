@@ -8,18 +8,10 @@ spec:
   - name: github-listener
     interceptors:
     - ref:
-        name: "github"
-        kind: ClusterInterceptor
-        apiVersion: triggers.tekton.dev
-      params:
-      - name: "addChangedFiles"
-        value:
-          enabled: true    
-    - ref:
         name: cel
       params:
       - name: "filter"
-        value: 'body["ref"].contains("main") && body["repository"]["name"] == "simple-apps" && header.match("X-GitHub-Event", "push")  && extensions.changed_files.matches("node/layers")'
+        value: 'body["ref"].contains("main") && body["repository"]["name"] == "simple-apps" && header.match("X-GitHub-Event", "push")'
       - name: "overlays"
         value:
         - key: branch
