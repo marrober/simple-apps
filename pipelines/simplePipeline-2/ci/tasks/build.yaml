@@ -18,6 +18,17 @@ spec:
       - name: "HOME"
         value: "/tekton/home"
   steps:
+    - name: copy-resources
+      command:
+      - /bin/sh
+      - -c
+      args:
+      - |-
+        mkdir build
+        cp resources/$(params.app-dir) /resources/build
+        cd /resources/build
+      image: registry.redhat.io/rhel8/nodejs-16
+      workingDir: /resources 
     - name: package-node-app
       command:
       - /bin/sh
@@ -25,11 +36,10 @@ spec:
       args:
       - |-
         ls -al
-        mkdir node_modules
         npm install -g npm@9.2.0
         npm install
       image: registry.redhat.io/rhel8/nodejs-16
-      workingDir: /resources/$(params.app-dir)
+      workingDir: /resources/build
     - name: build
       command:
       - buildah
@@ -49,7 +59,7 @@ spec:
         capabilities:
           add:
           - SETFCAP
-      workingDir: /resources/$(params.app-dir)
+      workingDir: /resources/build
     - name: list-images
       command:
       - buildah
