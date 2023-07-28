@@ -24,7 +24,7 @@ spec:
       - -c
       args:
       - |-
-        ls -al
+        ls -alR
         mkdir build
         cp /resources/$(params.app-dir)/* /resources/build/
         cd /resources/build
