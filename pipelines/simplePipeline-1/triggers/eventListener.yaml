@@ -6,16 +6,6 @@ spec:
   serviceAccountName: pipeline
   triggers:
   - name: github-listener
-    interceptors:
-    - ref:
-        name: cel
-      params:
-      - name: "filter"
-        value: 'body["ref"].contains("main") && body["repository"]["name"] == "simple-apps" && header.match("X-GitHub-Event", "push")'
-      - name: "overlays"
-        value:
-        - key: branch
-          expression: "body.ref.split('/')[2]"
     bindings:
       - ref: simple-pipeline-binding
     template:
