@@ -23,11 +23,6 @@ spec:
       value: image-registry.openshift-image-registry.svc:5000/simple-pipeline/my-app
       # If using the push-to-quay task update the following fields.
       # The quay.io user account field.
-    - name: quay-io-account
-      value: "marrober"
-      # The quay.io repository name.
-    - name: quay-io-repository
-      value: "simple-pipeline"
   workspaces:
   - name: files
     volumeClaimTemplate:
