@@ -28,7 +28,7 @@ spec:
         npm install
         ls -al
         cat layer.js
-      image: default-route-openshift-image-registry.apps.conroe.demolab.local/simple-pipeline/node-js
+      image: registry.redhat.io/rhel8/nodejs-16
       workingDir: /resources/$(params.app-dir)
     - name: build
       command:
@@ -44,7 +44,7 @@ spec:
       - -t
       - my-container-image
       - .
-      image: default-route-openshift-image-registry.apps.conroe.demolab.local/simple-pipeline/buildah
+      image: registry.redhat.io/rhel8/buildah 
       securityContext:
         capabilities:
           add:
@@ -57,7 +57,7 @@ spec:
       - --storage-driver=$(params.STORAGE_DRIVER)
       - --root
       - /files/buildah-containers
-      image: default-route-openshift-image-registry.apps.conroe.demolab.local/simple-pipeline/buildah
+      image: registry.redhat.io/rhel8/buildah 
       securityContext:
         capabilities:
           add:

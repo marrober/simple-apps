@@ -45,7 +45,7 @@ spec:
 
         docker://$(params.imagestream-url):$tag
 
-      image: default-route-openshift-image-registry.apps.conroe.demolab.local/simple-pipeline/buildah  
+      image: registry.redhat.io/rhel8/buildah   
       securityContext:
         capabilities:
           add: ["SETFCAP"]
