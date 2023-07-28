@@ -7,19 +7,19 @@ spec:
   triggers:
     - name: github-listener
       interceptors:
-      - ref:
-          name: "github"
-          kind: ClusterInterceptor
-          apiVersion: triggers.tekton.dev
-        params:
-        - name: "addChangedFiles"
-          value:
-            enabled: true
-      - ref:
-          name: cel
-        params:
-        - name: "filter"
-          value: 'header.match("X-GitHub-Event", "push") && extensions.changed_files.matches("node/layers")'
+#      - ref:
+#          name: "github"
+#          kind: ClusterInterceptor
+#          apiVersion: triggers.tekton.dev
+#        params:
+#        - name: "addChangedFiles"
+#          value:
+#            enabled: true
+#      - ref:
+#          name: cel
+#        params:
+#        - name: "filter"
+#          value: 'header.match("X-GitHub-Event", "push") && extensions.changed_files.matches("node/layers")'
       bindings:
         - ref: simple-pipeline-2-binding
       template:
