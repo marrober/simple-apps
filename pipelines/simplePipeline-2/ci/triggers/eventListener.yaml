@@ -21,6 +21,7 @@ spec:
 #        - name: "filter"
 #          value: 'header.match("X-GitHub-Event", "push") && extensions.changed_files.matches("node/layers")'
       bindings:
-        - ref: simple-pipeline-2-binding
+      - kind: TriggerBinding
+        ref: simple-pipeline-2-binding
       template:
         ref: simple-pipeline-2-template
