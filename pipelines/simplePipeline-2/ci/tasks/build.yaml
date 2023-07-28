@@ -24,8 +24,9 @@ spec:
       - -c
       args:
       - |-
+        ls -al
         mkdir build
-        cp resources/$(params.app-dir) /resources/build
+        cp /resources/$(params.app-dir)/* /resources/build/
         cd /resources/build
       image: registry.redhat.io/rhel8/nodejs-16
       workingDir: /resources 
