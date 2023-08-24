@@ -38,8 +38,11 @@ spec:
       args:
       - |-
         ls -al
+        npm audit fix
         npm install -g npm@9.2.0
         npm install
+        cat package.json
+        cat package-lock.json
       image: registry.redhat.io/rhel8/nodejs-16
       workingDir: /resources/$(params.app-dir)
     - name: build
@@ -61,7 +64,7 @@ spec:
         capabilities:
           add:
           - SETFCAP
-      workingDir: /resources/build
+      workingDir: /resources/$(params.app-dir)
     - name: list-images
       command:
       - buildah
