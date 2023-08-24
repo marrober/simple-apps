@@ -24,10 +24,11 @@ spec:
       - -c
       args:
       - |-
-        ls -alR
-        mkdir build
-        cp /resources/$(params.app-dir)/* /resources/build/
-        cd /resources/build
+        # ls -alR
+        mkdir app-build
+        ls -al
+        cp /resources/$(params.app-dir)/* /resources/app-build/
+        cd /resources/app-build
       image: registry.redhat.io/rhel8/nodejs-16
       workingDir: /resources 
     - name: package-node-app
@@ -40,7 +41,7 @@ spec:
         npm install -g npm@9.2.0
         npm install
       image: registry.redhat.io/rhel8/nodejs-16
-      workingDir: /resources/build
+      workingDir: /resources/app-build
     - name: build
       command:
       - buildah
