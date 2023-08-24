@@ -19,7 +19,7 @@ spec:
         value: "/tekton/home"
   steps:
     #- name: copy-resources
-      - /bin/sh
+    #  - /bin/sh
     #  command:
     #  - -c
     #  args:
