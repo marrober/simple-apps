@@ -1,0 +1,7 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: simple-pipeline-pr-
+spec:
+  pipelineRef:
+    name: simple-pipeline-3

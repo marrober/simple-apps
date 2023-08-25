@@ -1,0 +1,18 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: ls
+spec:
+  steps:
+    - name: ls
+      command:
+      - /bin/sh
+      - -c
+      args:
+      - |-
+        ls -al
+        /
+      image: default-route-openshift-image-registry.apps-crc.testing/openshift/cli:latest
+      resources: {}
+      workingDir: /
+
