@@ -97,6 +97,11 @@ spec:
         value: "$(params.TLSVERIFY)"
       - name: pipelineRunName
         value: $(context.pipelineRun.name)
+      - name: openshift_app_name
+        value: $(params.openshift_app_name)
+      - name: runtime_image_name
+        value: $(params.runtime_image_name)
+  results:
       taskRef:
         kind: Task
         name: push-image-to-ocp

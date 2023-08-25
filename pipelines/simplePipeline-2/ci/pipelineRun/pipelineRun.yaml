@@ -35,6 +35,10 @@ spec:
       type: "mroberts@redhat.com"
     - name: my-app-cd-git-commit-comment-dev
       type: "Update from ci process"
+    - name: openshift_app_name
+      value: simple-app-2
+    - name: runtime_image_name
+      value: my-app
   workspaces:
   - name: files
     volumeClaimTemplate:

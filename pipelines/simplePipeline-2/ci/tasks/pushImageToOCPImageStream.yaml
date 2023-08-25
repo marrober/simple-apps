@@ -12,6 +12,10 @@ spec:
       type: string
     - name: pipelineRunName
       type: string
+    - name: openshift_app_name
+      type: string
+    - name: runtime_image_name
+      type: string
   results:
     - name: new-tag
     - name: new-image-repo-location
