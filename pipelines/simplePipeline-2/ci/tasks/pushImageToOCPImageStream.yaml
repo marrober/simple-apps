@@ -65,7 +65,7 @@ spec:
           echo $TAG
 
           oc project $(params.openshift_app_name)
-          oc get is/$(params.runtime_image_name) -o jsonpath='{.status.publicDockerImageRepository}{":"}'$TAG > $(results.new-image-repo-location.path)
+          oc get is/$(params.runtime_image_name) -o jsonpath='{.status.dockerImageRepository}{":"}'$TAG > $(results.new-image-repo-location.path)
 
           echo -------------------------------------
           cat $(results.new-image-repo-location.path)

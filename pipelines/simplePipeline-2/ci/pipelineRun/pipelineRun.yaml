@@ -36,7 +36,7 @@ spec:
     - name: my-app-cd-git-commit-comment-dev
       value: "Update from ci process"
     - name: openshift_app_name
-      value: simple-app-2
+      value: simple-pipeline-2
     - name: runtime_image_name
       value: my-app
   workspaces:

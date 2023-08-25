@@ -74,8 +74,6 @@ spec:
 
         git config --global user.name $(params.GIT_USER_NAME)
 
-        ls -alR
-
         git clone https://${GITHOSTACCESSTOKEN}@$(params.GIT_URL).git
 
         echo "-----------------------------------------------------------------"
@@ -94,23 +92,7 @@ spec:
 
         git checkout $(params.GIT_BRANCH)
 
-        echo "-----------------------------------------------------------------"
-
-        echo "File before change"
-
-        echo "-----------------------------------------------------------------"
-
-        cat kustomization.yaml
-
         kustomize edit set image $(params.IMAGE)
-
-        echo "-----------------------------------------------------------------"
-
-        echo "File after change"
-
-        echo "-----------------------------------------------------------------"
-
-        cat kustomization.yaml
 
         cd /workspace/files/$(params.LOCATION)/$(params.GIT_REPO_NAME)
 
