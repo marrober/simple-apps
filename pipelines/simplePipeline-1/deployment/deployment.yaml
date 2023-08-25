@@ -1,0 +1,45 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: my-app
+  labels:
+    app: my-app
+    app.kubernetes.io/component: my-app
+    app.kubernetes.io/instance: my-app
+    app.kubernetes.io/name: my-app
+    app.openshift.io/runtime: my-app
+    app.openshift.io/runtime-namespace: simple-pipeline-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+        deployment: my-app
+    spec:
+      containers:
+        - name: my-app
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/simple-pipeline-1/my-app
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
