@@ -10,7 +10,7 @@ spec:
   - apiVersion: tekton.dev/v1beta1
     kind: PipelineRun
     metadata:
-      generateName: simple-pipeline-2-run-pr-tr-
+      generateName: simple-pipeline-2-run-tr-
     spec:
       serviceAccountName: pipeline
       pipelineRef:

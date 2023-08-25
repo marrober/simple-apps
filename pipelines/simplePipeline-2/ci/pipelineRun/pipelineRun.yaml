@@ -21,6 +21,20 @@ spec:
       # created in a different namespace. also update the namespace file in the location namespace/namespace.yaml.
     - name: imagestream-url
       value: image-registry.openshift-image-registry.svc:5000/simple-pipeline-2/my-app
+    - name: repo_type
+      value: github.com
+    - name: myapp-cd-git-url
+      value: marrober/simple-apps
+    - name: my-app-cd-git-repo-name
+      value: simple-apps
+    - name: my-app-cd-git-repo-path-to-content-development
+      value: pipelines/simplePipeline-2/deployment
+    - name: my-app-cd-git-user-name
+      type: "Mark Roberts"
+    - name: my-app-cd-git-user-email
+      type: "mroberts@redhat.com"
+    - name: my-app-cd-git-commit-comment-dev
+      type: "Update from ci process"
   workspaces:
   - name: files
     volumeClaimTemplate:

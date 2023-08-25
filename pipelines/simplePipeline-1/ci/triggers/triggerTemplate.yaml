@@ -11,7 +11,7 @@ spec:
   - apiVersion: tekton.dev/v1beta1
     kind: PipelineRun
     metadata:
-      generateName: simple-pipeline-run-pr-tr-
+      generateName: simple-pipeline-1-run-tr-
     spec:
       serviceAccountName: pipeline
       pipelineRef:
@@ -30,7 +30,7 @@ spec:
           # The imagestream url for where the created container image will be stored. Update the namespace element if this is
           # created in a different namespace. also update the namespace file in the location namespace/namespace.yaml.
         - name: imagestream-url
-          value: image-registry.openshift-image-registry.svc:5000/simple-pipeline/my-app
+          value: image-registry.openshift-image-registry.svc:5000/simple-pipeline-1/my-app
       workspaces:
       - name: files
         volumeClaimTemplate:

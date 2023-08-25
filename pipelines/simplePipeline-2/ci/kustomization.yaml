@@ -10,6 +10,4 @@ resources:
 - triggers/eventListenerRoute.yaml
 - triggers/triggerBinding.yaml
 - triggers/triggerTemplate.yaml
-#- role-binding/pipeline-sa.yaml
-
 

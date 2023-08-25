@@ -14,6 +14,7 @@ spec:
       type: string
   results:
     - name: new-tag
+    - name: new-image-repo-location
   stepTemplate:
     env:
       - name: "HOME"
@@ -46,6 +47,26 @@ spec:
         docker://$(params.imagestream-url):$tag
 
       image: registry.redhat.io/rhel8/buildah   
+      securityContext:
+        capabilities:
+          add: ["SETFCAP"]
+    - name: get-image-repository-url
+      command:
+        - /bin/sh
+        - '-c'
+      args:
+        - |-
+          export TAG=$(cat $(results.new-tag.path))
+
+          echo $TAG
+
+          oc project $(params.openshift_app_name)
+          oc get is/$(params.runtime_image_name) -o jsonpath='{.status.publicDockerImageRepository}{":"}'$TAG > $(results.new-image-repo-location.path)
+
+          echo -------------------------------------
+          cat $(results.new-image-repo-location.path)
+
+      image: image-registry.openshift-image-registry.svc:5000/openshift/cli:latest
       securityContext:
         capabilities:
           add: ["SETFCAP"]
