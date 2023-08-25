@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 images:
-- newTag: jnj7w
+- newTag: dnx55
 - name: image-registry.openshift-image-registry.svc:5000/simple-pipeline-2/my-app
 resources:
 - deployment.yaml
