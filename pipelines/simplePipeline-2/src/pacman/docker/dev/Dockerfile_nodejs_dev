@@ -1,0 +1,14 @@
+FROM node:boron
+
+MAINTAINER Ivan Font <ifont@redhat.com>
+
+# Create app directory and specify volume that will be bind mounted at runtime
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+VOLUME ["/usr/src/app"]
+
+# Expose port 3001
+EXPOSE 3001
+
+# Run container
+CMD ["npm", "run", "dev"]
