@@ -1,7 +1,7 @@
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: pipeline-mage-builder
+  name: pipeline-image-builder
 subjects:
   - kind: ServiceAccount
     name: pipeline
