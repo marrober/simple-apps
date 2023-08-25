@@ -26,6 +26,10 @@ spec:
       #
     - name: imagestream-url
       type: string
+    - name: openshift_app_name
+      type: string
+    - name: runtime_image_name
+      type: string
       # 
       # Update and commit Kustomize file 
       # 
