@@ -4,7 +4,7 @@ kind: Kustomization
 images:
 - newTag: p99xb
 - name: image-registry.openshift-image-registry.svc:5000/simple-pipeline-2/my-app
-  newTag: lslbm
+  newTag: rmcg2
 resources:
 - deployment.yaml
 - service.yaml
