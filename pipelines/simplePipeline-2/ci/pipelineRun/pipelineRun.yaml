@@ -30,11 +30,11 @@ spec:
     - name: my-app-cd-git-repo-path-to-content-development
       value: pipelines/simplePipeline-2/deployment
     - name: my-app-cd-git-user-name
-      type: "Mark Roberts"
+      value: "Mark Roberts"
     - name: my-app-cd-git-user-email
-      type: "mroberts@redhat.com"
+      value: "mroberts@redhat.com"
     - name: my-app-cd-git-commit-comment-dev
-      type: "Update from ci process"
+      value: "Update from ci process"
     - name: openshift_app_name
       value: simple-app-2
     - name: runtime_image_name

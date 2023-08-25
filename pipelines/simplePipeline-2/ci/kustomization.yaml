@@ -5,6 +5,7 @@ resources:
 - pipelines/pipeline.yaml
 - tasks/build.yaml
 - tasks/pushImageToOCPImageStream.yaml
+- tasks/update-and-commit-kustomization-file.yaml
 - smee/deployment.yaml
 - triggers/eventListener.yaml
 - triggers/eventListenerRoute.yaml
