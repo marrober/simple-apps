@@ -143,7 +143,7 @@ spec:
       runAfter:
         - push-image-to-imagestream
       workspaces:
-    -   name: files
+      - name: files
         workspace: files
 ##------------------------------------------------------------------
 # Workspace definitions
