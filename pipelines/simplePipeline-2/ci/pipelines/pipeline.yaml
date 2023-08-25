@@ -109,34 +109,34 @@ spec:
 # Clone the cd repository and update the kustomization file for the
 # development environment to refer to the new tagged image.
 ##------------------------------------------------------------------
-  - name: update-and-commit-kustomization-file-dev
-    params:
-    - name: GIT_URL
-      value: $(params.repo_type)/$(params.myapp-cd-git-url)
-    - name: GIT_REPO_NAME
-      value: $(params.my-app-cd-git-repo-name)
-    - name: GIT_BRANCH
-      value: "main"
-    - name: GIT_PATH_TO_CONTENT
-      value: $(params.my-app-cd-git-repo-path-to-content-development)
-    - name: GIT_USER_NAME
-      value: $(params.my-app-cd-git-user-name)
-    - name: GIT_USER_EMAIL
-      value: $(params.my-app-cd-git-user-email)
-    - name: GIT_COMMIT_COMMENT
-      value: $(params.my-app-cd-git-commit-comment-dev)
-    - name: IMAGE
-      value: $(tasks.push-image-to-imagestream.results.new-image-repo-location)
-    - name: LOCATION
-      value: "dev"
-    taskRef:
-      kind: Task
-      name: update-and-commit-kustomization-file
-    runAfter:
-    - create-runtime-image
-    workspaces:
-    - name: files
-      workspace: files
+    - name: update-and-commit-kustomization-file-dev
+      params:
+      - name: GIT_URL
+        value: $(params.repo_type)/$(params.myapp-cd-git-url)
+      - name: GIT_REPO_NAME
+        value: $(params.my-app-cd-git-repo-name)
+      - name: GIT_BRANCH
+        value: "main"
+      - name: GIT_PATH_TO_CONTENT
+        value: $(params.my-app-cd-git-repo-path-to-content-development)
+      - name: GIT_USER_NAME
+        value: $(params.my-app-cd-git-user-name)
+      - name: GIT_USER_EMAIL
+        value: $(params.my-app-cd-git-user-email)
+      - name: GIT_COMMIT_COMMENT
+        value: $(params.my-app-cd-git-commit-comment-dev)
+      - name: IMAGE
+        value: $(tasks.push-image-to-imagestream.results.new-image-repo-location)
+      - name: LOCATION
+        value: "dev"
+      taskRef:
+        kind: Task
+        name: update-and-commit-kustomization-file
+      runAfter:
+        - push-image-to-imagestream
+      workspaces:
+    -   name: files
+        workspace: files
 ##------------------------------------------------------------------
 # Workspace definitions
 ##------------------------------------------------------------------
