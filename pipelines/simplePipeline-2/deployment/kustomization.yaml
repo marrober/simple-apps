@@ -6,6 +6,7 @@ images:
 - name: image-registry.openshift-image-registry.svc:5000/simple-pipeline-2/my-app
   newTag: rmcg2
 resources:
+- namespace.yaml
 - deployment.yaml
 - service.yaml
 - route.yaml
