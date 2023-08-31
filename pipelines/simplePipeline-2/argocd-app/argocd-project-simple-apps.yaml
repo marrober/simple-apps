@@ -18,8 +18,8 @@ spec:
   destinations:
   - server: https://kubernetes.default.svc
     namespace: '*'
-#  - server: https://api.celeron.demolab.local:6443
-#    namespace: '*'
+  - server: https://api.pentium.demolab.local:6443
+    namespace: '*'
 
   # Deny all cluster-scoped resources from being created, except for named items
   clusterResourceWhitelist:
