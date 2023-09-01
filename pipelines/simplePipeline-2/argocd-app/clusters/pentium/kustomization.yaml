@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+- ../../base
+
+patches:
+- patch: |-
+    - op: replace
+      path: /metadata/name
+      value: simple-pipeline-2-pentium
+  target:
+    kind: Application
+    name: simple-pipeline-2
+- patch: |-
+    - op: replace
+      path: /spec/destination/server
+      value: https://api.pentium.demolab.local:6443
+  target:
+    kind: Application
+    name: simple-pipeline-2
