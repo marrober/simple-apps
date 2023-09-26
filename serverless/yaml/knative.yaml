@@ -2,6 +2,8 @@ apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: my-knative-app
+  annotations:
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
 spec:
   template:
     metadata:
