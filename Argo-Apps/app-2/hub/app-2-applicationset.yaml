@@ -10,12 +10,6 @@ spec:
         labelSelector:
           matchLabels:
             cluster.open-cluster-management.io/placement: app-2-placement
-#  - list:
-#      elements: 
-#      - cluster: local-cluster
-#        url: https://kubernetes.default.svc
-#      - cluster: pentium
-#        url: https://api.pentium.demolab.local:6443
   template:
     metadata:
       annotations:

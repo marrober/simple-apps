@@ -1,0 +1,32 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: my-knative-app
+spec:
+  template:
+    metadata:
+      annotations:
+        client.knative.dev/user-image: 'quay.io/marrober/serverless:latest'
+      name: my-knative-app-v1
+    spec:
+      containerConcurrency: 0
+      containers:
+        - env:
+            - name: version
+              value: '1'
+            - name: colour
+              value: green
+          image: >-
+            quay.io/marrober/serverless@sha256:7fbd1f554ade250370f364004525fc0e8ed9cf725fb76506c07dd8b7de134c08
+          name: user-container
+          readinessProbe:
+            successThreshold: 1
+            tcpSocket:
+              port: 0
+          resources: {}
+      enableServiceLinks: false
+      timeoutSeconds: 300
+  traffic:
+    - latestRevision: false
+      percent: 100
+      revisionName: my-knative-app-v1
