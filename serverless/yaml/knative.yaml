@@ -30,5 +30,8 @@ spec:
       timeoutSeconds: 300
   traffic:
     - latestRevision: false
-      percent: 100
+      percent: 50
+      revisionName: my-knative-app-v2
+    - latestRevision: false
+      percent: 50
       revisionName: my-knative-app-v3
