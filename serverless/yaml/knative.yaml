@@ -9,13 +9,13 @@ spec:
     metadata:
       annotations:
         client.knative.dev/user-image: 'quay.io/marrober/serverless:latest'
-      name: my-knative-app-v2
+      name: my-knative-app-v3
     spec:
       containerConcurrency: 0
       containers:
         - env:
             - name: version
-              value: '2'
+              value: '3'
             - name: colour
               value: green
           image: >-
@@ -31,4 +31,4 @@ spec:
   traffic:
     - latestRevision: false
       percent: 100
-      revisionName: my-knative-app-v2
+      revisionName: my-knative-app-v3
