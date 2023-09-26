@@ -5,6 +5,11 @@ metadata:
   namespace: openshift-gitops
 spec:
   project: default
+  ignoreDifferences:
+  - group: route.openshift.io/v1
+    jsonPointers:
+    - /
+    kind: Application
   destination:
     namespace: test-3
     server: 'https://kubernetes.default.svc'

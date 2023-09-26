@@ -13,7 +13,7 @@ metadata:
     serving.knative.dev/service: my-knative-app
     serving.knative.openshift.io/ingressName: my-knative-app
     serving.knative.openshift.io/ingressNamespace: test-3
-  name: route-6127d423-3c72-4c68-a889-0d7daf37e037
+  name: my-knative-app-route
   namespace: knative-serving-ingress
 spec:
   host: my-knative-app-test-3.apps.conroe.demolab.local
