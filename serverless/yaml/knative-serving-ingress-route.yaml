@@ -1,0 +1,29 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    haproxy.router.openshift.io/timeout: 600s
+    networking.internal.knative.dev/rollout: '{}'
+    networking.knative.dev/ingress.class: kourier.ingress.networking.knative.dev
+  labels:
+    app.kubernetes.io/instance: my-knative-app
+    networking.internal.knative.dev/ingress: my-knative-app
+    serving.knative.dev/route: my-knative-app
+    serving.knative.dev/routeNamespace: test-3
+    serving.knative.dev/service: my-knative-app
+    serving.knative.openshift.io/ingressName: my-knative-app
+    serving.knative.openshift.io/ingressNamespace: test-3
+  name: route-6127d423-3c72-4c68-a889-0d7daf37e037-616365626465
+  namespace: knative-serving-ingress
+spec:
+  host: my-knative-app-test-3.apps.conroe.demolab.local
+  port:
+    targetPort: http2
+  tls:
+    insecureEdgeTerminationPolicy: Allow
+    termination: edge
+  to:
+    kind: Service
+    name: kourier
+    weight: 100
+  wildcardPolicy: None

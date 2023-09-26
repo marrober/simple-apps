@@ -4,8 +4,9 @@ metadata:
   name: my-knative-app
   namespace: openshift-gitops
 spec:
+  project: default
   destination:
-    namespace: development
+    namespace: test-3
     server: 'https://kubernetes.default.svc'
   source:
     path: serverless/yaml
