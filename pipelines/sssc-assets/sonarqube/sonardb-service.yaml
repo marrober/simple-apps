@@ -1,0 +1,65 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: sonardb
+  namespace: sonarqube
+  uid: 84bfd970-53e8-409a-b9c0-b5fda894b6aa
+  resourceVersion: '88545'
+  creationTimestamp: '2023-10-17T08:30:35Z'
+  labels:
+    app: sonarqube
+    app.kubernetes.io/instance: sonarqube-local-cluster
+    template: postgresql-persistent-template
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{"template.openshift.io/expose-uri":"postgres://{.spec.clusterIP}:{.spec.ports[?(.name==\"postgresql\")].port}"},"labels":{"app":"sonarqube","app.kubernetes.io/instance":"sonarqube-local-cluster","template":"postgresql-persistent-template"},"name":"sonardb","namespace":"sonarqube"},"spec":{"ports":[{"name":"postgresql","port":5432}],"selector":{"name":"sonardb"}}}
+    template.openshift.io/expose-uri: 'postgres://{.spec.clusterIP}:{.spec.ports[?(.name=="postgresql")].port}'
+  managedFields:
+    - manager: argocd-application-controller
+      operation: Update
+      apiVersion: v1
+      time: '2023-10-17T08:30:35Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:kubectl.kubernetes.io/last-applied-configuration': {}
+            'f:template.openshift.io/expose-uri': {}
+          'f:labels':
+            .: {}
+            'f:app': {}
+            'f:app.kubernetes.io/instance': {}
+            'f:template': {}
+        'f:spec':
+          'f:internalTrafficPolicy': {}
+          'f:ports':
+            .: {}
+            'k:{"port":5432,"protocol":"TCP"}':
+              .: {}
+              'f:name': {}
+              'f:port': {}
+              'f:protocol': {}
+              'f:targetPort': {}
+          'f:selector': {}
+          'f:sessionAffinity': {}
+          'f:type': {}
+spec:
+  clusterIP: 172.30.131.79
+  ipFamilies:
+    - IPv4
+  ports:
+    - name: postgresql
+      protocol: TCP
+      port: 5432
+      targetPort: 5432
+  internalTrafficPolicy: Cluster
+  clusterIPs:
+    - 172.30.131.79
+  type: ClusterIP
+  ipFamilyPolicy: SingleStack
+  sessionAffinity: None
+  selector:
+    name: sonardb
+status:
+  loadBalancer: {}

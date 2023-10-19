@@ -1,0 +1,72 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: sonarqube
+  namespace: sonarqube
+  uid: d77a9204-6a27-4a64-8d3f-c904441b73b8
+  resourceVersion: '88826'
+  creationTimestamp: '2023-10-17T08:30:41Z'
+  labels:
+    app: sonarqube
+    app.kubernetes.io/instance: sonarqube-local-cluster
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"route.openshift.io/v1","kind":"Route","metadata":{"annotations":{},"labels":{"app":"sonarqube","app.kubernetes.io/instance":"sonarqube-local-cluster"},"name":"sonarqube","namespace":"sonarqube"},"spec":{"port":{"targetPort":"9000-tcp"},"tls":{"termination":"edge"},"to":{"kind":"Service","name":"sonarqube","weight":100},"wildcardPolicy":"None"}}
+    openshift.io/host.generated: 'true'
+  managedFields:
+    - manager: argocd-application-controller
+      operation: Update
+      apiVersion: route.openshift.io/v1
+      time: '2023-10-17T08:30:41Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:kubectl.kubernetes.io/last-applied-configuration': {}
+          'f:labels':
+            .: {}
+            'f:app': {}
+            'f:app.kubernetes.io/instance': {}
+        'f:spec':
+          'f:port':
+            .: {}
+            'f:targetPort': {}
+          'f:tls':
+            .: {}
+            'f:termination': {}
+          'f:to':
+            'f:kind': {}
+            'f:name': {}
+            'f:weight': {}
+          'f:wildcardPolicy': {}
+    - manager: openshift-router
+      operation: Update
+      apiVersion: route.openshift.io/v1
+      time: '2023-10-17T08:30:41Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:ingress': {}
+      subresource: status
+spec:
+  host: sonarqube-sonarqube.apps.cluster-gm5jr.gm5jr.sandbox2050.opentlc.com
+  to:
+    kind: Service
+    name: sonarqube
+    weight: 100
+  port:
+    targetPort: 9000-tcp
+  tls:
+    termination: edge
+  wildcardPolicy: None
+status:
+  ingress:
+    - host: sonarqube-sonarqube.apps.cluster-gm5jr.gm5jr.sandbox2050.opentlc.com
+      routerName: default
+      conditions:
+        - type: Admitted
+          status: 'True'
+          lastTransitionTime: '2023-10-17T08:30:41Z'
+      wildcardPolicy: None
+      routerCanonicalHostname: router-default.apps.cluster-gm5jr.gm5jr.sandbox2050.opentlc.com

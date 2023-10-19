@@ -1,0 +1,61 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: sonarqube
+  namespace: sonarqube
+  uid: 85aeb20a-f570-4ea7-b359-dd5575b26798
+  resourceVersion: '88549'
+  creationTimestamp: '2023-10-17T08:30:35Z'
+  labels:
+    app: sonarqube
+    app.kubernetes.io/instance: sonarqube-local-cluster
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"sonarqube","app.kubernetes.io/instance":"sonarqube-local-cluster"},"name":"sonarqube","namespace":"sonarqube"},"spec":{"ports":[{"name":"9000-tcp","port":9000}],"selector":{"deploymentconfig":"sonarqube"}}}
+  managedFields:
+    - manager: argocd-application-controller
+      operation: Update
+      apiVersion: v1
+      time: '2023-10-17T08:30:35Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:kubectl.kubernetes.io/last-applied-configuration': {}
+          'f:labels':
+            .: {}
+            'f:app': {}
+            'f:app.kubernetes.io/instance': {}
+        'f:spec':
+          'f:internalTrafficPolicy': {}
+          'f:ports':
+            .: {}
+            'k:{"port":9000,"protocol":"TCP"}':
+              .: {}
+              'f:name': {}
+              'f:port': {}
+              'f:protocol': {}
+              'f:targetPort': {}
+          'f:selector': {}
+          'f:sessionAffinity': {}
+          'f:type': {}
+spec:
+  clusterIP: 172.30.27.109
+  ipFamilies:
+    - IPv4
+  ports:
+    - name: 9000-tcp
+      protocol: TCP
+      port: 9000
+      targetPort: 9000
+  internalTrafficPolicy: Cluster
+  clusterIPs:
+    - 172.30.27.109
+  type: ClusterIP
+  ipFamilyPolicy: SingleStack
+  sessionAffinity: None
+  selector:
+    deploymentconfig: sonarqube
+status:
+  loadBalancer: {}

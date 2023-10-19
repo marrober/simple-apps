@@ -1,0 +1,269 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: '1'
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"sonarqube","app.kubernetes.io/instance":"sonarqube-local-cluster","template":"postgresql-persistent-template"},"name":"sonardb","namespace":"sonarqube"},"spec":{"replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"name":"sonardb"}},"strategy":{"type":"Recreate"},"template":{"metadata":{"labels":{"name":"sonardb"}},"spec":{"containers":[{"env":[{"name":"POSTGRESQL_USER","valueFrom":{"secretKeyRef":{"key":"database-user","name":"sonardb"}}},{"name":"POSTGRESQL_PASSWORD","valueFrom":{"secretKeyRef":{"key":"database-password","name":"sonardb"}}},{"name":"POSTGRESQL_DATABASE","valueFrom":{"secretKeyRef":{"key":"database-name","name":"sonardb"}}}],"image":"image-registry.openshift-image-registry.svc:5000/openshift/postgresql","imagePullPolicy":"IfNotPresent","livenessProbe":{"failureThreshold":3,"initialDelaySeconds":30,"periodSeconds":10,"successThreshold":1,"tcpSocket":{"port":5432},"timeoutSeconds":1},"name":"postgresql","ports":[{"containerPort":5432,"protocol":"TCP"}],"readinessProbe":{"exec":{"command":["/bin/sh","-i","-c","psql
+      -h 127.0.0.1 -U $POSTGRESQL_USER -q -d $POSTGRESQL_DATABASE -c 'SELECT
+      1'"]},"failureThreshold":3,"initialDelaySeconds":5,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":1},"resources":{"limits":{"cpu":"1","memory":"1Gi"},"requests":{"memory":"1Gi"}},"securityContext":{"privileged":true},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/var/lib/pgsql/data","name":"sonardb-data"}]}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","terminationGracePeriodSeconds":30,"volumes":[{"name":"sonardb-data","persistentVolumeClaim":{"claimName":"sonardb"}}]}}}}
+  resourceVersion: '90561'
+  name: sonardb
+  uid: 11eae5cf-e694-4cb3-aab4-80dadad8a27f
+  creationTimestamp: '2023-10-17T08:30:35Z'
+  generation: 1
+  managedFields:
+    - manager: argocd-application-controller
+      operation: Update
+      apiVersion: apps/v1
+      time: '2023-10-17T08:30:35Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:kubectl.kubernetes.io/last-applied-configuration': {}
+          'f:labels':
+            .: {}
+            'f:app': {}
+            'f:app.kubernetes.io/instance': {}
+            'f:template': {}
+        'f:spec':
+          'f:progressDeadlineSeconds': {}
+          'f:replicas': {}
+          'f:revisionHistoryLimit': {}
+          'f:selector': {}
+          'f:strategy':
+            'f:type': {}
+          'f:template':
+            'f:metadata':
+              'f:labels':
+                .: {}
+                'f:name': {}
+            'f:spec':
+              'f:containers':
+                'k:{"name":"postgresql"}':
+                  'f:image': {}
+                  'f:volumeMounts':
+                    .: {}
+                    'k:{"mountPath":"/var/lib/pgsql/data"}':
+                      .: {}
+                      'f:mountPath': {}
+                      'f:name': {}
+                  'f:terminationMessagePolicy': {}
+                  .: {}
+                  'f:resources':
+                    .: {}
+                    'f:limits':
+                      .: {}
+                      'f:cpu': {}
+                      'f:memory': {}
+                    'f:requests':
+                      .: {}
+                      'f:memory': {}
+                  'f:livenessProbe':
+                    .: {}
+                    'f:failureThreshold': {}
+                    'f:initialDelaySeconds': {}
+                    'f:periodSeconds': {}
+                    'f:successThreshold': {}
+                    'f:tcpSocket':
+                      .: {}
+                      'f:port': {}
+                    'f:timeoutSeconds': {}
+                  'f:env':
+                    .: {}
+                    'k:{"name":"POSTGRESQL_DATABASE"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:secretKeyRef': {}
+                    'k:{"name":"POSTGRESQL_PASSWORD"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:secretKeyRef': {}
+                    'k:{"name":"POSTGRESQL_USER"}':
+                      .: {}
+                      'f:name': {}
+                      'f:valueFrom':
+                        .: {}
+                        'f:secretKeyRef': {}
+                  'f:readinessProbe':
+                    .: {}
+                    'f:exec':
+                      .: {}
+                      'f:command': {}
+                    'f:failureThreshold': {}
+                    'f:initialDelaySeconds': {}
+                    'f:periodSeconds': {}
+                    'f:successThreshold': {}
+                    'f:timeoutSeconds': {}
+                  'f:securityContext':
+                    .: {}
+                    'f:privileged': {}
+                  'f:terminationMessagePath': {}
+                  'f:imagePullPolicy': {}
+                  'f:ports':
+                    .: {}
+                    'k:{"containerPort":5432,"protocol":"TCP"}':
+                      .: {}
+                      'f:containerPort': {}
+                      'f:protocol': {}
+                  'f:name': {}
+              'f:dnsPolicy': {}
+              'f:restartPolicy': {}
+              'f:schedulerName': {}
+              'f:securityContext': {}
+              'f:terminationGracePeriodSeconds': {}
+              'f:volumes':
+                .: {}
+                'k:{"name":"sonardb-data"}':
+                  .: {}
+                  'f:name': {}
+                  'f:persistentVolumeClaim':
+                    .: {}
+                    'f:claimName': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: apps/v1
+      time: '2023-10-17T08:31:17Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            'f:deployment.kubernetes.io/revision': {}
+        'f:status':
+          'f:availableReplicas': {}
+          'f:conditions':
+            .: {}
+            'k:{"type":"Available"}':
+              .: {}
+              'f:lastTransitionTime': {}
+              'f:lastUpdateTime': {}
+              'f:message': {}
+              'f:reason': {}
+              'f:status': {}
+              'f:type': {}
+            'k:{"type":"Progressing"}':
+              .: {}
+              'f:lastTransitionTime': {}
+              'f:lastUpdateTime': {}
+              'f:message': {}
+              'f:reason': {}
+              'f:status': {}
+              'f:type': {}
+          'f:observedGeneration': {}
+          'f:readyReplicas': {}
+          'f:replicas': {}
+          'f:updatedReplicas': {}
+      subresource: status
+  namespace: sonarqube
+  labels:
+    app: sonarqube
+    app.kubernetes.io/instance: sonarqube-local-cluster
+    template: postgresql-persistent-template
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: sonardb
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        name: sonardb
+    spec:
+      volumes:
+        - name: sonardb-data
+          persistentVolumeClaim:
+            claimName: sonardb
+      containers:
+        - resources:
+            limits:
+              cpu: '1'
+              memory: 1Gi
+            requests:
+              memory: 1Gi
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - '-i'
+                - '-c'
+                - >-
+                  psql -h 127.0.0.1 -U $POSTGRESQL_USER -q -d
+                  $POSTGRESQL_DATABASE -c 'SELECT 1'
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          terminationMessagePath: /dev/termination-log
+          name: postgresql
+          livenessProbe:
+            tcpSocket:
+              port: 5432
+            initialDelaySeconds: 30
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          env:
+            - name: POSTGRESQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: sonardb
+                  key: database-user
+            - name: POSTGRESQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: sonardb
+                  key: database-password
+            - name: POSTGRESQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: sonardb
+                  key: database-name
+          securityContext:
+            privileged: true
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: sonardb-data
+              mountPath: /var/lib/pgsql/data
+          terminationMessagePolicy: File
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/openshift/postgresql
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+status:
+  observedGeneration: 1
+  replicas: 1
+  updatedReplicas: 1
+  readyReplicas: 1
+  availableReplicas: 1
+  conditions:
+    - type: Available
+      status: 'True'
+      lastUpdateTime: '2023-10-17T08:31:17Z'
+      lastTransitionTime: '2023-10-17T08:31:17Z'
+      reason: MinimumReplicasAvailable
+      message: Deployment has minimum availability.
+    - type: Progressing
+      status: 'True'
+      lastUpdateTime: '2023-10-17T08:31:17Z'
+      lastTransitionTime: '2023-10-17T08:30:38Z'
+      reason: NewReplicaSetAvailable
+      message: ReplicaSet "sonardb-85fd97b9" has successfully progressed.
