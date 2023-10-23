@@ -4,7 +4,7 @@ metadata:
   name: simple-pipeline-4-ci
   namespace: openshift-gitops
 spec:
-  project: simple-apps-4-ci
+  project: simple-apps-4
   destination:
     namespace: simple-pipeline-4-ci
     server: https://kubernetes.default.svc
