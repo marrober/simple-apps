@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
 - namespace.yaml
 - role-bindings/argocd-admin.yaml
+- role-bindings/ci-pipeline-role.yaml
 - argocd-management-app.yaml
 - argocd-project-simple-apps.yaml
 - argocd-application.yaml
