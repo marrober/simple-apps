@@ -7,6 +7,6 @@ resources:
 - role-bindings/ci-pipeline-role.yaml
 - argocd-management-app.yaml
 - argocd-project-simple-apps.yaml
-- argocd-application.yaml
+# - argocd-application.yaml
 - argocd-ci-process.yaml
 
