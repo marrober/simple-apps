@@ -7,7 +7,4 @@ resources:
 - application-pipeline/tasks/build.yaml
 - application-pipeline/tasks/pushImageToOCPImageStream.yaml
 - application-pipeline/smee/deployment.yaml
-
-bases:
-- application-pipeline/triggers
-
+- application-pipeline/triggers/
