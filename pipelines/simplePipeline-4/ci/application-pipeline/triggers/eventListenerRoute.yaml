@@ -3,10 +3,10 @@ kind: Route
 metadata:
   labels:
     eventlistener: simple-pipeline-listener-interceptor
-  name: simple-pipeline-listener-el
+  name: app-build-listener-el
 spec:
   port:
     targetPort: http-listener
   to:
     kind: Service
-    name: el-simple-pipeline-listener-interceptor
+    name: el-app-build-listener-interceptor

@@ -1,10 +1,10 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  generateName: simple-pipeline-pr-
+  generateName: app-build-pr-
 spec:
   pipelineRef:
-    name: simple-pipeline
+    name: app-build
   params:
       # Use this Git URL to pull a simple sample application and dockerfile for the construction of the container image. 
       # Update this reference if you clone the repo and make changes or use a completely difference repo.

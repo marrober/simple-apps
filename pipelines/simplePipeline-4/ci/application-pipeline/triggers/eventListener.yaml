@@ -1,7 +1,7 @@
 apiVersion: triggers.tekton.dev/v1alpha1
 kind: EventListener
 metadata:
-  name: simple-pipeline-listener-interceptor
+  name: app-build-listener
 spec:
   serviceAccountName: pipeline
   triggers:
@@ -17,6 +17,6 @@ spec:
         - key: branch
           expression: "body.ref.split('/')[2]"
     bindings:
-      - ref: simple-pipeline-binding
+      - ref: app-build-binding
     template:
-      ref: simple-pipeline-template
+      ref: app-build-template
