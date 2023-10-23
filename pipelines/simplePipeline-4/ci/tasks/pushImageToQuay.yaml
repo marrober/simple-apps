@@ -1,0 +1,74 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: push-image-to-quay
+spec:
+  params:
+    - name: quay-io-account
+      description: The quay.io account that matches the credentials stored in the mounted secret.
+      type: string
+      default: ""
+    - name: quay-io-repository
+      description: The quay.io repository in which to store the image.
+      type: string
+      default: ""
+    - name: quay-io-image-tag-name
+      description: The tag to use to identify the image.
+      type: string
+      default: "latest"
+    - name: STORAGE_DRIVER
+      description: The Buildah storage STORAGE_DRIVER
+      type: string
+  steps:
+    - name: buildah-tag-image
+      command:
+        - buildah
+        - tag
+        - '--storage-driver=$(params.STORAGE_DRIVER)'
+        - '--root'
+        - '/files/buildah-containers'
+        - 'my-container-image:latest'
+        - 'quay.io/$(params.quay-io-account)/$(params.quay-io-repository):$(params.quay-io-image-tag-name)'
+      image: registry.redhat.io/rhel8/buildah
+      securityContext:
+        capabilities:
+          add: ["SETFCAP"]
+      resources: {}
+    - name: list-images
+      command:
+        - buildah
+        - images
+        - '--storage-driver=$(params.STORAGE_DRIVER)'
+        - '--root'
+        - '/files/buildah-containers'
+      image: registry.redhat.io/rhel8/buildah
+      securityContext:
+        capabilities:
+          add: ["SETFCAP"]
+      workingDir: /
+      resources: {}
+    - name: push-image-to-quay
+      command:
+        - buildah
+        - push
+        - '--storage-driver=$(params.STORAGE_DRIVER)'
+        - '--authfile'
+        - /etc/secret-volume/.dockerconfigjson
+        - '--root'
+        - '/files/buildah-containers'
+        - 'quay.io/$(params.quay-io-account)/$(params.quay-io-repository):$(params.quay-io-image-tag-name)'
+      image: registry.redhat.io/rhel8/buildah
+      securityContext:
+        capabilities:
+          add: ["SETFCAP"]
+      volumeMounts:
+        - name: quay-auth-secret
+          mountPath: /etc/secret-volume
+          readOnly: true
+  volumes:
+    - name: quay-auth-secret
+      secret:
+        secretName: quay-auth-secret
+  workspaces:
+  - name: files
+    mountPath: /files

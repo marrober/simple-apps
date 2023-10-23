@@ -1,0 +1,20 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: my-app
+  labels:
+    app: my-app
+    app.kubernetes.io/component: my-app
+    app.kubernetes.io/instance: my-app
+    app.kubernetes.io/name: my-app
+spec:
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
+  sessionAffinity: None
+  selector:
+    app: my-app
+    deployment: my-app
