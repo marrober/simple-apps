@@ -3,7 +3,7 @@ kind: Route
 metadata:
   labels:
     eventlistener: simple-pipeline-listener-interceptor
-  name: app-build-listener-el
+  name: app-build-listener
 spec:
   port:
     targetPort: http-listener
