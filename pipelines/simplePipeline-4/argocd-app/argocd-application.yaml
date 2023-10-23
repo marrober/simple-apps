@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: simple-pipeline-4
+  name: simple-pipeline-4-app
   namespace: openshift-gitops
 spec:
   project: simple-apps-4
