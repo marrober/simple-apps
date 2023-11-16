@@ -1,0 +1,59 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"tekton.dev/v1beta1","kind":"Task","metadata":{"annotations":{},"labels":{"app.kubernetes.io/instance":"globex-ui-pipeline-local-cluster"},"name":"scan-export-sbom","namespace":"ci"},"spec":{"params":[{"default":"https://cyclonedx-bom-repo-server-cyclonedx.apps.cluster-rrcp2.rrcp2.sandbox2991.opentlc.com","name":"cyclonedxHostUrl","type":"string"},{"default":null,"name":"image","type":"string"}],"results":[{"description":"The url location of the generate SBOM","name":"sbomUrl"}],"steps":[{"args":["download","sbom","$(params.image)","--output-file","bom.json"],"image":"quay.io/redhat-appstudio/cosign:v2.1.1","name":"get-sbom","workingDir":"/workspace/repository"},{"image":"quay.io/redhat-gpte/grype:0.65.2","name":"scan-sbom","resources":{"requests":{"memory":"1Gi"}},"script":"set -x\ngrype sbom:./bom.json -o table\n","workingDir":"/workspace/repository"},{"image":"ubi9/ubi","name":"export-sbom","resources":{"requests":{"memory":"1Gi"}},"script":"set +x\ncurl -X POST $(params.cyclonedxHostUrl)/v1/bom -H \"Content-Type: application/vnd.cyclonedx+json; version=1.4\" -H \"Accept: */*\" -d @bom.json -D /tmp/header.txt \u003e /dev/null\nLOCATION=$(cat /tmp/header.txt | grep location: | awk '{print $2}' | sed 's|http:|https:|g')\necho $LOCATION\nprintf \"%s\" \"$LOCATION\" \u003e \"$(results.sbomUrl.path)\"\n","workingDir":"/workspace/repository"}],"workspaces":[{"name":"repository"}]}}
+  creationTimestamp: "2023-11-14T12:33:33Z"
+  generation: 1
+  labels:
+    app.kubernetes.io/instance: globex-ui-pipeline-local-cluster
+  name: scan-export-sbom
+  namespace: ci
+  resourceVersion: "103499"
+  uid: f0a6caf8-e529-4017-9fe0-f15e4a9f5d43
+spec:
+  params:
+  - default: https://cyclonedx-bom-repo-server-cyclonedx.apps.cluster-rrcp2.rrcp2.sandbox2991.opentlc.com
+    name: cyclonedxHostUrl
+    type: string
+  - name: image
+    type: string
+  results:
+  - description: The url location of the generate SBOM
+    name: sbomUrl
+    type: string
+  steps:
+  - args:
+    - download
+    - sbom
+    - $(params.image)
+    - --output-file
+    - bom.json
+    image: quay.io/redhat-appstudio/cosign:v2.1.1
+    name: get-sbom
+    resources: {}
+    workingDir: /workspace/repository
+  - image: quay.io/redhat-gpte/grype:0.65.2
+    name: scan-sbom
+    resources:
+      requests:
+        memory: 1Gi
+    script: |
+      set -x
+      grype sbom:./bom.json -o table
+    workingDir: /workspace/repository
+  - image: ubi9/ubi
+    name: export-sbom
+    resources:
+      requests:
+        memory: 1Gi
+    script: |
+      set +x
+      curl -X POST $(params.cyclonedxHostUrl)/v1/bom -H "Content-Type: application/vnd.cyclonedx+json; version=1.4" -H "Accept: */*" -d @bom.json -D /tmp/header.txt > /dev/null
+      LOCATION=$(cat /tmp/header.txt | grep location: | awk '{print $2}' | sed 's|http:|https:|g')
+      echo $LOCATION
+      printf "%s" "$LOCATION" > "$(results.sbomUrl.path)"
+    workingDir: /workspace/repository
+  workspaces:
+  - name: repository

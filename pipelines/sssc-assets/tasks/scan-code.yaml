@@ -4,14 +4,14 @@ metadata:
   annotations:
     kubectl.kubernetes.io/last-applied-configuration: |
       {"apiVersion":"tekton.dev/v1beta1","kind":"Task","metadata":{"annotations":{},"labels":{"app.kubernetes.io/instance":"globex-ui-pipeline-local-cluster"},"name":"scan-code","namespace":"ci"},"spec":{"params":[{"default":"docker.io/sonarsource/sonar-scanner-cli:4.7","name":"scanImage","type":"string"},{"default":"https://sonarqube-sonarqube.apps.cluster-tpn6s.sandbox2653.opentlc.com/","name":"sonarqubeHostUrl","type":"string"},{"default":"object-detection-rest","name":"sonarqubeProjectKey","type":"string"},{"default":"object-detection-rest-sonarqube-secret","name":"sonarqubeProjectSecret","type":"string"},{"default":"true","name":"verbose","type":"string"}],"steps":[{"env":[{"name":"SONAR_TOKEN_WEB_UI","valueFrom":{"secretKeyRef":{"key":"token","name":"$(params.sonarqubeProjectSecret)"}}}],"image":"$(params.scanImage)","name":"scan-code","script":"set -x\necho $(ls -a)\nsonar-scanner -X -Dsonar.projectKey=$(params.sonarqubeProjectKey) -Dsonar.sources=./ -Dsonar.host.url=$(params.sonarqubeHostUrl) -Dsonar.login=$SONAR_TOKEN_WEB_UI\n","workingDir":"/workspace/repository"}],"workspaces":[{"name":"repository"}]}}
-  creationTimestamp: "2023-10-17T08:38:37Z"
+  creationTimestamp: "2023-11-14T12:33:33Z"
   generation: 1
   labels:
     app.kubernetes.io/instance: globex-ui-pipeline-local-cluster
   name: scan-code
   namespace: ci
-  resourceVersion: "110129"
-  uid: c735f758-4d42-4981-b0f5-8dbe55e7643c
+  resourceVersion: "103501"
+  uid: 95fca466-1430-4864-8014-86ca5593da2d
 spec:
   params:
   - default: docker.io/sonarsource/sonar-scanner-cli:4.7

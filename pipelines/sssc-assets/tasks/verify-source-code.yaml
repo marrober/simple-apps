@@ -1,9 +1,20 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"tekton.dev/v1beta1","kind":"Task","metadata":{"annotations":{},"labels":{"app.kubernetes.io/instance":"globex-ui-pipeline-local-cluster"},"name":"verify-source-code","namespace":"ci"},"spec":{"description":"This task verifies the latest commit and signature against the gpg public key","steps":[{"image":"alpine/git:latest","name":"git-verify","script":"set -x\napk add gpg-agent\ngpg --import /workspace/secrets/public.key\ngit config --global --add safe.directory /workspace/repository\ngit verify-commit HEAD || (echo \"Unable to verify commit at HEAD!\" \u0026\u0026 exit 1)\n","workingDir":"/workspace/repository"}],"workspaces":[{"name":"repository"},{"name":"secrets"}]}}
+  creationTimestamp: "2023-11-14T12:33:33Z"
+  generation: 1
+  labels:
+    app.kubernetes.io/instance: globex-ui-pipeline-local-cluster
   name: verify-source-code
+  namespace: ci
+  resourceVersion: "103502"
+  uid: a55cc619-a07f-4517-98eb-ddcdf18d093b
 spec:
-  description: This task verifies the latest commit and signature against a gpg public key
+  description: This task verifies the latest commit and signature against the gpg
+    public key
   steps:
   - image: alpine/git:latest
     name: git-verify
