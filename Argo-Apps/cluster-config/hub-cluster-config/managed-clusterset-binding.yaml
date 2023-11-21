@@ -4,4 +4,4 @@ metadata:
   name: default
   namespace: openshift-gitops
 spec:
-  clusterSet: default
+  clusterSet: dev-clusters

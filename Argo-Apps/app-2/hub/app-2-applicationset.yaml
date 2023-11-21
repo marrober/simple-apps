@@ -9,7 +9,7 @@ spec:
         configMapRef: acm-placement
         labelSelector:
           matchLabels:
-            cluster.open-cluster-management.io/placement: default
+            cluster.open-cluster-management.io/placement: dev-clusters
   template:
     metadata:
       annotations:
