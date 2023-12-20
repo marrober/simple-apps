@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: image-check-
+spec:
+  pipelineRef:
+    name: image-check-pipeline
+  params:
+    - name: acs_central_endpoint
+      value: acs-secret
+    - name: acs_api_token
+      value: acs-secret
+    - name: roxctl-output-format
+      value: "table"
+    - name: public-url
+      value: "quay.io/marrober/liberty-rest:latest"
+
