@@ -1,0 +1,79 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: acs-image-build-check
+spec:
+  params:
+    - name: acs_central_endpoint
+      description: Secret containing the address:port tuple for ACS Central (example - rox.stackrox.io:443)
+      type: string
+    - name: acs_api_token
+      description: Secret containing the ACS API token with CI permissions
+      type: string
+    - name: public-url
+      type: string
+    - name: roxctl-output-format
+      description : Roxctl output format - either table, json or csv
+      type: string
+  results:
+    - name: scan-result
+  steps:
+##------------------------------------------------------------------
+# Rox iamge check - check built image
+##------------------------------------------------------------------
+    - name: rox-image-build-check
+      env:
+        - name: ROX_API_TOKEN
+          valueFrom:
+            secretKeyRef:
+              key: acs_api_token
+              name: $(params.acs_api_token)
+        - name: ROX_CENTRAL_ENDPOINT
+          valueFrom:
+            secretKeyRef:
+              key: acs_central_endpoint
+              name: $(params.acs_central_endpoint)
+      image: registry.access.redhat.com/ubi8/ubi:latest
+      resources: {}
+      script: >-
+        #!/usr/bin/env bash
+
+        set +x
+
+        curl -s -k -L -H "Authorization: Bearer $ROX_API_TOKEN"
+        https://$ROX_CENTRAL_ENDPOINT/api/cli/download/roxctl-linux --output
+        ./roxctl > /dev/null; echo "Getting roxctl"
+
+        chmod +x ./roxctl  > /dev/null
+
+        failTask="false"
+
+        echo "image to be scanned : $(params.public-url)"
+
+        ./roxctl image scan --image $(params.public-url) --insecure-skip-tls-verify -e $ROX_CENTRAL_ENDPOINT --force > /dev/null 2>&1
+
+        ./roxctl image check --image $(params.public-url) --insecure-skip-tls-verify -e $ROX_CENTRAL_ENDPOINT -o $(params.roxctl-output-format) --retries 0 > imageScanResult 2>&1
+
+        cat imageScanResult
+
+        imageScanResultNewVar=`cat imageScanResult`
+
+        if [[ "$imageScanResultNewVar" == *"failed policies found"* ]]; then
+          failTask=true
+        fi
+
+        if [[ "$failTask" == "true" ]]; then
+
+          echo "Setting overall result to fail"
+
+          echo -n "fail" | tee $(results.scan-result.path) >> /dev/null
+
+        else
+
+          echo "Setting overall result to pass"
+
+          echo -n "pass" | tee $(results.scan-result.path) >> /dev/null
+
+        fi
+
+      workingDir: /workspace

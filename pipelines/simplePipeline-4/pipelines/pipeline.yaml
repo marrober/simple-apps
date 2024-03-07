@@ -1,0 +1,31 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: image-check-pipeline
+spec:
+  params:
+  - name: acs_central_endpoint              # Advanced Cluster Security endpoint
+    type: string
+  - name: acs_api_token                     # Advanced Cluster Security access token secret
+    type: string
+  - name: roxctl-output-format              # Advanced Cluster Security image scan output format
+    type: string
+  - name: public-url
+    type: string
+  tasks:
+##------------------------------------------------------------------
+# Perform image check
+##------------------------------------------------------------------
+  - name: image-check
+    params:
+    - name: acs_central_endpoint
+      value: $(params.acs_central_endpoint)
+    - name: acs_api_token
+      value: $(params.acs_api_token)
+    - name: public-url
+      value: $(params.public-url)
+    - name: roxctl-output-format
+      value: $(params.roxctl-output-format)
+    taskRef:
+      kind: Task
+      name: acs-image-build-check
