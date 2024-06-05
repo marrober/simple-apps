@@ -22,7 +22,7 @@ spec:
     spec:
       destination:
         namespace: app-1
-        server: https://kubernetes.default.svc
+        server: '{{server}}'
       project: app-1
       source:
         path: Argo-Apps/app-1
