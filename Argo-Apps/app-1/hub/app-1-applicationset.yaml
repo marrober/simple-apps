@@ -6,10 +6,10 @@ metadata:
 spec:
   generators:
     - clusterDecisionResource:
-        configMapRef: acm-placement
+        configMapRef: ocm-placement-generator
         labelSelector:
           matchLabels:
-            cluster.open-cluster-management.io/placement: dev-clusters
+            cluster.open-cluster-management.io/placement: app1-app-placement
   template:
     metadata:
       annotations:
@@ -21,7 +21,7 @@ spec:
       name: '{{name}}-app-1'
     spec:
       destination:
-        namespace: app-1
+        namespace: argo-app-1
         server: '{{server}}'
       project: app-1
       source:
