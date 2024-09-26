@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
 - namespace.yaml
 - managed-cluster-policy-objects.yaml
-- app-3-app-placement.yaml  
+- app-1-app-placement.yaml  
 - app-project.yaml  
 - clusterset-binding.yaml  
-- app-3-applicationset.yaml  
+- app-1-applicationset.yaml  

@@ -2,6 +2,7 @@ apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
   name: app-3-managed-cluster-objects
+  namespace: argo-app-3
   labels:
     policy: app-3-managed-cluster-objects
 spec:
@@ -28,6 +29,7 @@ spec:
         kind: ConfigurationPolicy
         metadata:
           name: app-3-project
+          namespace: argo-app-3
         spec:
           severity: medium
           remediationAction: enforce
@@ -53,6 +55,7 @@ spec:
         kind: ConfigurationPolicy
         metadata:
           name: app-3-managed-cluster-binding
+          namespace: argo-app-3
         spec:
           severity: medium
           remediationAction: enforce
@@ -77,6 +80,7 @@ apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
   name: binding-app-3-managed-cluster-objects
+  namespace: argo-app-3
 placementRef:
   name: placement-app-3-managed-cluster-objects
   kind: PlacementRule
@@ -90,6 +94,7 @@ apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
   name: placement-app-3-managed-cluster-objects
+  namespace: argo-app-3
 spec:
   clusterConditions:
     - status: "True"

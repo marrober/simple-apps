@@ -2,6 +2,6 @@ apiVersion: cluster.open-cluster-management.io/v1beta2
 kind: ManagedClusterSetBinding
 metadata:
   name: dev-clusters
-  namespace: openshift-gitops
+  namespace: argo-app-1
 spec:
   clusterSet: dev-clusters
