@@ -1,0 +1,99 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: app-3-managed-cluster-objects
+  labels:
+    policy: app-3-managed-cluster-objects
+spec:
+  remediationAction: enforce
+  disabled: false
+  policy-templates:
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: app-3-namespace
+        spec:
+          severity: medium
+          remediationAction: enforce
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                kind: Project
+                apiVersion: project.openshift.io/v1
+                metadata:
+                  name: argo-app-3
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: app-3-project
+        spec:
+          severity: medium
+          remediationAction: enforce
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: argoproj.io/v1alpha1
+                kind: AppProject
+                metadata:
+                  name: app-3
+                  namespace: openshift-gitops
+                spec:
+                  clusterResourceWhitelist:
+                  - group: '*'
+                    kind: '*'
+                  destinations:
+                  - namespace: '*'
+                    server: '*'
+                  sourceRepos:
+                  - '*'
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: app-3-managed-cluster-binding
+        spec:
+          severity: medium
+          remediationAction: enforce
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: rbac.authorization.k8s.io/v1
+                kind: RoleBinding
+                metadata:
+                  name: argocd-admin
+                  namespace: argo-app-3
+                roleRef:
+                  apiGroup: rbac.authorization.k8s.io
+                  kind: ClusterRole
+                  name: admin
+                subjects:
+                - kind: ServiceAccount
+                  name: openshift-gitops-argocd-application-controller
+                  namespace: openshift-gitops
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: binding-app-3-managed-cluster-objects
+placementRef:
+  name: placement-app-3-managed-cluster-objects
+  kind: PlacementRule
+  apiGroup: apps.open-cluster-management.io
+subjects:
+  - name: app-3-managed-cluster-objects
+    kind: Policy
+    apiGroup: policy.open-cluster-management.io
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: placement-app-3-managed-cluster-objects
+spec:
+  clusterConditions:
+    - status: "True"
+      type: ManagedClusterConditionAvailable
+  clusterSelector:
+    matchExpressions:
+      - {key: vendor, operator: In, values: ["OpenShift"]}
