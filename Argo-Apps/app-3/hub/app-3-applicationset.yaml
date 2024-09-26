@@ -9,7 +9,7 @@ spec:
         configMapRef: ocm-placement-generator
         labelSelector:
           matchLabels:
-            cluster.open-cluster-management.io/placement: dev-clusters
+            cluster.open-cluster-management.io/placement: prod-clusters
   template:
     metadata:
       annotations:
