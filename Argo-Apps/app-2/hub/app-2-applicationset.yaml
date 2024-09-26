@@ -21,7 +21,7 @@ spec:
       name: '{{name}}-app-2'
     spec:
       destination:
-        namespace: app-2
+        namespace: argo-app-2
         server: '{{server}}'
       project: app-2
       source:
