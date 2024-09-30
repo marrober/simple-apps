@@ -25,7 +25,7 @@ spec:
         server: '{{server}}'
       project: app-2
       source:
-        path: Argo-Apps/app-2
+        path: Argo-Apps/app-2/app-deployment
         repoURL: https://github.com/marrober/simple-apps.git
         targetRevision: main
       syncPolicy:

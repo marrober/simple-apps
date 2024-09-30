@@ -22,7 +22,7 @@ spec:
                 kind: Project
                 apiVersion: project.openshift.io/v1
                 metadata:
-                  name: argo-app-2
+                  name: argo-app-1
     - objectDefinition:
         apiVersion: policy.open-cluster-management.io/v1
         kind: ConfigurationPolicy
@@ -37,7 +37,7 @@ spec:
                 apiVersion: argoproj.io/v1alpha1
                 kind: AppProject
                 metadata:
-                  name: app-2
+                  name: app-1
                   namespace: openshift-gitops
                 spec:
                   clusterResourceWhitelist:
@@ -63,7 +63,7 @@ spec:
                 kind: RoleBinding
                 metadata:
                   name: argocd-admin
-                  namespace: argo-app-2
+                  namespace: argo-app-1
                 roleRef:
                   apiGroup: rbac.authorization.k8s.io
                   kind: ClusterRole
@@ -96,4 +96,4 @@ spec:
       type: ManagedClusterConditionAvailable
   clusterSelector:
     matchExpressions:
-      - {key: environment, operator: In, values: ["dev"]}
+      - {key: vendor, operator: In, values: ["OpenShift"]}

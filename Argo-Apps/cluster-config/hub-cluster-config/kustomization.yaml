@@ -2,5 +2,11 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- namespace.yaml
-- deployment.yaml
+- gitops-cluster.yaml
+- gitops-policy-admin-cluster-role.yaml  
+- managed-cluster-placement.yaml
+- managed-clusterset-binding-prod-clusters.yaml  
+- ocm-placement-generator-cm.yaml
+- gitops-policy-admin-cluster-role-binding.yaml
+- managed-clusterset-binding-dev-clusters.yaml
+- ocm-placement-consumer-role.yaml
