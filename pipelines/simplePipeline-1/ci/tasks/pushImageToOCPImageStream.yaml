@@ -43,7 +43,7 @@ spec:
 
         localhost/my-container-image:latest \
 
-        docker://$(params.imagestream-url):$tag
+        docker://$(params.imagestream-url):latest
 
       image: registry.redhat.io/rhel8/buildah    
       securityContext:
