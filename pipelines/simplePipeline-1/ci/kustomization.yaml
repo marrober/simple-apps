@@ -8,4 +8,4 @@ resources:
 - triggers/eventListener.yaml
 - triggers/eventListenerRoute.yaml
 - triggers/triggerBinding.yaml
-- triggers/triggerTemplate.yam
+- triggers/triggerTemplate.yaml
