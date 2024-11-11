@@ -10,3 +10,4 @@ resources:
 - gitops-policy-admin-cluster-role-binding.yaml
 - managed-clusterset-binding-dev-clusters.yaml
 - ocm-placement-consumer-role.yaml
+- gitops-operator/policy-openshift-gitops.yaml
