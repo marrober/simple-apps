@@ -8,46 +8,46 @@ spec:
   remediationAction: enforce
   disabled: false
   policy-templates:
-    - objectDefinition:
-        apiVersion: policy.open-cluster-management.io/v1
-        kind: ConfigurationPolicy
-        metadata:
-          name: app-1-namespace
-        spec:
-          severity: medium
-          remediationAction: enforce
-          object-templates:
-            - complianceType: musthave
-              objectDefinition:
-                kind: Project
-                apiVersion: project.openshift.io/v1
-                metadata:
-                  name: argo-app-1
-    - objectDefinition:
-        apiVersion: policy.open-cluster-management.io/v1
-        kind: ConfigurationPolicy
-        metadata:
-          name: app-1-project
-        spec:
-          severity: medium
-          remediationAction: enforce
-          object-templates:
-            - complianceType: musthave
-              objectDefinition:
-                apiVersion: argoproj.io/v1alpha1
-                kind: AppProject
-                metadata:
-                  name: app-1
-                  namespace: openshift-gitops
-                spec:
-                  clusterResourceWhitelist:
-                  - group: '*'
-                    kind: '*'
-                  destinations:
-                  - namespace: '*'
-                    server: '*'
-                  sourceRepos:
-                  - '*'
+#    - objectDefinition:
+#        apiVersion: policy.open-cluster-management.io/v1
+#        kind: ConfigurationPolicy
+#        metadata:
+#          name: app-1-namespace
+#        spec:
+#          severity: medium
+#          remediationAction: enforce
+#          object-templates:
+#            - complianceType: musthave
+#              objectDefinition:
+#                kind: Project
+#                apiVersion: project.openshift.io/v1
+#                metadata:
+#                  name: argo-app-1
+#    - objectDefinition:
+#        apiVersion: policy.open-cluster-management.io/v1
+#        kind: ConfigurationPolicy
+#        metadata:
+#          name: app-1-project
+#        spec:
+#          severity: medium
+#          remediationAction: enforce
+#          object-templates:
+#            - complianceType: musthave
+#              objectDefinition:
+#                apiVersion: argoproj.io/v1alpha1
+#                kind: AppProject
+#                metadata:
+#                  name: app-1
+#                  namespace: openshift-gitops
+#                spec:
+#                  clusterResourceWhitelist:
+#                  - group: '*'
+#                    kind: '*'
+#                  destinations:
+#                  - namespace: '*'
+#                    server: '*'
+#                  sourceRepos:
+#                  - '*'
     - objectDefinition:
         apiVersion: policy.open-cluster-management.io/v1
         kind: ConfigurationPolicy
