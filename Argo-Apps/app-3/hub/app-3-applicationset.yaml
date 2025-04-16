@@ -4,6 +4,12 @@ metadata:
   name: app-3
   namespace: openshift-gitops
 spec:
+  generators:
+    - clusterDecisionResource:
+        configMapRef: ocm-placement-generator
+        labelSelector:
+          matchLabels:
+            cluster.open-cluster-management.io/placement: dev-clusters
   template:
     metadata:
       annotations:
