@@ -5,7 +5,7 @@ metadata:
   labels:
     app: app-3
 spec:
-  replicas: 10
+  replicas: 4
   selector:
     matchLabels:
       deployment: app-3
@@ -28,8 +28,8 @@ spec:
               cpu: 1
               memory: 500Mi
             requests:
-              cpu: 500m
-              memory: 100Mi
+              cpu: 50m
+              memory: 10Mi
 ---
 kind: Service
 apiVersion: v1
