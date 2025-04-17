@@ -12,6 +12,21 @@ spec:
         apiVersion: policy.open-cluster-management.io/v1
         kind: ConfigurationPolicy
         metadata:
+          name: app-3-namespace
+        spec:
+          severity: medium
+          remediationAction: enforce
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                kind: Project
+                apiVersion: project.openshift.io/v1
+                metadata:
+                  name: argo-app-3
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
           name: app-x-managed-cluster-binding
         spec:
           severity: medium
