@@ -1,0 +1,71 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- namespace.yaml
+- managed-cluster-policy-objects.yaml
+- app-project.yaml  
+- applicationset.yaml  
+
+patches: 
+  - patch: |-
+      - op: replace
+        path: /metadata/name
+        value: argo-app-5
+    target:
+      labelSelector: kustomizeIdentifer=app-to-update
+  - patch: |-
+      - op: replace
+        path: /spec/template/metadata/name
+        value: '{{name}}-argo-app-5'
+    target:
+      labelSelector: kustomizeIdentifer=app-to-update
+      kind: ApplicationSet
+  - patch: |-
+      - op: replace
+        path: /spec/template/spec/project
+        value: argo-app-5
+    target:
+      labelSelector: kustomizeIdentifer=app-to-update
+      kind: ApplicationSet
+  - patch: |-
+      - op: replace
+        path: /spec/template/spec/destination/namespace
+        value: argo-app-5
+    target:
+      labelSelector: kustomizeIdentifer=app-to-update
+      kind: ApplicationSet
+  - patch: |-
+      - op: replace
+        path: /spec/template/spec/source/path
+        value: Argo-Apps/argo-app-5/app-deployment
+    target:
+      labelSelector: kustomizeIdentifer=app-to-update
+      kind: ApplicationSet
+  - patch: |-
+      - op: replace
+        path: /metadata/labels/policy
+        value: app-5-managed-cluster-objects
+    target:
+      labelSelector: kustomizeIdentifer=app-to-update
+  - patch: |-
+      - op: replace
+        path: /spec/policy-templates/0/objectDefinition/spec/object-templates/0/objectDefinition/metadata/namespace
+        value: argo-app-5
+    target:
+      labelSelector: kustomizeIdentifer=app-to-update
+      kind: Policy
+  - patch: |-
+      - op: replace
+        path: /placementRef/name
+        value: argo-app-5
+    target:
+      labelSelector: kustomizeIdentifer=app-to-update
+      kind: PlacementBinding
+  - patch: |-
+      - op: replace
+        path: /subjects/0/name
+        value: argo-app-5
+    target:
+      labelSelector: kustomizeIdentifer=app-to-update
+      kind: PlacementBinding
