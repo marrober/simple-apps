@@ -38,7 +38,7 @@ patches:
   - patch: |-
       - op: replace
         path: /spec/template/spec/source/path
-        value: Argo-Apps/argo-app-5/app-deployment
+        value: Argo-Apps/app-5/app-deployment
     target:
       labelSelector: kustomizeIdentifer=app-to-update
       kind: ApplicationSet
