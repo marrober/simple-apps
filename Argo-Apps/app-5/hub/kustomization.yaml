@@ -78,6 +78,20 @@ patches:
       kind: Policy
   - patch: |-
       - op: replace
+        path: /spec/policy-templates/2/objectDefinition/metadata/name
+        value: argocd-project-app-5
+    target:
+      labelSelector: kustomizeIdentifer=app-to-update
+      kind: Policy
+  - patch: |-
+      - op: replace
+        path: /spec/policy-templates/2/objectDefinition/spec/object-templates/0/objectDefinition/metadata/name
+        value: argo-app-5
+    target:
+      labelSelector: kustomizeIdentifer=app-to-update
+      kind: Policy
+  - patch: |-
+      - op: replace
         path: /placementRef/name
         value: argo-app-5
     target:

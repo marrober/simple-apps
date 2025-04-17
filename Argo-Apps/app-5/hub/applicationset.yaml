@@ -25,7 +25,7 @@ spec:
       destination:
         namespace: argo-argo-app
         server: '{{server}}'
-      project: app-3
+      project: to-replace
       source:
         path: Argo-Apps/argo-app/app-deployment
         repoURL: https://github.com/marrober/simple-apps.git
