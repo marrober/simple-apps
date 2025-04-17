@@ -12,7 +12,8 @@ spec:
         apiVersion: policy.open-cluster-management.io/v1
         kind: ConfigurationPolicy
         metadata:
-          name: app-3-namespace
+          name: argocd-admin
+          namespace: openshift-gitops
         spec:
           severity: medium
           remediationAction: enforce
@@ -38,7 +39,7 @@ spec:
                 kind: RoleBinding
                 metadata:
                   name: argocd-admin
-                  namespace: argo-app-x
+                  namespace: openshift-gitops
                 roleRef:
                   apiGroup: rbac.authorization.k8s.io
                   kind: ClusterRole
