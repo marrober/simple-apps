@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: argo-app
+  namespace: openshift-gitops
+  labels:
+    kustomizeIdentifer: app-to-update
+spec:
+  generators:
+    - clusterDecisionResource:
+        configMapRef: ocm-placement-generator
+        labelSelector:
+          matchLabels:
+            cluster.open-cluster-management.io/placement: dev-clusters
+  template:
+    metadata:
+      annotations:
+        apps.open-cluster-management.io/ocm-managed-cluster: '{{name}}'
+        apps.open-cluster-management.io/ocm-managed-cluster-app-namespace: openshift-gitops
+        argocd.argoproj.io/skip-reconcile: "true" 
+      labels:
+        apps.open-cluster-management.io/pull-to-ocm-managed-cluster: "true" 
+      name: '{{name}}'
+    spec:
+      destination:
+        namespace: argo-argo-app
+        server: '{{server}}'
+      project: to-replace
+      source:
+        path: Argo-Apps/argo-app/app-deployment
+        repoURL: https://github.com/marrober/simple-apps.git
+        targetRevision: main
+      syncPolicy:
+        automated: {}
+        syncOptions:
+        - CreateNamespace=true
+        retry:
+          limit: 5 
+          backoff:
+            duration: 5s
+            factor: 2 
+            maxDuration: 30s

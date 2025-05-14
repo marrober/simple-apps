@@ -1,0 +1,103 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- ../base/
+- ../env/01-dev/
+
+patches: 
+  - patch: |-
+      - op: replace
+        path: /metadata/name
+        value: argo-app-6.1
+    target:
+      labelSelector: kustomizeIdentifer=app-to-update
+  - patch: |-
+      - op: replace
+        path: /spec/template/spec/destination/namespace
+        value: argo-app-6.1
+    target:
+      kind: ApplicationSet
+  - patch: |-
+      - op: replace
+        path: /spec/template/spec/project
+        value: argo-app-6.1
+    target:
+      labelSelector: kustomizeIdentifer=app-to-update
+      kind: ApplicationSet
+  - patch: |-
+      - op: replace
+        path: /spec/template/spec/destination/namespace
+        value: argo-app-6.1
+    target:
+      labelSelector: kustomizeIdentifer=app-to-update
+      kind: ApplicationSet
+  - patch: |-
+      - op: replace
+        path: /spec/template/spec/source/path
+        value: Argo-Apps/app-collection/app-definition
+    target:
+      labelSelector: kustomizeIdentifer=app-to-update
+      kind: ApplicationSet
+  - patch: |-
+      - op: replace
+        path: /metadata/labels/policy
+        value: argo-app-6.1-managed-cluster-objects
+    target:
+      labelSelector: kustomizeIdentifer=app-to-update
+  - patch: |-
+      - op: replace
+        path: /spec/policy-templates/0/objectDefinition/metadata/name
+        value: argo-app-6.1-project
+    target:
+      labelSelector: kustomizeIdentifer=app-to-update
+      kind: Policy
+  - patch: |-
+      - op: replace
+        path: /spec/policy-templates/0/objectDefinition/spec/object-templates/0/objectDefinition/metadata/name
+        value: argo-app-6.1
+    target:
+      labelSelector: kustomizeIdentifer=app-to-update
+      kind: Policy
+  - patch: |-
+      - op: replace
+        path: /spec/policy-templates/1/objectDefinition/metadata/name
+        value: argo-app-6.1-role-binding
+    target:
+      labelSelector: kustomizeIdentifer=app-to-update
+      kind: Policy
+  - patch: |-
+      - op: replace
+        path: /spec/policy-templates/1/objectDefinition/spec/object-templates/0/objectDefinition/metadata/namespace
+        value: argo-app-6.1
+    target:
+      labelSelector: kustomizeIdentifer=app-to-update
+      kind: Policy
+  - patch: |-
+      - op: replace
+        path: /spec/policy-templates/2/objectDefinition/metadata/name
+        value: argo-app-6.1
+    target:
+      labelSelector: kustomizeIdentifer=app-to-update
+      kind: Policy
+  - patch: |-
+      - op: replace
+        path: /spec/policy-templates/2/objectDefinition/spec/object-templates/0/objectDefinition/metadata/name
+        value: argo-app-6.1
+    target:
+      labelSelector: kustomizeIdentifer=app-to-update
+      kind: Policy
+  - patch: |-
+      - op: replace
+        path: /placementRef/name
+        value: argo-app-6.1
+    target:
+      labelSelector: kustomizeIdentifer=app-to-update
+      kind: PlacementBinding
+  - patch: |-
+      - op: replace
+        path: /subjects/0/name
+        value: argo-app-6.1
+    target:
+      labelSelector: kustomizeIdentifer=app-to-update
+      kind: PlacementBinding
