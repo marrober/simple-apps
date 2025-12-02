@@ -7,7 +7,7 @@ spec:
   project: simple-apps-mc
   destination:
     namespace: simple-pipeline-2
-    server: https://openshift-gitops-server-openshift-gitops.apps.cluster-1.sandbox5426.opentlc.com:6443
+    server: https://api.cluster-1.sandbox5426.opentlc.com:6443
   ignoreDifferences:
   - group: argoproj.io
     jsonPointers:
