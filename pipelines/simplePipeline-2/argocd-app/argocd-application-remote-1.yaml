@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: simple-pipeline-2-ci
+  name: simple-pipeline-2-pentium
   namespace: openshift-gitops
 spec:
-  project: simple-apps
+  project: simple-apps-mc
   destination:
     namespace: simple-pipeline-2
-    server: https://kubernetes.default.svc
+    server: https://openshift-gitops-server-openshift-gitops.apps.cluster-1.sandbox5426.opentlc.com:6443
   ignoreDifferences:
   - group: argoproj.io
     jsonPointers:
@@ -30,7 +30,7 @@ spec:
     - /spec/host
     kind: Route
   source:
-    path: pipelines/simplePipeline-2/ci
+    path: pipelines/simplePipeline-2/deployment
     targetRevision: main
     repoURL: https://github.com/marrober/simple-apps.git
   syncPolicy:

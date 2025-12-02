@@ -3,9 +3,7 @@ kind: Kustomization
 
 resources:
 - namespace.yaml
-- role-bindings/argocd-admin.yaml
 - argocd-management-app.yaml
 - argocd-project-simple-apps.yaml
-- argocd-ci-process.yaml
 - argocd-application-local.yaml
 - argocd-application-pentium.yaml
