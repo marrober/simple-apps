@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: simple-pipeline-2
+  name: simple-pipeline-2-local
   namespace: openshift-gitops
 spec:
   project: simple-apps-mc
