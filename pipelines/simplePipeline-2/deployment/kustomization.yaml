@@ -4,6 +4,7 @@ kind: Kustomization
 images:
 - name: quay.io/marrober/simple-rest:latest
 resources:
+- namespace.yaml
 - deployment.yaml
 - service.yaml
 - route.yaml
