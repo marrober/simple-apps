@@ -15,7 +15,7 @@ patches:
 - patch: |-
     - op: replace
       path: /spec/destination/server
-      value: https://api.pentium.demolab.local:6443
+      value: https://api.cluster-1.sandbox5426.opentlc.com:6443
   target:
     kind: Application
     name: simple-pipeline-2

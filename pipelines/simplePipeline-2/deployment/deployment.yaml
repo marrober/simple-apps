@@ -22,8 +22,7 @@ spec:
     spec:
       containers:
         - name: my-app
-          image: >-
-            quay.io/marrober/simple-rest:latest
+          image: quay.io/marrober/layers:latest
           ports:
             - containerPort: 8080
               protocol: TCP
