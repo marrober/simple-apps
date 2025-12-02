@@ -6,4 +6,4 @@ resources:
 - argocd-management-app.yaml
 - argocd-project-simple-apps.yaml
 - argocd-application-local.yaml
-- argocd-application-pentium.yaml
+- argocd-application-remote-1.yaml
