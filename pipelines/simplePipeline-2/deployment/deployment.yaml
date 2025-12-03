@@ -10,7 +10,7 @@ metadata:
     app.openshift.io/runtime: my-app
     app.openshift.io/runtime-namespace: simple-pipeline-2
 spec:
-  replicas: 5
+  replicas: 1
   selector:
     matchLabels:
       app: my-app
