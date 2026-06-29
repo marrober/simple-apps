@@ -2,6 +2,7 @@ apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
   name: openshift-gitops-operator
+  namespace: rhacm-policies
   annotations:
     policy.open-cluster-management.io/standards: NIST SP 800-53
     policy.open-cluster-management.io/categories: CM Configuration Management
@@ -38,6 +39,7 @@ apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
   name: binding-policy-gitops-operator
+  namespace: rhacm-policies
 placementRef:
   name: placement-policy-gitops-operator
   kind: PlacementRule
@@ -51,6 +53,7 @@ apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
   name: placement-policy-gitops-operator
+  namespace: rhacm-policies
 spec:
   clusterConditions:
     - status: "True"
@@ -63,6 +66,7 @@ apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
   name: gitops-hub-instance
+  namespace: rhacm-policies
 spec:
   remediationAction: enforce
   disabled: false
@@ -209,6 +213,7 @@ apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
   name: binding-gitops-hub-instance
+  namespace: rhacm-policies
 placementRef:
   name: placement-gitops-hub-instance
   kind: PlacementRule
@@ -222,6 +227,7 @@ apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
   name: placement-gitops-hub-instance
+  namespace: rhacm-policies
 spec:
   clusterConditions:
     - status: "True"
