@@ -11,3 +11,4 @@ spec:
         labelSelector:
           matchLabels:
             vendor: OpenShift
+            local-cluster: 'true'

@@ -1,7 +1,7 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-  name: managed-cluster-roles
+  name: argocd-managed-cluster-roles
 spec:
   remediationAction: enforce
   disabled: false
@@ -43,13 +43,13 @@ spec:
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
-  name: binding-managed-cluster-roles
+  name: binding-argocd-managed-cluster-roles
 placementRef:
   name: placement-managed-cluster
   kind: PlacementRule
   apiGroup: apps.open-cluster-management.io
 subjects:
-  - name: managed-cluster-roles
+  - name: argocd-managed-cluster-roles
     kind: Policy
     apiGroup: policy.open-cluster-management.io
 ---
@@ -60,4 +60,4 @@ metadata:
 spec:
   clusterSelector:
     matchExpressions:
-      - {key: vendor, operator: In, values: ["OpenShift"]}
+      - {key: local-cluster, operator: NotIn, values: ["true"]}

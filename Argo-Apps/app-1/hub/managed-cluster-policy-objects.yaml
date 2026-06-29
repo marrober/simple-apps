@@ -2,6 +2,7 @@ apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
   name: app-1-managed-cluster-objects
+  namespace: openshift-gitops
   labels:
     policy: app-1-managed-cluster-objects
 spec:
@@ -77,6 +78,7 @@ apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
   name: binding-app-1-managed-cluster-objects
+  namespace: openshift-gitops
 placementRef:
   name: placement-app-1-managed-cluster-objects
   kind: PlacementRule
@@ -90,10 +92,11 @@ apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
   name: placement-app-1-managed-cluster-objects
+  namespace: openshift-gitops
 spec:
   clusterConditions:
     - status: "True"
       type: ManagedClusterConditionAvailable
   clusterSelector:
     matchExpressions:
-      - {key: vendor, operator: In, values: ["OpenShift"]}
+      - {key: local-cluster, operator: NotIn, values: ["true"]}
