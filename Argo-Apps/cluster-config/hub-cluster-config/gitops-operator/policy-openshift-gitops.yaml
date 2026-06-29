@@ -16,7 +16,6 @@ spec:
         metadata:
           name: openshift-gitops-operator
         spec:
-          remediationAction: enforce
           severity: medium
           object-templates:
             - complianceType: musthave
@@ -58,4 +57,175 @@ spec:
       type: ManagedClusterConditionAvailable
   clusterSelector:
     matchExpressions:
-      - {key: environment, operator: In, values: ["dev"]}
+      - {key: vendor, operator: In, values: ["OpenShift"]}
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: gitops-hub-instance
+spec:
+  remediationAction: enforce
+  disabled: false
+  policy-templates:
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: gitops-hub-instance
+        spec:
+          severity: medium
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: argoproj.io/v1beta1
+                kind: ArgoCD
+                metadata:
+                  name: argocd
+                  namespace: openshift-gitops
+                spec:
+                  server:
+                    resources:
+                      limits:
+                        cpu: 500m
+                        memory: 256Mi
+                      requests:
+                        cpu: 125m
+                        memory: 128Mi
+                    route:
+                      enabled: true
+                  sso:
+                    dex:
+                      resources:
+                        limits:
+                          cpu: 500m
+                          memory: 256Mi
+                        requests:
+                          cpu: 250m
+                          memory: 128Mi
+                      openShiftOAuth: true
+                    provider: dex
+                  applicationSet:
+                    enabled: true
+                  rbac:
+                    defaultPolicy: ''
+                    policy: |
+                      g, system:cluster-admins, role:admin
+                    scopes: '[groups]'
+                  repo:
+                    resources:
+                      limits:
+                        cpu: 1000m
+                        memory: 1024Mi
+                      requests:
+                        cpu: 250m
+                        memory: 256Mi
+                  ha:
+                    resources:
+                      limits:
+                        cpu: 500m
+                        memory: 256Mi
+                      requests:
+                        cpu: 250m
+                        memory: 128Mi
+                    enabled: false
+                  redis:
+                    resources:
+                      limits:
+                        cpu: 500m
+                        memory: 256Mi
+                      requests:
+                        cpu: 250m
+                        memory: 128Mi
+                  controller:
+                    resources:
+                      limits:
+                        cpu: 2000m
+                        memory: 2048Mi
+                      requests:
+                        cpu: 250m
+                        memory: 1024Mi
+                  resourceExclusions: |
+                    - apiGroups:
+                      - ""
+                      - discovery.k8s.io
+                      kinds:
+                      - Endpoints
+                      - EndpointSlice
+                    - apiGroups:
+                      - apiregistration.k8s.io
+                      kinds:
+                      - APIService
+                    - apiGroups:
+                      - coordination.k8s.io
+                      kinds:
+                      - Lease
+                    - apiGroups:
+                      - authentication.k8s.io
+                      - authorization.k8s.io
+                      kinds:
+                      - SelfSubjectReview
+                      - TokenReview
+                      - LocalSubjectAccessReview
+                      - SelfSubjectAccessReview
+                      - SelfSubjectRulesReview
+                      - SubjectAccessReview
+                    - apiGroups:
+                      - certificates.k8s.io
+                      kinds:
+                      - CertificateSigningRequest
+                    - apiGroups:
+                      - cert-manager.io
+                      kinds:
+                      - CertificateRequest
+                    - apiGroups:
+                      - cilium.io
+                      kinds:
+                      - CiliumIdentity
+                      - CiliumEndpoint
+                      - CiliumEndpointSlice
+                    - apiGroups:
+                      - kyverno.io
+                      - reports.kyverno.io
+                      - wgpolicyk8s.io
+                      kinds:
+                      - PolicyReport
+                      - ClusterPolicyReport
+                      - EphemeralReport
+                      - ClusterEphemeralReport
+                      - AdmissionReport
+                      - ClusterAdmissionReport
+                      - BackgroundScanReport
+                      - ClusterBackgroundScanReport
+                      - UpdateRequest
+                    - apiGroups:
+                      - tekton.dev
+                      clusters:
+                      - '*'
+                      kinds:
+                      - TaskRun
+                      - PipelineRun
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: binding-gitops-hub-instance
+placementRef:
+  name: placement-gitops-hub-instance
+  kind: PlacementRule
+  apiGroup: apps.open-cluster-management.io
+subjects:
+  - name: gitops-hub-instance
+    kind: Policy
+    apiGroup: policy.open-cluster-management.io
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: placement-gitops-hub-instance
+spec:
+  clusterConditions:
+    - status: "True"
+      type: ManagedClusterConditionAvailable
+  clusterSelector:
+    matchExpressions:
+      - {key: local-cluster, operator: In, values: ["true"]}

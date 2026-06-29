@@ -60,4 +60,4 @@ metadata:
 spec:
   clusterSelector:
     matchExpressions:
-      - {key: local-cluster, operator: NotIn, values: ["true"]}
+      - {key: vendor, operator: In, values: ["OpenShift"]}

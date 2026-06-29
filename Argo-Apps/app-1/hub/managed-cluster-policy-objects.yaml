@@ -8,21 +8,21 @@ spec:
   remediationAction: enforce
   disabled: false
   policy-templates:
-#    - objectDefinition:
-#        apiVersion: policy.open-cluster-management.io/v1
-#        kind: ConfigurationPolicy
-#        metadata:
-#          name: app-1-namespace
-#        spec:
-#          severity: medium
-#          remediationAction: enforce
-#          object-templates:
-#            - complianceType: musthave
-#              objectDefinition:
-#                kind: Project
-#                apiVersion: project.openshift.io/v1
-#                metadata:
-#                  name: argo-app-1
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: app-1-namespace
+        spec:
+          severity: medium
+          remediationAction: enforce
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                kind: Namespace
+                apiVersion: v1
+                metadata:
+                  name: argo-app-1
     - objectDefinition:
         apiVersion: policy.open-cluster-management.io/v1
         kind: ConfigurationPolicy
