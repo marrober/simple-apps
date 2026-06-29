@@ -1,0 +1,63 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: managed-cluster-roles
+spec:
+  remediationAction: enforce
+  disabled: false
+  policy-templates:
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: managed-cluster-roles
+        spec:
+          remediationAction: enforce
+          severity: medium
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: rbac.authorization.k8s.io/v1
+                kind: ClusterRole
+                metadata:
+                  name: argocd-klusterlet-consumer
+                rules:
+                - apiGroups: ["argoproj.io"]
+                  resources: ["applications", "appprojects"]
+                  verbs: ["create", "get", "list", "watch", "update", "patch", "delete"]
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: rbac.authorization.k8s.io/v1
+                kind: ClusterRoleBinding
+                metadata:
+                  name: klusterlet-argocd-binding
+                roleRef:
+                  apiGroup: rbac.authorization.k8s.io
+                  kind: ClusterRole
+                  name: argocd-klusterlet-consumer
+                subjects:
+                - kind: ServiceAccount
+                  name: klusterlet-work-sa
+                  namespace: open-cluster-management-agent
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: binding-managed-cluster-roles
+placementRef:
+  name: placement-managed-cluster
+  kind: PlacementRule
+  apiGroup: apps.open-cluster-management.io
+subjects:
+  - name: managed-cluster-roles
+    kind: Policy
+    apiGroup: policy.open-cluster-management.io
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: placement-managed-cluster
+spec:
+  clusterSelector:
+    matchExpressions:
+      - {key: local-cluster, operator: NotIn, values: ["true"]}

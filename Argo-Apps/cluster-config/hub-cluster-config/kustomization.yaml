@@ -11,3 +11,4 @@ resources:
 - managed-clusterset-binding-dev-clusters.yaml
 - ocm-placement-consumer-role.yaml
 - gitops-operator/policy-openshift-gitops.yaml
+- ../managed/
