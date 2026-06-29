@@ -58,3 +58,17 @@ spec:
     kind: Service
     name: app-1
     weight: 100
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: edge-route
+spec:
+    kind: Service
+    name: app-1
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+  wildcardPolicy: None

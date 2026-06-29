@@ -9,6 +9,12 @@ spec:
   predicates:
     - requiredClusterSelector:
         labelSelector:
-          matchLabels:
-            vendor: OpenShift
-            local-cluster: 'true'
+          matchExpressions:
+            - key: vendor
+              operator: In 
+              values: 
+                - 'OpenShift'
+            - key: local-cluster
+              operator: NotIn
+              values:
+                - 'true'
