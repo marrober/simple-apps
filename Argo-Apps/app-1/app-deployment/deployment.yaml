@@ -64,6 +64,7 @@ apiVersion: route.openshift.io/v1
 metadata:
   name: edge-route
 spec:
+  to:
     kind: Service
     name: app-1
     weight: 100
